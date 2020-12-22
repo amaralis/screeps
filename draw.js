@@ -1,4 +1,8 @@
 module.exports = {
+    circleAt: function(x,y,room){
+        new RoomVisual(room.name).circle(x, y, {fill: "#0000ff"});
+    },
+
     availableMiningSpots: function(room){
         room.memory.miningLocations.forEach(location => {
             terrain = new Room.Terrain(room.name);

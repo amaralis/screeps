@@ -2,8 +2,8 @@ const utils = require("utils");
 const draw = require("draw");
 
 module.exports = {
-    init: function(roomName) {
-        const room = Game.rooms[roomName];
+    init: function(room) {
+        console.log("level1Room initialized");
         
         // Push spawns to memory on room start
         if(room.memory.mySpawns === undefined || room.memory.mySpawns.length === 0){ // Room is fresh, no memory
@@ -21,10 +21,12 @@ module.exports = {
             })
         }
 
+
+
         // Find how many energy mining spots there are
         if(room.memory.miningLocations === undefined){
             room.memory.miningLocations = [];
-            room.setMiningLocations(utils.setAdjacentLocations(room, room.memory.sources));
+            room.setMiningLocations();
         }
         
         draw.availableMiningSpots(room);

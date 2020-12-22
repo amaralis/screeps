@@ -31,8 +31,6 @@ module.exports = {
             }
         })
 
-        console.log(locations);
-
         return locations;
     }
 }
