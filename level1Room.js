@@ -1,4 +1,4 @@
-const adjacentLocations = require("availableAdjacentSpots");
+const utils = require("utils");
 const draw = require("draw");
 
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
         // Find how many energy mining spots there are
         if(room.memory.miningLocations === undefined){
             room.memory.miningLocations = [];
-            adjacentLocations.setAdjacentLocations(room, room.memory.sources, room.setMiningLocations);
+            room.setMiningLocations(utils.setAdjacentLocations(room, room.memory.sources));
         }
         
         draw.availableMiningSpots(room);
