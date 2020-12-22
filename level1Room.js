@@ -1,34 +1,33 @@
-const energyMiningSpots = require("energyMiningSpots");
+const adjacentLocations = require("availableAdjacentSpots");
+const draw = require("draw");
 
 module.exports = {
     init: function(roomName) {
         const room = Game.rooms[roomName];
         
         // Push spawns to memory on room start
-        if(room.memory.mySpawns === undefined){
+        if(room.memory.mySpawns === undefined || room.memory.mySpawns.length === 0){ // Room is fresh, no memory
             room.memory.mySpawns = [];
             room.find(FIND_MY_SPAWNS).forEach(spawn => {
                 room.memory.mySpawns.push(spawn);
             })
         }
 
-        // Find optimal path from spawn to energy source
+        // Find optimal path to energy source
+        if(room.memory.sources === undefined || room.memory.sources.length === 0){ // Room is fresh, no memory
+            room.memory.sources = [];
+            room.find(FIND_SOURCES).forEach(source => {
+                room.memory.sources.push(source);
+            })
+        }
 
         // Find how many energy mining spots there are
         if(room.memory.miningLocations === undefined){
             room.memory.miningLocations = [];
-            energyMiningSpots.saveToRoom(roomName);
+            adjacentLocations.setAdjacentLocations(room, room.memory.sources, room.setMiningLocations);
         }
         
-        room.memory.miningLocations.forEach(location => {
-            terrain = new Room.Terrain(roomName);
-            if(terrain.get(location.x, location.y) === 0){
-                new RoomVisual(roomName).circle(location.x, location.y, {fill: "#ff0000"});
-            }
-            if(terrain.get(location.x, location.y) === 2){
-                new RoomVisual(roomName).circle(location.x, location.y, {fill: "#00ff00"});
-            }            
-        })
+        draw.availableMiningSpots(room);
         
         // Spawn basic workers (work, carry, carry, move, move)
 
