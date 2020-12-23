@@ -3,8 +3,6 @@ const draw = require("draw");
 
 module.exports = {
     init: function(room) {
-        console.log("level1Room initialized");
-        
         // Push spawns to memory on room start
         if(room.memory.mySpawns === undefined || room.memory.mySpawns.length === 0){ // Room is fresh, no memory
             room.memory.mySpawns = [];

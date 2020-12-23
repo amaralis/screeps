@@ -1,11 +1,20 @@
 module.exports = {
-    setAdjacentLocations: function(room, centerLocationsArr) {
+    getAdjacentLocations: function(centerLocationsArr) {
         let locations = [];
 
         centerLocationsArr.forEach(location => {
-            const terrain = new Room.Terrain(room.name);
+            //const terrain = new Room.Terrain(room.name);
 
-            if(terrain.get(location.pos.x,     location.pos.y - 1) === 0 || terrain.get(location.pos.x,     location.pos.y - 1) === 2){
+            locations.push({x:  location.pos.x,      y: (location.pos.y - 1), posRelativeToOrigin: "Upper", adjacentTo: location, isTaken: false});
+            locations.push({x: (location.pos.x + 1), y: (location.pos.y - 1), posRelativeToOrigin: "Upper right", adjacentTo: location, isTaken: false});
+            locations.push({x: (location.pos.x + 1), y:  location.pos.y,      posRelativeToOrigin: "Right", adjacentTo: location, isTaken: false});
+            locations.push({x: (location.pos.x + 1), y: (location.pos.y + 1), posRelativeToOrigin: "Lower right", adjacentTo: location, isTaken: false});
+            locations.push({x:  location.pos.x,      y: (location.pos.y + 1), posRelativeToOrigin: "Lower", adjacentTo: location, isTaken: false});
+            locations.push({x: (location.pos.x - 1), y: (location.pos.y + 1), posRelativeToOrigin: "Lower left", adjacentTo: location, isTaken: false});
+            locations.push({x: (location.pos.x - 1), y:  location.pos.y,      posRelativeToOrigin: "Left", adjacentTo: location, isTaken: false});
+            locations.push({x: (location.pos.x - 1), y: (location.pos.y - 1), posRelativeToOrigin: "Upper left", adjacentTo: location, isTaken: false});
+
+            /* if(terrain.get(location.pos.x,     location.pos.y - 1) === 0 || terrain.get(location.pos.x,     location.pos.y - 1) === 2){
                 locations.push({x: location.pos.x, y: (location.pos.y - 1), pos: "Upper", locationID: location.id, isTaken: false});
             }
             if(terrain.get(location.pos.x + 1, location.pos.y - 1) === 0 || terrain.get(location.pos.x + 1, location.pos.y - 1) === 2){
@@ -28,8 +37,11 @@ module.exports = {
             }
             if(terrain.get(location.pos.x - 1, location.pos.y - 1) === 0 || terrain.get(location.pos.x - 1, location.pos.y - 1) === 2){
                 locations.push({x: (location.pos.x - 1), y: (location.pos.y - 1), pos: "Upper left", locationID: location.id, isTaken: false});
-            }
-        })
+            } */
+        });
+
+        console.log("Locations length: ", locations.length);
+        console.log("Locations array: ", JSON.stringify(locations));
 
         return locations;
     }
