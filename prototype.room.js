@@ -28,4 +28,9 @@ module.exports = function(){
                 this.memory.sourceToSpawnPaths.push(tempPathArray);
         })
     }
+
+    Room.prototype.setSpawningPriorities = function(){
+        
+        
+    }
 }
