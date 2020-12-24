@@ -1,17 +1,20 @@
 const level1Room = require("level1Room");
+const objectives = require("roomObjectives");
 
 initializer = function(room) {
+    room.memory.initialized = false;
+
     // Push spawns to memory on new rooms
     if(!room.memory.mySpawns || !room.memory.mySpawns.length){
         room.memory.mySpawns = [];
-        room.find(FIND_MY_SPAWNS).forEach(spawn => {
-            room.memory.mySpawns.push(spawn);
-        })
-
-        room.memory.mySpawns.forEach(spawn => {
-            spawn.memory.availableAdjacentLocations = [];
-            spawn.getOpenAdjacentLocations();
-        })
+        const spawns = room.find(FIND_MY_SPAWNS);
+        if(spawns){
+            spawns.forEach(spawn => {
+                room.memory.mySpawns.push(spawn);
+                spawn.memory.availableAdjacentLocations = [];
+                spawn.getOpenAdjacentLocations();
+            });
+        }
     }
 
     room.memory.mySpawns.forEach(spawn => {
@@ -25,7 +28,7 @@ initializer = function(room) {
         room.memory.sources = [];
         room.find(FIND_SOURCES).forEach(source => {
             room.memory.sources.push(source);
-        })
+        });
     }
 
     // Push mining locations to memory on new rooms
@@ -46,9 +49,23 @@ initializer = function(room) {
         room.setSourceToSpawnPaths();
     }
     
-
-    if(!room.memory.creeps){
+    // Push mining locations to memory on new rooms
+    if(!room.memory.creeps || !room.memory.creeps.length){
         room.memory.creeps = [];
+    }
+
+    if(!room.memory.objectives || !room.memory.objectives.length){
+        room.memory.objectives = [];
+        //objectives.getObjectives(room);
+    }
+    
+    // Harvester formula
+    if(!room.memory.harvesterFormula && room.memory.sources){
+        room.memory.sources.forEach(source => {
+            const numberOfMiningSpots = room.getMiningSpotsPerSource(source).length;
+            const workAmount = Math.ceil(source.energyCapacity/2/300/numberOfMiningSpots);
+            console.log(workAmount);
+        });        
     }
 
     room.memory.initialized = true;

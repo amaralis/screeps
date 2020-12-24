@@ -13,14 +13,14 @@ module.exports = {
     spawnToSourcePaths: function(room){
         room.memory.spawnToSourcePaths.forEach(obj => {
             obj.path.forEach(path => {
-                new RoomVisual(path.roomName).circle(path.x, path.y, {fill: "", stroke: "#ff00ff"});
+                new RoomVisual(path.roomName).circle(path.x, path.y, {fill: "", stroke: "#ff0088"});
             })
         })    
     },
     sourceToSpawnPaths: function(room){
         room.memory.spawnToSourcePaths.forEach(obj => {
             obj.path.forEach(path => {
-                new RoomVisual(path.roomName).circle(path.x, path.y, {fill: "", stroke: "#ff00ff"});
+                new RoomVisual(path.roomName).circle(path.x, path.y, {fill: "", stroke: "#ff0088"});
             })
         })    
     }

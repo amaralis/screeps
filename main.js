@@ -10,12 +10,14 @@ delete Game.rooms["W6N3"].memory.spawnToSourcePaths; // JUST FOR TESTING
 delete Game.rooms["W6N3"].memory.sourceToSpawnPaths; // JUST FOR TESTING
 delete Game.rooms["W6N3"].memory.creeps; // JUST FOR TESTING
 delete Game.rooms["W6N3"].memory.initialized; // JUST FOR TESTING
+delete Game.rooms["W6N3"].memory.objectives; // JUST FOR TESTING
 //delete Game.spawns["Spawn1"].memory; // JUST FOR TESTING
 
 module.exports.loop = function () {
     for (const creep in Memory.creeps){
         !Game.creeps[creep] && delete Memory.creeps[creep];
     }
+
     for (const roomKey in Game.rooms) {
         const room = Game.rooms[roomKey];
         if(!room.memory.initialized){
@@ -28,6 +30,5 @@ module.exports.loop = function () {
         draw.sourceToSpawnPaths(room);
     }
 
-
-    console.log(Game.cpu.getUsed());
+    //console.log(Game.cpu.getUsed());
 }

@@ -11,7 +11,7 @@ module.exports = function(){
                 return this.memory.miningLocations.push(location);
             }
         })
-    }
+    },
 
     Room.prototype.setSpawnToSourcePaths = function(){
         this.memory.mySpawns.forEach(spawn => {
@@ -19,7 +19,7 @@ module.exports = function(){
                 this.memory.spawnToSourcePaths.push({spawn: spawn, location: location, path: utils.findPath(spawn.pos, new RoomPosition(location.x, location.y, this.name)).path});
             });
         });
-    }
+    },
 
     Room.prototype.setSourceToSpawnPaths = function(){
         this.memory.spawnToSourcePaths.forEach(obj => {
@@ -27,10 +27,18 @@ module.exports = function(){
                 tempPathArray = tempPathArray.reverse();
                 this.memory.sourceToSpawnPaths.push(tempPathArray);
         })
-    }
+    },
 
-    Room.prototype.setSpawningPriorities = function(){
+    Room.prototype.getMiningSpotsPerSource = function(source){
+        let spotsPerSource = [];
+        this.memory.miningLocations.forEach(miningSpot => {
+            if(miningSpot.adjacentTo.id == source.id){
+                spotsPerSource.push({miningSpot, source});
+            }
+        });
         
-        
+        console.log(spotsPerSource, spotsPerSource.length);
+
+        return spotsPerSource;
     }
 }
