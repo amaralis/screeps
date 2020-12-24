@@ -1,8 +1,4 @@
 module.exports = {
-    circleAt: function(x,y,room){
-        new RoomVisual(room.name).circle(x, y, {fill: "#0000ff"});
-    },
-
     availableMiningSpots: function(room){
         room.memory.miningLocations.forEach(location => {
             terrain = new Room.Terrain(room.name);
@@ -13,6 +9,19 @@ module.exports = {
                 new RoomVisual(room.name).circle(location.x, location.y, {fill: "#00ff00"});
             }            
         })
-
+    },
+    spawnToSourcePaths: function(room){
+        room.memory.spawnToSourcePaths.forEach(obj => {
+            obj.path.forEach(path => {
+                new RoomVisual(path.roomName).circle(path.x, path.y, {fill: "", stroke: "#ff00ff"});
+            })
+        })    
+    },
+    sourceToSpawnPaths: function(room){
+        room.memory.spawnToSourcePaths.forEach(obj => {
+            obj.path.forEach(path => {
+                new RoomVisual(path.roomName).circle(path.x, path.y, {fill: "", stroke: "#ff00ff"});
+            })
+        })    
     }
 }

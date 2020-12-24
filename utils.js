@@ -12,7 +12,11 @@ module.exports = {
             locations.push({x: (location.pos.x - 1), y:  location.pos.y,      posRelativeToOrigin: "Left", adjacentTo: location, isTaken: false});
             locations.push({x: (location.pos.x - 1), y: (location.pos.y - 1), posRelativeToOrigin: "Upper left", adjacentTo: location, isTaken: false});
         });
-        
+
         return locations;
+    },
+
+    findPath: function(from, to, opts = undefined){
+        return PathFinder.search(from, to, opts);
     }
 }
