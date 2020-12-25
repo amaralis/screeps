@@ -14,6 +14,7 @@ module.exports = function(){
 
     StructureSpawn.prototype.spawnBasicWorker = function(){
         console.log("Spawn basic worker called");
-        this.spawnCreep(basicWorker.body, undefined, basicWorker.memory);
+        let spawnTest = this.spawnCreep(basicWorker().workerBody, "undefined", {memory: basicWorker().memory, dryRun:true});
+        console.log("Spawn test: ", spawnTest);
     }
 }

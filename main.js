@@ -21,6 +21,10 @@ module.exports.loop = function () {
         !Game.creeps[creep] && delete Memory.creeps[creep];
     }
 
+    for (const spawn in Memory.spawns){
+        !Game.spawns[spawn] && delete Memory.spawns[spawn];
+    }
+    
     for (const roomKey in Game.rooms) {
         const room = Game.rooms[roomKey];
         if(!room.memory.initialized){

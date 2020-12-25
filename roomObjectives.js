@@ -1,7 +1,5 @@
 module.exports = {
     setQueue: function(room){
-        console.log(SPAWN_ENERGY_CAPACITY);
-        console.log(room.energyCapacityAvailable);
         if(room.memory.queue.length === 0 && (room.energyCapacityAvailable <= SPAWN_ENERGY_CAPACITY)){
             const availableSpawns = room.memory.mySpawns.filter(spawn => {
                 return !spawn.spawning;
@@ -28,6 +26,8 @@ module.exports = {
                         minersShort--;
                     }                    
                 });
+            } else {
+                console.log("No available spawns");
             }
         }
     }
