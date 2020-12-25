@@ -1,7 +1,9 @@
 const getAdjacentLocations = require("utils").getAdjacentLocations;
 const utils = require("utils");
+const roomObjectives = require("roomObjectives");
 
 module.exports = function(){
+
     Room.prototype.setMiningLocations = function() {
         let adjacentLocationsArray = getAdjacentLocations(this.memory.sources);
         const terrain = new Room.Terrain(this.name);
@@ -36,9 +38,19 @@ module.exports = function(){
                 spotsPerSource.push({miningSpot, source});
             }
         });
-        
-        console.log(spotsPerSource, spotsPerSource.length);
 
         return spotsPerSource;
+    },
+    
+    Room.prototype.getMaxMiners = function(){
+        let maxMiners = 0;
+        this.memory.minersPerSource.forEach(elt => {
+            maxMiners += elt.miningSpotsArray.length;
+        });
+        return maxMiners;
+    },
+
+    Room.prototype.setQueue = function(){
+        roomObjectives.setQueue(this);
     }
 }

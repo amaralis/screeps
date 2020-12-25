@@ -1,5 +1,4 @@
 const level1Room = require("level1Room");
-const objectives = require("roomObjectives");
 
 initializer = function(room) {
     room.memory.initialized = false;
@@ -16,12 +15,6 @@ initializer = function(room) {
             });
         }
     }
-
-    room.memory.mySpawns.forEach(spawn => {
-        Game.spawns[spawn.name].memory.availableAdjacentLocations.forEach(location => {
-            new RoomVisual(room.name).circle(location.x, location.y, {fill: "green", stroke: "#ff0000", strokeWidth: 0.1});
-        })
-    })
 
     // Push sources to memory on new rooms
     if(!room.memory.sources || !room.memory.sources.length){
@@ -49,23 +42,25 @@ initializer = function(room) {
         room.setSourceToSpawnPaths();
     }
     
-    // Push mining locations to memory on new rooms
+    // Create creeps array
     if(!room.memory.creeps || !room.memory.creeps.length){
         room.memory.creeps = [];
     }
-
-    if(!room.memory.objectives || !room.memory.objectives.length){
-        room.memory.objectives = [];
-        //objectives.getObjectives(room);
-    }
     
-    // Harvester formula
-    if(!room.memory.harvesterFormula && room.memory.sources){
+    // Find how many work units and miners per source are needed
+    if(!room.memory.minersPerSource && room.memory.sources){
+        room.memory.minersPerSource = [];
         room.memory.sources.forEach(source => {
-            const numberOfMiningSpots = room.getMiningSpotsPerSource(source).length;
-            const workAmount = Math.ceil(source.energyCapacity/2/300/numberOfMiningSpots);
-            console.log(workAmount);
-        });        
+            const miningSpotsArray = room.getMiningSpotsPerSource(source);
+            const workAmount = Math.ceil(source.energyCapacity/2/300/miningSpotsArray.length);
+            room.memory.minersPerSource.push({miningSpotsArray, workPerMiner: workAmount, source});
+        });
+    }
+
+    // Queue up room objectives
+    if(!room.memory.queue){
+        room.memory.queue = [];
+        room.setQueue();
     }
 
     room.memory.initialized = true;

@@ -11,6 +11,9 @@ delete Game.rooms["W6N3"].memory.sourceToSpawnPaths; // JUST FOR TESTING
 delete Game.rooms["W6N3"].memory.creeps; // JUST FOR TESTING
 delete Game.rooms["W6N3"].memory.initialized; // JUST FOR TESTING
 delete Game.rooms["W6N3"].memory.objectives; // JUST FOR TESTING
+delete Game.rooms["W6N3"].memory.minersPerSource; // JUST FOR TESTING
+delete Game.rooms["W6N3"].memory.state; // JUST FOR TESTING
+delete Game.rooms["W6N3"].memory.queue; // JUST FOR TESTING
 //delete Game.spawns["Spawn1"].memory; // JUST FOR TESTING
 
 module.exports.loop = function () {
@@ -27,8 +30,13 @@ module.exports.loop = function () {
         // !!! drawing has non-insignificant impact on CPU usage
         draw.availableMiningSpots(room);
         draw.spawnToSourcePaths(room);
-        draw.sourceToSpawnPaths(room);
+        draw.sourceToSpawnPaths(room);        
+        room.memory.mySpawns.forEach(spawn => {
+            Game.spawns[spawn.name].memory.availableAdjacentLocations.forEach(location => {
+                new RoomVisual(room.name).circle(location.x, location.y, {fill: "green", stroke: "#ff0000", strokeWidth: 0.1});
+            });
+        });
     }
 
-    //console.log(Game.cpu.getUsed());
+    // console.log(Game.cpu.getUsed());
 }
