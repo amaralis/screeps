@@ -3,10 +3,10 @@ module.exports = {
         room.memory.miningLocations.forEach(location => {
             terrain = new Room.Terrain(room.name);
             if(terrain.get(location.x, location.y) === 0){
-                new RoomVisual(room.name).circle(location.x, location.y, {fill: "#ff0000"});
+                new RoomVisual(room.name).rect(location.x - 0.5, location.y - 0.5, 1, 1, {stroke: "#5555ff", fill:"", opacity: 1});
             }
             if(terrain.get(location.x, location.y) === 2){
-                new RoomVisual(room.name).circle(location.x, location.y, {fill: "#00ff00"});
+                new RoomVisual(room.name).rect(location.x, location.y, 1, 1, {stroke: "#55ff55", fill: "", opacity: 1});
             }            
         })
     },

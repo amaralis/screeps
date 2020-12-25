@@ -1,5 +1,4 @@
-const spawnBasicWorker = function(spawn){
-    spawn.spawnCreep([WORK, CARRY, MOVE, MOVE], undefined, {memory:{role: basicWorker}}); // 250 energy
+module.exports = {
+    body: [WORK, CARRY, MOVE, MOVE], // 250 energy
+    memory: {role: "basic worker", type: "basic worker"}
 }
-
-module.exports = spawnBasicWorker;

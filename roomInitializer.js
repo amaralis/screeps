@@ -52,14 +52,14 @@ initializer = function(room) {
         room.memory.minersPerSource = [];
         room.memory.sources.forEach(source => {
             const miningSpotsArray = room.getMiningSpotsPerSource(source);
-            const workAmount = Math.ceil(source.energyCapacity/2/300/miningSpotsArray.length);
+            const workAmount = Math.ceil(source.energyCapacity/2/SPAWN_ENERGY_CAPACITY/miningSpotsArray.length);
             room.memory.minersPerSource.push({miningSpotsArray, workPerMiner: workAmount, source});
         });
     }
 
     // Queue up room objectives
-    if(!room.memory.queue){
-        room.memory.queue = [];
+    if(!room.memory.queue || !room.memory.queue.length){
+        room.memory.queue = []
         room.setQueue();
     }
 
