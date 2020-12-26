@@ -18,5 +18,13 @@ module.exports = {
 
     findPath: function(from, to, opts = undefined){
         return PathFinder.search(from, to, opts);
+    },
+
+    getAvailableSpawns: function(room){
+        const availableSpawns = room.memory.mySpawns.filter(spawn => {
+            return !spawn.spawning;
+        });
+
+        return availableSpawns;
     }
 }
