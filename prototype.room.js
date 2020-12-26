@@ -57,7 +57,7 @@ module.exports = function(){
         this.memory.minersPerSource.forEach(elt => {
             maxMiners += elt.miningSpotsArray.length;
         });
-        return maxMiners;
+        return maxMiners * 5; // * 5 is just for testing purposes, to see how pathfinding handles collisions
     },
     Room.prototype.getMaxRepairers = function(){
         return 5;
