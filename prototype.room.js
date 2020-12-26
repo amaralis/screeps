@@ -1,6 +1,7 @@
 const getAdjacentLocations = require("utils").getAdjacentLocations;
 const utils = require("utils");
-const setQueue = require("setQueue");
+const setCreepQueue = require("queue.creep.set");
+const executeCreepQueue = require("queue.creep.execute");
 
 module.exports = function(){
 
@@ -16,7 +17,7 @@ module.exports = function(){
     },
 
     Room.prototype.setSpawnToSourcePaths = function(){
-        this.memory.mySpawns.forEach(spawn => {
+        this.memory.roomSpawns.forEach(spawn => {
             this.memory.miningLocations.forEach(location => {
                 this.memory.spawnToSourcePaths.push({spawn: spawn, location: location, path: utils.findPath(spawn.pos, new RoomPosition(location.x, location.y, this.name)).path});
             });
@@ -42,14 +43,16 @@ module.exports = function(){
         return spotsPerSource;
     },
     
-    Room.prototype.setQueue = function(){
-        // Queue compares queued items with objectives and updates as necessary
-        setQueue(this);
+    Room.prototype.setState = function(state){
+        this.memory.state = state;
+    },
+    
+    Room.prototype.setCreepQueue = function(){
+        setCreepQueue(this);
     },
 
-    Room.prototype.setState = function(state){
-        console.log("State at Room.prototype: ", state);
-        this.memory.state = state;
+    Room.prototype.executeCreepQueue = function(room){
+        executeCreepQueue(this);
     },
     
     Room.prototype.getMaxMiners = function(){
@@ -66,6 +69,9 @@ module.exports = function(){
         return 5;
     },
     Room.prototype.getMaxBuilders = function(){
+        return 5;
+    },
+    Room.prototype.getMaxUpgraders = function(){
         return 5;
     },
     Room.prototype.getMaxFighters = function(){

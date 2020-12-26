@@ -1,22 +1,20 @@
-const level1Room = require("level1Room");
-
 initializer = function(room) {
     room.memory.initialized = false;
 
-    // Push spawns to memory on new rooms
-    if(!room.memory.mySpawns || !room.memory.mySpawns.length){
-        room.memory.mySpawns = [];
+    // Push spawns to memory
+    if(!room.memory.roomSpawns || !room.memory.roomSpawns.length){
+        room.memory.roomSpawns = [];
         const spawns = room.find(FIND_MY_SPAWNS);
         if(spawns){
             spawns.forEach(spawn => {
-                room.memory.mySpawns.push(spawn);
+                room.memory.roomSpawns.push(spawn);
                 spawn.memory.availableAdjacentLocations = [];
                 spawn.getOpenAdjacentLocations();
             });
         }
     }
 
-    // Push sources to memory on new rooms
+    // Push sources to memory
     if(!room.memory.sources || !room.memory.sources.length){
         room.memory.sources = [];
         room.find(FIND_SOURCES).forEach(source => {
@@ -24,19 +22,19 @@ initializer = function(room) {
         });
     }
 
-    // Push mining locations to memory on new rooms
+    // Push mining locations to memory
     if(!room.memory.miningLocations || !room.memory.miningLocations.length){
         room.memory.miningLocations = [];
         room.setMiningLocations();
     }    
 
-    // Find path from spawn to energy sources, commit to room memory on new rooms
+    // Find path from spawn to energy sources, commit to room memory
     if(!room.memory.spawnToSourcePaths || !room.memory.spawnToSourcePaths.length){
         room.memory.spawnToSourcePaths = [];
         room.setSpawnToSourcePaths();
     }    
     
-    // Find path from energy sources to spawn, commit to room memory on new rooms
+    // Find path from energy sources to spawn, commit to room memory
     if(!room.memory.sourceToSpawnPaths || !room.memory.sourceToSpawnPaths.length){
         room.memory.sourceToSpawnPaths = [];
         room.setSourceToSpawnPaths();
@@ -66,6 +64,7 @@ initializer = function(room) {
                     "hauler": room.getMaxHaulers(),
                     "repairer": room.getMaxRepairers(),
                     "builder": room.getMaxBuilders(),
+                    "upgrader": room.getMaxUpgraders(),
                     "fighter": room.getMaxFighters(),
                     "medic": room.getMaxMedics()
                 }
@@ -94,11 +93,13 @@ initializer = function(room) {
         room.setState("improving");
     }
     
-    // Set production queue
-    if(!room.memory.queue || !room.memory.queue.length){
-        room.memory.queue = [];
-        room.setQueue();
+    // Set creep production queue and execute
+    if(!room.memory.creepQueue || !room.memory.creepQueue.length){
+        room.memory.creepQueue = [];
+        room.setCreepQueue();
+        room.executeCreepQueue();
     }
+
 
     room.memory.initialized = true;
 }
