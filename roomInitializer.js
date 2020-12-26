@@ -57,9 +57,46 @@ initializer = function(room) {
         });
     }
 
-    // Queue up room objectives
+    // Set objectives
+    if(!room.memory.objectives){
+        room.memory.objectives = [
+            {
+                "creeps": {
+                    "miner": room.getMaxMiners(),
+                    "hauler": room.getMaxHaulers(),
+                    "repairer": room.getMaxRepairers(),
+                    "builder": room.getMaxBuilders(),
+                    "fighter": room.getMaxFighters(),
+                    "medic": room.getMaxMedics()
+                }
+            },
+            {
+                "buildings": {
+                    "container": room.getMaxContainers(),
+                    "extension": room.getMaxExtensions(),
+                    "extractor": room.getMaxExtractors(),
+                    "factory": room.getMaxFactories(),
+                    "lab": room.getMaxLabs(),
+                    "link": room.getMaxLinks(),
+                    "nuker": room.getMaxNukers(),
+                    "observer": room.getMaxObservers(),
+                    "power spawn": room.getMaxPowerSpawns(),
+                    "spawn": room.getMaxSpawns(),
+                    "storage": room.getMaxStorage(),
+                    "tower": room.getMaxTowers()
+                }                
+            }
+        ];
+    }
+    
+    // Set initial room state
+    if(!room.memory.state){
+        room.setState("improving");
+    }
+    
+    // Set production queue
     if(!room.memory.queue || !room.memory.queue.length){
-        room.memory.queue = []
+        room.memory.queue = [];
         room.setQueue();
     }
 

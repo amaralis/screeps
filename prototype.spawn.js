@@ -1,5 +1,5 @@
 const getAdjacentLocations = require("utils").getAdjacentLocations;
-const basicWorker = require("blueprints.worker");
+const getBlueprint = require("blueprints");
 
 module.exports = function(){
     StructureSpawn.prototype.getOpenAdjacentLocations = function(){
@@ -14,7 +14,7 @@ module.exports = function(){
 
     StructureSpawn.prototype.spawnBasicWorker = function(){
         console.log("Spawn basic worker called");
-        let spawnTest = this.spawnCreep(basicWorker().workerBody, "undefined", {memory: basicWorker().memory, dryRun:true});
-        console.log("Spawn test: ", spawnTest);
+        let spawnTest = this.spawnCreep(getBlueprint("basic worker").workerBody, "undefined", {memory: getBlueprint("basic worker").memory, dryRun:true});
+        // console.log("Spawn test: ", spawnTest);
     }
 }

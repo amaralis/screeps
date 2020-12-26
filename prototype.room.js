@@ -1,6 +1,6 @@
 const getAdjacentLocations = require("utils").getAdjacentLocations;
 const utils = require("utils");
-const roomObjectives = require("roomObjectives");
+const setQueue = require("setQueue");
 
 module.exports = function(){
 
@@ -42,6 +42,16 @@ module.exports = function(){
         return spotsPerSource;
     },
     
+    Room.prototype.setQueue = function(){
+        // Queue compares queued items with objectives and updates as necessary
+        setQueue(this);
+    },
+
+    Room.prototype.setState = function(state){
+        console.log("State at Room.prototype: ", state);
+        this.memory.state = state;
+    },
+    
     Room.prototype.getMaxMiners = function(){
         let maxMiners = 0;
         this.memory.minersPerSource.forEach(elt => {
@@ -49,8 +59,55 @@ module.exports = function(){
         });
         return maxMiners;
     },
-
-    Room.prototype.setQueue = function(){
-        roomObjectives.setQueue(this);
+    Room.prototype.getMaxRepairers = function(){
+        return 5;
+    },
+    Room.prototype.getMaxHaulers = function(){
+        return 5;
+    },
+    Room.prototype.getMaxBuilders = function(){
+        return 5;
+    },
+    Room.prototype.getMaxFighters = function(){
+        return 5;
+    },
+    Room.prototype.getMaxMedics = function(){
+        return 5;
+    },
+    Room.prototype.getMaxContainers = function(){
+        return 5;
+    },
+    Room.prototype.getMaxExtractors = function(){
+        return 5;
+    },
+    Room.prototype.getMaxFactories = function(){
+        return 5;
+    },
+    Room.prototype.getMaxExtensions = function(){
+        return 5;
+    },
+    Room.prototype.getMaxLabs = function(){
+        return 5;
+    },
+    Room.prototype.getMaxLinks = function(){
+        return 5;
+    },
+    Room.prototype.getMaxNukers = function(){
+        return 5;
+    },
+    Room.prototype.getMaxObservers = function(){
+        return 5;
+    },
+    Room.prototype.getMaxPowerSpawns = function(){
+        return 5;
+    },
+    Room.prototype.getMaxSpawns = function(){
+        return 5;
+    },
+    Room.prototype.getMaxStorage = function(){
+        return 5;
+    },
+    Room.prototype.getMaxTowers = function(){
+        return 5;
     }
 }
