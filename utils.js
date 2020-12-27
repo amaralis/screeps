@@ -23,7 +23,7 @@ module.exports = {
         for (const spawnKey in Game.spawns){
             if(!Game.spawns[spawnKey].spawning){
                 availableSpawns.push(Game.spawns[spawnKey]);
-                console.log("Getting spawns at utils: ", Game.spawns[spawnKey]);
+                console.log("Getting spawns at utils: ", spawnKey);
             }
         }
         // const availableSpawns = room.memory.roomSpawns.filter(spawn => {

@@ -7,27 +7,28 @@ const creepController = require("controller.creep");
 const setCreepQueue = require("queue.creep.set");
 const executeCreepQueue = require("queue.creep.execute");
 
-delete Game.rooms["W4N3"].memory.miningLocations; // JUST FOR TESTING
-delete Game.rooms["W4N3"].memory.roomSpawns; // JUST FOR TESTING
-delete Game.rooms["W4N3"].memory.sources; // JUST FOR TESTING
-delete Game.rooms["W4N3"].memory.spawnToSourcePaths; // JUST FOR TESTING
-delete Game.rooms["W4N3"].memory.sourceToSpawnPaths; // JUST FOR TESTING
-delete Game.rooms["W4N3"].memory.creeps; // JUST FOR TESTING
-delete Game.rooms["W4N3"].memory.initialized; // JUST FOR TESTING
-delete Game.rooms["W4N3"].memory.objectives; // JUST FOR TESTING
-delete Game.rooms["W4N3"].memory.minersPerSource; // JUST FOR TESTING
-delete Game.rooms["W4N3"].memory.state; // JUST FOR TESTING
-delete Game.rooms["W4N3"].memory.creepQueue; // JUST FOR TESTING
-delete Game.rooms["W4N3"].memory.creepProductionQueue; // JUST FOR TESTING
-delete Game.rooms["W4N3"].memory.queue; // JUST FOR TESTING
+delete Game.rooms["W7N2"].memory.miningLocations; // JUST FOR TESTING
+delete Game.rooms["W7N2"].memory.roomSpawns; // JUST FOR TESTING
+delete Game.rooms["W7N2"].memory.sources; // JUST FOR TESTING
+delete Game.rooms["W7N2"].memory.spawnToSourcePaths; // JUST FOR TESTING
+delete Game.rooms["W7N2"].memory.sourceToSpawnPaths; // JUST FOR TESTING
+delete Game.rooms["W7N2"].memory.creeps; // JUST FOR TESTING
+delete Game.rooms["W7N2"].memory.initialized; // JUST FOR TESTING
+delete Game.rooms["W7N2"].memory.objectives; // JUST FOR TESTING
+delete Game.rooms["W7N2"].memory.minersPerSource; // JUST FOR TESTING
+delete Game.rooms["W7N2"].memory.state; // JUST FOR TESTING
+delete Game.rooms["W7N2"].memory.creepQueue; // JUST FOR TESTING
+delete Game.rooms["W7N2"].memory.creepProductionQueue; // JUST FOR TESTING
+delete Game.rooms["W7N2"].memory.queue; // JUST FOR TESTING
 delete Game.spawns["Spawn1"].memory.availableAdjacentLocations; // JUST FOR TESTING
 
 module.exports.loop = function () {    
+    console.log(`======================= TICK ${Game.time} =======================`)
     for (const spawn in Memory.spawns){
         !Game.spawns[spawn] && delete Memory.spawns[spawn];
 
-        console.log("spawn.spawning (queue.creep.execute): ", Game.spawns[spawn].spawning);
-        console.log("spawn.spawning === true? ", (Game.spawns[spawn].spawning === true));
+        console.log("spawn.spawning (main): ", JSON.stringify(Game.spawns[spawn].spawning));
+        console.log("!spawn.spawning ? ", (!Game.spawns[spawn].spawning));
         console.log("spawn: ", JSON.stringify(Game.spawns[spawn]));
 
     }

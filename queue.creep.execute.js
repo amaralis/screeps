@@ -14,7 +14,7 @@ module.exports = function(room){
                     console.log("Spawning miner: ", JSON.stringify(nextInCreepQueue));
                     console.log("Spawn name at queue.creep.execute inside switch: ", spawn.name);
 
-                    spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType).workerBody,
+                    let spawnTest = spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType).workerBody,
                     `Busy Bee - ${Game.time}`,
                     {
                         memory: {...getBlueprint(nextInCreepQueue.creepType).memory,
@@ -24,20 +24,34 @@ module.exports = function(room){
                         toSpawnPathIndex:nextInCreepQueue.pathToSpawnIndex,
                             },
                         directions: spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]),
-                        /* dryRun:true */
+                        dryRun:true
                     });
+
+                    if(spawnTest === 0){
+                        spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType).workerBody,
+                        `Busy Bee - ${Game.time}`,
+                        {
+                            memory: {...getBlueprint(nextInCreepQueue.creepType).memory,
+                            // moveToPos: room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0],
+                            // spawnTime: utils.getSpawnTimeFromBodyArray(getBlueprint(nextInCreepQueue.creepType).workerBody.length),
+                            toSourcePathIndex: nextInCreepQueue.pathToSourceIndex,
+                            toSpawnPathIndex:nextInCreepQueue.pathToSpawnIndex,
+                                },
+                            directions: spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]),
+                            /* dryRun:true */
+                        });
+                        
+                        const queuedCreepName = `Busy Bee - ${Game.time}`;
+                        console.log("SPAWNING CREEP NAME: ", queuedCreepName);
+                        room.memory.creepProductionQueue.push(nextInCreepQueue);
+                        room.memory.creeps.push(Game.creeps[queuedCreepName]);
+                    }
+                    
+                    console.log(`SPAWN TEST CODE: ${spawnTest}`);
 
                     // console.log("spawn.spawning (queue.creep.execute): ", Game.spawns[spawn.name].spawning);
                     // console.log("spawn.spawning === true? ", (Game.spawns[spawn.name].spawning === true));
                     // console.log("spawn: ", JSON.stringify(spawn));
-
-
-                    if(spawn.spawning){
-                        const queuedCreepName = spawn.spawning.name;
-                        console.log("Spawning creep name: ", queuedCreepName);
-                        room.memory.creepProductionQueue.push(nextInCreepQueue);
-                        room.memory.creeps.push(Game.creeps[queuedCreepName]);
-                    }
 
                     break;
                 }
@@ -58,7 +72,7 @@ module.exports = function(room){
                 }
                 default:
                     console.log("Invalid item in production creepQueue: ", creepQueue[0]);
-            }            
+            }
         });
         
         // console.log("creepQueue: ", JSON.stringify(room.memory.creepQueue));                            
