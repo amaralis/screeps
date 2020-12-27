@@ -4,19 +4,19 @@ require("prototype.spawn")();
 const draw = require("draw");
 const utils = require("utils");
 
-delete Game.rooms["W8N4"].memory.miningLocations; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.roomSpawns; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.sources; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.spawnToSourcePaths; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.sourceToSpawnPaths; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.creeps; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.initialized; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.objectives; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.minersPerSource; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.state; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.creepQueue; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.creepProductionQueue; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.queue; // JUST FOR TESTING
+delete Game.rooms["W5N3"].memory.miningLocations; // JUST FOR TESTING
+delete Game.rooms["W5N3"].memory.roomSpawns; // JUST FOR TESTING
+delete Game.rooms["W5N3"].memory.sources; // JUST FOR TESTING
+delete Game.rooms["W5N3"].memory.spawnToSourcePaths; // JUST FOR TESTING
+delete Game.rooms["W5N3"].memory.sourceToSpawnPaths; // JUST FOR TESTING
+delete Game.rooms["W5N3"].memory.creeps; // JUST FOR TESTING
+delete Game.rooms["W5N3"].memory.initialized; // JUST FOR TESTING
+delete Game.rooms["W5N3"].memory.objectives; // JUST FOR TESTING
+delete Game.rooms["W5N3"].memory.minersPerSource; // JUST FOR TESTING
+delete Game.rooms["W5N3"].memory.state; // JUST FOR TESTING
+delete Game.rooms["W5N3"].memory.creepQueue; // JUST FOR TESTING
+delete Game.rooms["W5N3"].memory.creepProductionQueue; // JUST FOR TESTING
+delete Game.rooms["W5N3"].memory.queue; // JUST FOR TESTING
 //delete Game.spawns["Spawn1"].memory; // JUST FOR TESTING
 
 module.exports.loop = function () {

@@ -17,7 +17,9 @@ module.exports = function(room){
                     {
                         memory: {...getBlueprint(nextInCreepQueue.creepType).memory,
                         // moveToPos: room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0],
-                        spawnTime: utils.getSpawnTimeFromBodyArray(getBlueprint(nextInCreepQueue.creepType).workerBody.length)
+                        spawnTime: utils.getSpawnTimeFromBodyArray(getBlueprint(nextInCreepQueue.creepType).workerBody.length),
+                        toSourcePathIndex: nextInCreepQueue.pathToSourceIndex,
+                        toSpawnPathIndex:nextInCreepQueue.pathToSpawnIndex,
                             },
                         directions: spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]),
                         dryRun:true});
