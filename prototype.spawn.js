@@ -3,7 +3,7 @@ const getBlueprint = require("blueprints");
 
 module.exports = function(){
     StructureSpawn.prototype.getOpenAdjacentLocations = function(){
-        const adjacentLocationsArray = getAdjacentLocations([this]);
+        const adjacentLocationsArray = getAdjacentLocations(this);
         const terrain = new Room.Terrain(this.room.name);
         adjacentLocationsArray.forEach(location => {
             if(terrain.get(location.x, location.y) === 0 || terrain.get(location.x, location.y) === 2){

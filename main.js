@@ -36,11 +36,7 @@ module.exports.loop = function () {
         draw.availableMiningSpots(room);
         draw.spawnToSourcePaths(room);
         draw.sourceToSpawnPaths(room);        
-        room.memory.roomSpawns.forEach(spawn => {
-            Game.spawns[spawn.name].memory.availableAdjacentLocations.forEach(location => {
-                new RoomVisual(room.name).rect(location.x - .5, location.y - .5, 1, 1, {fill: "", stroke: "#55ff55", opacity: 0.5});
-            });
-        });
+        draw.spawnAdjacentLocations(room);
     }
 
     // console.log(Game.cpu.getUsed());

@@ -23,5 +23,12 @@ module.exports = {
                 new RoomVisual(path.roomName).circle(path.x, path.y, {fill: "", stroke: "#ff0088"});
             })
         })    
+    },
+    spawnAdjacentLocations: function(room){
+        room.memory.roomSpawns.forEach(spawn => {
+            Game.spawns[spawn.name].memory.availableAdjacentLocations.forEach(location => {
+                new RoomVisual(room.name).rect(location.x - .5, location.y - .5, 1, 1, {fill: "", stroke: "#55ff55", opacity: 0.5});
+            });
+        });
     }
 }

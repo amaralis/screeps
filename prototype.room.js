@@ -1,4 +1,4 @@
-const getAdjacentLocations = require("utils").getAdjacentLocations;
+const getAdjacentLocations = require("utils");
 const utils = require("utils");
 const setCreepQueue = require("queue.creep.set");
 const executeCreepQueue = require("queue.creep.execute");
@@ -6,14 +6,16 @@ const executeCreepQueue = require("queue.creep.execute");
 module.exports = function(){
 
     Room.prototype.setMiningLocations = function() {
-        let adjacentLocationsArray = getAdjacentLocations(this.memory.sources);
-        const terrain = new Room.Terrain(this.name);
+        this.memory.sources.forEach(source => {
+            let adjacentLocationsArray = utils.getAdjacentLocations(source);
+            const terrain = new Room.Terrain(this.name);
+            adjacentLocationsArray.forEach(location => {
+                if(terrain.get(location.x, location.y) === 0 || terrain.get(location.x, location.y) === 2){
+                    return this.memory.miningLocations.push(location);
+                }
+            });            
+        });
 
-        adjacentLocationsArray.forEach(location => {
-            if(terrain.get(location.x, location.y) === 0 || terrain.get(location.x, location.y) === 2){
-                return this.memory.miningLocations.push(location);
-            }
-        })
     },
 
     Room.prototype.setSpawnToSourcePaths = function(){
