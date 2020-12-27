@@ -6,7 +6,7 @@ module.exports = {
                 new RoomVisual(room.name).rect(location.x - 0.5, location.y - 0.5, 1, 1, {stroke: "#5555ff", fill:"", opacity: 1});
             }
             if(terrain.get(location.x, location.y) === 2){
-                new RoomVisual(room.name).rect(location.x - 0.5, location.y - 0.5, 1, 1, {stroke: "#55ff55", fill: "", opacity: 1});
+                new RoomVisual(room.name).rect(location.x - 0.5, location.y - 0.5, 1, 1, {stroke: "#55cc55", fill: "", opacity: 1});
             }            
         })
     },

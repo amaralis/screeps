@@ -18,26 +18,29 @@ module.exports = setCreepQueue;
 const queueMiner = function(room){            
     let minersShort = getTargetMiners(room);
     const { minersPerSource } = room.memory;
+    console.log("minersShort at queue.creep.set: ", minersShort);
 
-    while(minersShort > 0){
-        minersPerSource.forEach(sourceData => {
-            // console.log("source id at queue.creep.set: ", sourceData.source.id);
-            sourceData.miningSpotsArray.forEach(miningSpotObj => {
+    minersPerSource.forEach(sourceData => {
+        sourceData.miningSpotsArray.forEach(miningSpotObj => {
+            console.log("Creep queue length: ", room.memory.creepQueue.length);
+            console.log("Miners short: ", minersShort);
+            while(room.memory.creepQueue.length < minersShort && miningSpotObj.miningSpot.isTakenBy < 6){
                 if(miningSpotObj.miningSpot.isTakenBy < 6){ // This needs an algorithm to decide how many miners per source we want in the early stages of a room
                     const toSourcePathIndex = getCreepPathToSourceIndex(room, miningSpotObj.miningSpot);
                     const toSpawnPathIndex = getCreepPathToSpawnIndex(room, miningSpotObj.miningSpot);
-
 
                     room.memory.creepQueue.push({creepType: "miner",
                     workUnits: sourceData.workPerMiner,
                     targetSourceId: sourceData.source.id,
                     pathToSourceIndex: toSourcePathIndex,
                     pathToSpawnIndex: toSpawnPathIndex});
-                    minersShort--;
+
+                    console.log("isTakenBy: ", miningSpotObj.miningSpot.isTakenBy);
+                    miningSpotObj.miningSpot.isTakenBy++;
                 }
-            });
+            }
         });
-    }
+    });
 
     // console.log("creepQueue: ", JSON.stringify(room.memory.creepQueue));
 }

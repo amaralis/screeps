@@ -22,14 +22,22 @@ delete Game.rooms["W2N5"].memory.creepProductionQueue; // JUST FOR TESTING
 delete Game.rooms["W2N5"].memory.queue; // JUST FOR TESTING
 delete Game.spawns["Spawn1"].memory.availableAdjacentLocations; // JUST FOR TESTING
 
+// for (const creep in Memory.creeps){ // JUST FOR TESTING
+//     if(!Game.creeps[creep]){
+//         delete Memory.creeps[creep];
+//     }
+// }
+
 module.exports.loop = function () {    
     console.log(`======================= TICK ${Game.time} =======================`)
+    console.log("Memory.creeps: ", JSON.stringify(Memory.creeps));
+    console.log("Game.creeps: ", JSON.stringify(Game.creeps));
     for (const spawn in Memory.spawns){
         !Game.spawns[spawn] && delete Memory.spawns[spawn];
 
-        console.log("spawn.spawning (main): ", JSON.stringify(Game.spawns[spawn].spawning));
-        console.log("!spawn.spawning ? ", (!Game.spawns[spawn].spawning));
-        console.log("spawn: ", JSON.stringify(Game.spawns[spawn]));
+        // console.log("spawn.spawning (main): ", JSON.stringify(Game.spawns[spawn].spawning));
+        // console.log("!spawn.spawning ? ", (!Game.spawns[spawn].spawning));
+        // console.log("spawn: ", JSON.stringify(Game.spawns[spawn]));
 
     }
     
@@ -39,6 +47,8 @@ module.exports.loop = function () {
             roomInitializer(room);
         }
         
+        
+        // Ideally, this isn't in main
         setCreepQueue(room);
         executeCreepQueue(room);
 
@@ -50,21 +60,12 @@ module.exports.loop = function () {
         draw.spawnAdjacentLocations(room);
     }
     
-    for (const creep in Game.creeps){
+    for (const creep in Memory.creeps){
         if(!Game.creeps[creep]){
             delete Memory.creeps[creep];
         } else {
-            if(!Game.creeps[creep].spawning){
-                creepController(creep);
-            }
+            creepController(creep);
         }
-        // if(Game.creeps[creep].memory.state === "idle"){
-        //     switch(Game.creeps[creep].memory.role){
-        //         case "miner": {
-        //             Game.creeps[creep].moveByPath(Game.creeps[creep].room.findPath(creep.pos, creep.moveToPos));
-        //         }
-        //     }
-        // }
     }
 
     // console.log(JSON.stringify(Game.creeps));

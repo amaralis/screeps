@@ -4,7 +4,7 @@ module.exports = function(type){
             return {
                 // workerBody: [WORK, CARRY, MOVE, MOVE], // 250 energy
                 workerBody: [MOVE], // test
-                memory: {role: "miner", type: "basic worker", state:"harvesting"}
+                memory: {role: "miner", type: "basic worker", state:"awaiting ownership"}
             }
 
         default:
