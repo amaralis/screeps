@@ -4,7 +4,7 @@ module.exports = function(room){
     
     if(room.memory.creeps.length > 0){
         existingMiners = room.memory.creeps.reduce((totalMiners, currentCreep) => {
-            if(currentCreep.memory.role === "miner"){
+            if(!currentCreep.spawning && currentCreep.memory.role === "miner"){ // This is required, but it may mean we'll get an extra creep; needs testing
                 return totalMiners++;
             }
         });

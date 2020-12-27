@@ -27,6 +27,8 @@ module.exports = function(room){
                         dryRun:true
                     });
 
+                    // !!! .spawning only flags on the next tick. Do not use !!!
+
                     if(spawnTest === 0){
                         spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType).workerBody,
                         `Busy Bee - ${Game.time}`,
@@ -37,8 +39,7 @@ module.exports = function(room){
                             toSourcePathIndex: nextInCreepQueue.pathToSourceIndex,
                             toSpawnPathIndex:nextInCreepQueue.pathToSpawnIndex,
                                 },
-                            directions: spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]),
-                            /* dryRun:true */
+                            directions: spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0])
                         });
                         
                         const queuedCreepName = `Busy Bee - ${Game.time}`;

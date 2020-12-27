@@ -7,19 +7,19 @@ const creepController = require("controller.creep");
 const setCreepQueue = require("queue.creep.set");
 const executeCreepQueue = require("queue.creep.execute");
 
-delete Game.rooms["W7N2"].memory.miningLocations; // JUST FOR TESTING
-delete Game.rooms["W7N2"].memory.roomSpawns; // JUST FOR TESTING
-delete Game.rooms["W7N2"].memory.sources; // JUST FOR TESTING
-delete Game.rooms["W7N2"].memory.spawnToSourcePaths; // JUST FOR TESTING
-delete Game.rooms["W7N2"].memory.sourceToSpawnPaths; // JUST FOR TESTING
-delete Game.rooms["W7N2"].memory.creeps; // JUST FOR TESTING
-delete Game.rooms["W7N2"].memory.initialized; // JUST FOR TESTING
-delete Game.rooms["W7N2"].memory.objectives; // JUST FOR TESTING
-delete Game.rooms["W7N2"].memory.minersPerSource; // JUST FOR TESTING
-delete Game.rooms["W7N2"].memory.state; // JUST FOR TESTING
-delete Game.rooms["W7N2"].memory.creepQueue; // JUST FOR TESTING
-delete Game.rooms["W7N2"].memory.creepProductionQueue; // JUST FOR TESTING
-delete Game.rooms["W7N2"].memory.queue; // JUST FOR TESTING
+delete Game.rooms["W2N5"].memory.miningLocations; // JUST FOR TESTING
+delete Game.rooms["W2N5"].memory.roomSpawns; // JUST FOR TESTING
+delete Game.rooms["W2N5"].memory.sources; // JUST FOR TESTING
+delete Game.rooms["W2N5"].memory.spawnToSourcePaths; // JUST FOR TESTING
+delete Game.rooms["W2N5"].memory.sourceToSpawnPaths; // JUST FOR TESTING
+delete Game.rooms["W2N5"].memory.creeps; // JUST FOR TESTING
+delete Game.rooms["W2N5"].memory.initialized; // JUST FOR TESTING
+delete Game.rooms["W2N5"].memory.objectives; // JUST FOR TESTING
+delete Game.rooms["W2N5"].memory.minersPerSource; // JUST FOR TESTING
+delete Game.rooms["W2N5"].memory.state; // JUST FOR TESTING
+delete Game.rooms["W2N5"].memory.creepQueue; // JUST FOR TESTING
+delete Game.rooms["W2N5"].memory.creepProductionQueue; // JUST FOR TESTING
+delete Game.rooms["W2N5"].memory.queue; // JUST FOR TESTING
 delete Game.spawns["Spawn1"].memory.availableAdjacentLocations; // JUST FOR TESTING
 
 module.exports.loop = function () {    
