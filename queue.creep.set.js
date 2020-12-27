@@ -26,7 +26,11 @@ const queueMiner = function(room){
                     const toSourcePathIndex = getCreepPathToSourceIndex(room, miningSpotObj.miningSpot);
                     const toSpawnPathIndex = getCreepPathToSpawnIndex(room, miningSpotObj.miningSpot);
 
-                    room.memory.creepQueue.push({creepType: "miner", workUnits: source.workPerMiner, targetSourceId: source.id, pathToSourceIndex: toSourcePathIndex, pathToSpawnIndex: toSpawnPathIndex});
+                    room.memory.creepQueue.push({creepType: "miner",
+                    workUnits: source.workPerMiner,
+                    targetSourceId: source.id,
+                    pathToSourceIndex: toSourcePathIndex,
+                    pathToSpawnIndex: toSpawnPathIndex});
                     minersShort--;
                 }
             });
@@ -40,8 +44,6 @@ const getCreepPathToSourceIndex = function(room, miningSpot){
     const { spawnToSourcePaths } = room.memory;
     for(let i = 0; i < spawnToSourcePaths.length; i++){
         let path = spawnToSourcePaths[i].path;
-        // console.log("path: ", path);
-        // console.log("spawnToSourcePaths: ", JSON.stringify(spawnToSourcePaths));
         let lastIndex = path.length-1;
         if(path[lastIndex].x === miningSpot.x && path[lastIndex].y === miningSpot.y){
             return i;

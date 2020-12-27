@@ -1,4 +1,5 @@
 const utils = require("utils");
+const getBlueprint = require("blueprints");
 
 module.exports = function(room){
     const { creepQueue } = room.memory;
@@ -9,9 +10,20 @@ module.exports = function(room){
         const nextInCreepQueue = creepQueue[0];
         availableSpawns.forEach(spawn => {
             switch(nextInCreepQueue.creepType){
-                case "miner": {                    
+                case "miner": {
                     console.log("Spawning miner: ", JSON.stringify(nextInCreepQueue));
                     console.log("Should now shift from creep queue into 'in progress' queue");
+                    console.log(JSON.stringify(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]));
+
+                    let spawnTest = spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType).workerBody,
+                    `Busy Bee - ${Game.time}`,
+                    {memory: {...getBlueprint(nextInCreepQueue.creepType).memory,
+                        moveTo: spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0])},
+                        dryRun:true});
+
+                    console.log(spawnTest);
+
+
                     break;
                 }
                 case "hauler": {

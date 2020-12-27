@@ -1,9 +1,9 @@
 module.exports = function(type){
     switch (type){
-        case "basic worker":
+        case "miner":
             return {
                 workerBody: [WORK, CARRY, MOVE, MOVE], // 250 energy
-                memory: {role: "basic worker", type: "basic worker"}
+                memory: {role: "miner", type: "basic worker"}
             }
 
         default:

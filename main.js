@@ -14,6 +14,7 @@ delete Game.rooms["W7N3"].memory.objectives; // JUST FOR TESTING
 delete Game.rooms["W7N3"].memory.minersPerSource; // JUST FOR TESTING
 delete Game.rooms["W7N3"].memory.state; // JUST FOR TESTING
 delete Game.rooms["W7N3"].memory.creepQueue; // JUST FOR TESTING
+delete Game.rooms["W7N3"].memory.creepProductionQueue; // JUST FOR TESTING
 delete Game.rooms["W7N3"].memory.queue; // JUST FOR TESTING
 //delete Game.spawns["Spawn1"].memory; // JUST FOR TESTING
 

@@ -93,9 +93,10 @@ initializer = function(room) {
         room.setState("improving");
     }
     
-    // Set creep production queue and execute
+    // Set creep production queues and execute
     if(!room.memory.creepQueue || !room.memory.creepQueue.length){
         room.memory.creepQueue = [];
+        room.memory.creepProductionQueue = [];
         room.setCreepQueue();
         room.executeCreepQueue();
     }

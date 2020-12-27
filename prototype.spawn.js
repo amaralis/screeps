@@ -1,9 +1,9 @@
-const getAdjacentLocations = require("utils").getAdjacentLocations;
+const utils = require("utils");
 const getBlueprint = require("blueprints");
 
 module.exports = function(){
     StructureSpawn.prototype.getOpenAdjacentLocations = function(){
-        const adjacentLocationsArray = getAdjacentLocations(this);
+        const adjacentLocationsArray = utils.getAdjacentLocations(this);
         const terrain = new Room.Terrain(this.room.name);
         adjacentLocationsArray.forEach(location => {
             if(terrain.get(location.x, location.y) === 0 || terrain.get(location.x, location.y) === 2){
@@ -12,9 +12,12 @@ module.exports = function(){
         })
     },
 
-    StructureSpawn.prototype.spawnBasicWorker = function(){
-        console.log("Spawn basic worker called");
-        let spawnTest = this.spawnCreep(getBlueprint("basic worker").workerBody, "undefined", {memory: getBlueprint("basic worker").memory, dryRun:true});
-        // console.log("Spawn test: ", spawnTest);
+    StructureSpawn.prototype.getDirections = function(targetPos){
+        let surroundingTiles = utils.getAdjacentLocations(this);
+        surroundingTiles.forEach(tile => {
+            if(tile.x === targetPos.x && tile.y === targetPos.y){
+                return targetPos.directionsToHere;
+            }
+        });
     }
 }
