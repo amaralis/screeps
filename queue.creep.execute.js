@@ -6,23 +6,30 @@ module.exports = function(room){
     const availableSpawns = utils.getAvailableSpawns(room);
     
     if(availableSpawns.length > 0){
-        console.log("creepQueue before execution: ", JSON.stringify(room.memory.creepQueue));        
-        const nextInCreepQueue = creepQueue[0];
+        const nextInCreepQueue = creepQueue.shift();
         availableSpawns.forEach(spawn => {
             switch(nextInCreepQueue.creepType){
                 case "miner": {
                     console.log("Spawning miner: ", JSON.stringify(nextInCreepQueue));
-                    console.log("Should now shift from creep queue into 'in progress' queue");
-                    console.log(JSON.stringify(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]));
 
                     let spawnTest = spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType).workerBody,
                     `Busy Bee - ${Game.time}`,
-                    {memory: {...getBlueprint(nextInCreepQueue.creepType).memory,
-                        moveTo: spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0])},
+                    {
+                        memory: {...getBlueprint(nextInCreepQueue.creepType).memory,
+                        // moveToPos: room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0],
+                        spawnTime: utils.getSpawnTimeFromBodyArray(getBlueprint(nextInCreepQueue.creepType).workerBody.length)
+                            },
+                        directions: spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]),
                         dryRun:true});
 
-                    console.log(spawnTest);
+                    if(spawn.spawning){
+                        const queuedCreepName = spawn.spawning.name;
+                        console.log("Spawning creep name: ", queuedCreepName);
+                        room.memory.creepProductionQueue.push(nextInCreepQueue);
+                        room.memory.creeps.push(Game.creeps[queuedCreepName]);
+                    }
 
+                    console.log(spawnTest);
 
                     break;
                 }
@@ -46,7 +53,7 @@ module.exports = function(room){
             }            
         });
         
-        console.log("creepQueue: ", JSON.stringify(room.memory.creepQueue));                            
+        // console.log("creepQueue: ", JSON.stringify(room.memory.creepQueue));                            
     } else {
         console.log("No available spawns to execute creepQueue in room " + room.name);
     }

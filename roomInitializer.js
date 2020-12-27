@@ -101,7 +101,6 @@ initializer = function(room) {
         room.executeCreepQueue();
     }
 
-
     room.memory.initialized = true;
 }
 

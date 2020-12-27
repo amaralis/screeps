@@ -24,5 +24,9 @@ module.exports = {
         });
 
         return availableSpawns;
+    },
+
+    getSpawnTimeFromBodyArray: function(bodyArray){
+        return bodyArray.length * 3;
     }
 }

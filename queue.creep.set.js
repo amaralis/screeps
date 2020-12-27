@@ -37,7 +37,7 @@ const queueMiner = function(room){
         });
     }
 
-    console.log("creepQueue: ", JSON.stringify(room.memory.creepQueue));
+    // console.log("creepQueue: ", JSON.stringify(room.memory.creepQueue));
 }
 
 const getCreepPathToSourceIndex = function(room, miningSpot){
