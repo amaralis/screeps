@@ -20,15 +20,17 @@ const queueMiner = function(room){
     const { minersPerSource } = room.memory;
 
     while(minersShort > 0){
-        minersPerSource.forEach(source => {
-            source.miningSpotsArray.forEach(miningSpotObj => {
+        minersPerSource.forEach(sourceData => {
+            // console.log("source id at queue.creep.set: ", sourceData.source.id);
+            sourceData.miningSpotsArray.forEach(miningSpotObj => {
                 if(miningSpotObj.miningSpot.isTakenBy < 6){ // This needs an algorithm to decide how many miners per source we want in the early stages of a room
                     const toSourcePathIndex = getCreepPathToSourceIndex(room, miningSpotObj.miningSpot);
                     const toSpawnPathIndex = getCreepPathToSpawnIndex(room, miningSpotObj.miningSpot);
 
+
                     room.memory.creepQueue.push({creepType: "miner",
-                    workUnits: source.workPerMiner,
-                    targetSourceId: source.id,
+                    workUnits: sourceData.workPerMiner,
+                    targetSourceId: sourceData.source.id,
                     pathToSourceIndex: toSourcePathIndex,
                     pathToSpawnIndex: toSpawnPathIndex});
                     minersShort--;

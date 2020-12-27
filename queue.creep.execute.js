@@ -14,7 +14,6 @@ module.exports = function(room){
                     console.log("Spawning miner: ", JSON.stringify(nextInCreepQueue));
                     console.log("Spawn name at queue.creep.execute inside switch: ", spawn.name);
 
-
                     let spawnTest = spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType).workerBody,
                     `Busy Bee - ${Game.time}`,
                     {
@@ -30,6 +29,7 @@ module.exports = function(room){
 
                     console.log("spawn.spawning (queue.creep.execute): ", spawn.spawning);
                     console.log("spawn.spawning === true? ", (spawn.spawning === true));
+                    console.log("spawn: ", JSON.stringify(spawn));
 
 
                     if(spawn.spawning){
