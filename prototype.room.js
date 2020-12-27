@@ -21,7 +21,7 @@ module.exports = function(){
     },
 
     Room.prototype.setSpawnToSourcePaths = function(){
-        this.memory.roomSpawns.forEach(spawn => {
+        this.find(FIND_MY_SPAWNS).forEach(spawn => {
             this.memory.miningLocations.forEach(location => {
                 this.memory.spawnToSourcePaths.push({spawn: spawn, location: location, path: utils.findPath(spawn.pos, new RoomPosition(location.x, location.y, this.name)).path});
             });

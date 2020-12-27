@@ -20,11 +20,16 @@ delete Game.rooms["W4N3"].memory.state; // JUST FOR TESTING
 delete Game.rooms["W4N3"].memory.creepQueue; // JUST FOR TESTING
 delete Game.rooms["W4N3"].memory.creepProductionQueue; // JUST FOR TESTING
 delete Game.rooms["W4N3"].memory.queue; // JUST FOR TESTING
-//delete Game.spawns["Spawn1"].memory; // JUST FOR TESTING
+delete Game.spawns["Spawn1"].memory.availableAdjacentLocations; // JUST FOR TESTING
 
 module.exports.loop = function () {    
     for (const spawn in Memory.spawns){
         !Game.spawns[spawn] && delete Memory.spawns[spawn];
+
+        console.log("spawn.spawning (queue.creep.execute): ", Game.spawns[spawn].spawning);
+        console.log("spawn.spawning === true? ", (Game.spawns[spawn].spawning === true));
+        console.log("spawn: ", JSON.stringify(Game.spawns[spawn]));
+
     }
     
     for (const roomKey in Game.rooms) {

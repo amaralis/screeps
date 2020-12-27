@@ -14,7 +14,7 @@ module.exports = function(room){
                     console.log("Spawning miner: ", JSON.stringify(nextInCreepQueue));
                     console.log("Spawn name at queue.creep.execute inside switch: ", spawn.name);
 
-                    let spawnTest = spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType).workerBody,
+                    spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType).workerBody,
                     `Busy Bee - ${Game.time}`,
                     {
                         memory: {...getBlueprint(nextInCreepQueue.creepType).memory,
@@ -27,9 +27,9 @@ module.exports = function(room){
                         /* dryRun:true */
                     });
 
-                    console.log("spawn.spawning (queue.creep.execute): ", spawn.spawning);
-                    console.log("spawn.spawning === true? ", (spawn.spawning === true));
-                    console.log("spawn: ", JSON.stringify(spawn));
+                    // console.log("spawn.spawning (queue.creep.execute): ", Game.spawns[spawn.name].spawning);
+                    // console.log("spawn.spawning === true? ", (Game.spawns[spawn.name].spawning === true));
+                    // console.log("spawn: ", JSON.stringify(spawn));
 
 
                     if(spawn.spawning){
@@ -38,8 +38,6 @@ module.exports = function(room){
                         room.memory.creepProductionQueue.push(nextInCreepQueue);
                         room.memory.creeps.push(Game.creeps[queuedCreepName]);
                     }
-
-                    console.log(spawnTest);
 
                     break;
                 }

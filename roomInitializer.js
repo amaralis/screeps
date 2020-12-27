@@ -1,18 +1,20 @@
 initializer = function(room) {
     room.memory.initialized = false;
 
-    // Push spawns to memory
-    if(!room.memory.roomSpawns || !room.memory.roomSpawns.length){
-        room.memory.roomSpawns = [];
-        const spawns = room.find(FIND_MY_SPAWNS);
-        if(spawns){
-            spawns.forEach(spawn => {
-                room.memory.roomSpawns.push(spawn);
-                spawn.memory.availableAdjacentLocations = [];
-                spawn.getOpenAdjacentLocations();
-            });
-        }
-    }
+    // // Push spawns to memory
+    // if(!room.memory.roomSpawns || !room.memory.roomSpawns.length){
+    //     room.memory.roomSpawns = [];
+    //     const spawns = room.find(FIND_MY_SPAWNS);
+    //     if(spawns){
+    //         spawns.forEach(spawn => {
+    //             room.memory.roomSpawns.push(spawn);
+    //             spawn.memory.availableAdjacentLocations = [];
+    //             spawn.getOpenAdjacentLocations();
+    //         });
+    //     }
+    // }
+
+    
 
     // Push sources to memory
     if(!room.memory.sources || !room.memory.sources.length){
