@@ -3,6 +3,8 @@ const utils = require("utils");
 const setCreepQueue = require("queue.creep.set");
 const executeCreepQueue = require("queue.creep.execute");
 
+const minerTestingMultiplier = 5; // FOR TESTING
+
 module.exports = function(){
 
     Room.prototype.setMiningLocations = function() {
@@ -62,7 +64,7 @@ module.exports = function(){
         this.memory.minersPerSource.forEach(elt => {
             maxMiners += elt.miningSpotsArray.length;
         });
-        return maxMiners * 5; // * 5 is just for testing purposes, to see how pathfinding handles collisions
+        return maxMiners * minerTestingMultiplier; // TESTING MULTIPLIER
     },
     Room.prototype.getMaxRepairers = function(){
         return 5;

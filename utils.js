@@ -20,8 +20,11 @@ module.exports = {
 
     getAvailableSpawns: function(room){
         const availableSpawns = room.memory.roomSpawns.filter(spawn => {
+            console.log("Available spawns at utils filter method: ", !spawn.spawning);
             return !spawn.spawning;
         });
+
+        console.log("Available spawns at utils.js", JSON.stringify(availableSpawns));
 
         return availableSpawns;
     },

@@ -1,18 +1,19 @@
-const harvest = require("role.harvesting");
-const deliverCargo = require("role.deliveringCargo");
+const harvest = require("creep.state.harvesting");
+const deliverCargo = require("creep.state.deliveringCargo");
 
 module.exports = function(creep){
-    const { state, name } = creep.memory;
-    switch(state){
+    // const { state, name } = creep.memory;
+    switch(creep.state){
         case "idle": {
-            console.log(`Creep ${name} is idle`);
+            console.log(`Creep ${creep.name} is idle`);
         }
         case "harvesting": {
-            console.log(`Creep ${name} is harvesting`);
-            
+            console.log(`Creep ${creep.name} is harvesting`);
+            harvest(creep);
         }
         case "delivering cargo": {
-            console.log(`Creep ${name} is delivering cargo`);
+            console.log(`Creep ${creep.name} is delivering cargo`);
+            deliverCargo(creep);
         }
     }
 }

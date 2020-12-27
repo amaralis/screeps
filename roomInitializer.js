@@ -98,7 +98,6 @@ initializer = function(room) {
         room.memory.creepQueue = [];
         room.memory.creepProductionQueue = [];
         room.setCreepQueue();
-        room.executeCreepQueue();
     }
 
     room.memory.initialized = true;
