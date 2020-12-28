@@ -11,13 +11,13 @@ module.exports = function(room){
         let nextInCreepQueue = creepQueue.shift();
         console.log("creepQueue length after shift(): ", creepQueue.length);
         availableSpawns.forEach(spawn => {
-            console.log("Spawn name at queue.creep.execute: ", spawn.name);
+            // console.log("Spawn name at queue.creep.execute: ", spawn.name);
             switch(nextInCreepQueue.creepType){
                 case "miner": {
-                    console.log("Spawning miner before adding name: ", JSON.stringify(nextInCreepQueue));
+                    // console.log("Spawning miner before adding name: ", JSON.stringify(nextInCreepQueue));
                     nextInCreepQueue.name = `Busy Bee - ${Game.time}`;
-                    console.log("Spawning miner after adding name: ", JSON.stringify(nextInCreepQueue));
-                    console.log("Spawn name at queue.creep.execute inside switch: ", spawn.name);
+                    // console.log("Spawning miner after adding name: ", JSON.stringify(nextInCreepQueue));
+                    // console.log("Spawn name at queue.creep.execute inside switch: ", spawn.name);
 
                     let spawnTest = spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType).body,
                     nextInCreepQueue.name,
@@ -51,8 +51,8 @@ module.exports = function(room){
                             directions: spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0])
                         });
                         
-                        console.log("SPAWNING CREEP NAME: ", nextInCreepQueue.name);
-                        console.log("Creep in Game.creeps: ", Game.creeps[nextInCreepQueue.name]);
+                        // console.log("SPAWNING CREEP NAME: ", nextInCreepQueue.name);
+                        // console.log("Creep in Game.creeps: ", Game.creeps[nextInCreepQueue.name]);
                         room.memory.creepProductionQueue.push(nextInCreepQueue);
                     }
                     

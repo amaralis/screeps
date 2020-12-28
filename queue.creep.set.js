@@ -19,25 +19,21 @@ const queueMiner = function(room){
     let minersShort = getTargetMiners(room);
     const { minersPerSource } = room.memory;
     console.log("minersShort at queue.creep.set: ", minersShort);
-
+    console.log("Creep queue length queue.creep.set: ", room.memory.creepQueue.length);
     minersPerSource.forEach(sourceData => {
         sourceData.miningSpotsArray.forEach(miningSpotObj => {
-            console.log("Creep queue length: ", room.memory.creepQueue.length);
-            console.log("Miners short: ", minersShort);
             while(room.memory.creepQueue.length <= minersShort && miningSpotObj.miningSpot.isTakenBy < 5){ // This needs an algorithm to decide how many miners per source we want in the early stages of a room
-                // if(miningSpotObj.miningSpot.isTakenBy < 5){ // This should work without the && above, but it doesn't and I don't know why
-                    const toSourcePathIndex = getCreepPathToSourceIndex(room, miningSpotObj.miningSpot);
-                    const toSpawnPathIndex = getCreepPathToSpawnIndex(room, miningSpotObj.miningSpot);
+                const toSourcePathIndex = getCreepPathToSourceIndex(room, miningSpotObj.miningSpot);
+                const toSpawnPathIndex = getCreepPathToSpawnIndex(room, miningSpotObj.miningSpot);
 
-                    room.memory.creepQueue.push({creepType: "miner",
-                    workUnits: sourceData.workPerMiner,
-                    targetSourceId: sourceData.source.id,
-                    pathToSourceIndex: toSourcePathIndex,
-                    pathToSpawnIndex: toSpawnPathIndex});
+                room.memory.creepQueue.push({creepType: "miner",
+                workUnits: sourceData.workPerMiner,
+                targetSourceId: sourceData.source.id,
+                pathToSourceIndex: toSourcePathIndex,
+                pathToSpawnIndex: toSpawnPathIndex});
 
-                    miningSpotObj.miningSpot.isTakenBy++;
-                    console.log("This mining spot isTakenBy ", miningSpotObj.miningSpot.isTakenBy, " miners");
-                // }
+                miningSpotObj.miningSpot.isTakenBy++;
+                // console.log("This mining spot isTakenBy ", miningSpotObj.miningSpot.isTakenBy, " miners");
             }
         });
     });

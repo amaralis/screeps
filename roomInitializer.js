@@ -59,35 +59,31 @@ initializer = function(room) {
 
     // Set objectives
     if(!room.memory.objectives){
-        room.memory.objectives = [
-            {
-                "creeps": {
-                    "miner": room.getMaxMiners(),
-                    "hauler": room.getMaxHaulers(),
-                    "repairer": room.getMaxRepairers(),
-                    "builder": room.getMaxBuilders(),
-                    "upgrader": room.getMaxUpgraders(),
-                    "fighter": room.getMaxFighters(),
-                    "medic": room.getMaxMedics()
+        room.memory.objectives = {
+                creeps: {
+                    miner: room.getMaxMiners(),
+                    hauler: room.getMaxHaulers(),
+                    repairer: room.getMaxRepairers(),
+                    builder: room.getMaxBuilders(),
+                    upgrader: room.getMaxUpgraders(),
+                    fighter: room.getMaxFighters(),
+                    medic: room.getMaxMedics()
+                },
+                buildings: {
+                    container: room.getMaxContainers(),
+                    extension: room.getMaxExtensions(),
+                    extractor: room.getMaxExtractors(),
+                    factory: room.getMaxFactories(),
+                    lab: room.getMaxLabs(),
+                    link: room.getMaxLinks(),
+                    nuker: room.getMaxNukers(),
+                    observer: room.getMaxObservers(),
+                    powerSpawn: room.getMaxPowerSpawns(),
+                    spawn: room.getMaxSpawns(),
+                    storage: room.getMaxStorage(),
+                    tower: room.getMaxTowers()
                 }
-            },
-            {
-                "buildings": {
-                    "container": room.getMaxContainers(),
-                    "extension": room.getMaxExtensions(),
-                    "extractor": room.getMaxExtractors(),
-                    "factory": room.getMaxFactories(),
-                    "lab": room.getMaxLabs(),
-                    "link": room.getMaxLinks(),
-                    "nuker": room.getMaxNukers(),
-                    "observer": room.getMaxObservers(),
-                    "power spawn": room.getMaxPowerSpawns(),
-                    "spawn": room.getMaxSpawns(),
-                    "storage": room.getMaxStorage(),
-                    "tower": room.getMaxTowers()
-                }                
-            }
-        ];
+        };
     }
     
     // Set initial room state

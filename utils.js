@@ -38,7 +38,7 @@ module.exports = {
         })
 
 
-        console.log("BODY ENERGY COST at utils: ", this.getBodyEnergyCostByBlueprint(creepType));
+        console.log("Body energy cost at utils: ", this.getBodyEnergyCostByBlueprint(creepType));
 
         console.log("Available spawns at utils.js: ", JSON.stringify(availableSpawns));
 
