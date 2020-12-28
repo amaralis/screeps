@@ -13,14 +13,14 @@ module.exports = {
     spawnToSourcePaths: function(room){
         room.memory.spawnToSourcePaths.forEach(obj => {
             obj.path.forEach(path => {
-                new RoomVisual(path.roomName).circle(path.x, path.y, {fill: "", stroke: "#ff0088"});
+                new RoomVisual(path.roomName).circle(path.x, path.y, {fill: "", stroke: "#ff0088", strokeWidth: .05});
             })
         })    
     },
     sourceToSpawnPaths: function(room){
         room.memory.spawnToSourcePaths.forEach(obj => {
             obj.path.forEach(path => {
-                new RoomVisual(path.roomName).circle(path.x, path.y, {fill: "", stroke: "#ff0088"});
+                new RoomVisual(path.roomName).circle(path.x, path.y, {fill: "", stroke: "#ff0088", strokeWidth: .05});
             })
         })    
     },
@@ -32,10 +32,5 @@ module.exports = {
                 new RoomVisual(room.name).rect(location.x - .5, location.y - .5, 1, 1, {fill: "", stroke: "#55ff55", opacity: 0.5});
             });
         }
-        // room.memory.roomSpawns.forEach(spawn => {
-        //     Game.spawns[spawn.name].getOpenAdjacentLocations.forEach(location => {
-        //         new RoomVisual(room.name).rect(location.x - .5, location.y - .5, 1, 1, {fill: "", stroke: "#55ff55", opacity: 0.5});
-        //     });
-        // });
     }
 }

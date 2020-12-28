@@ -33,8 +33,6 @@ module.exports = {
             return spawn.store.getUsedCapacity(RESOURCE_ENERGY) >= this.getBodyEnergyCostByBlueprint(creepType);
         });
 
-        console.log("Available spawns at utils.js: ", JSON.stringify(availableSpawns));
-
         return availableSpawns;
     },
 

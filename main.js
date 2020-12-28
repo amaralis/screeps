@@ -17,20 +17,16 @@ delete Game.rooms["W8N4"].memory.initialized; // JUST FOR TESTING
 delete Game.rooms["W8N4"].memory.objectives; // JUST FOR TESTING
 delete Game.rooms["W8N4"].memory.minersPerSource; // JUST FOR TESTING
 delete Game.rooms["W8N4"].memory.state; // JUST FOR TESTING
-// delete Game.rooms["W8N4"].memory.creeps; // JUST FOR TESTING
 delete Game.rooms["W8N4"].memory.creepQueue; // JUST FOR TESTING
 delete Game.rooms["W8N4"].memory.creepProductionQueue; // JUST FOR TESTING
 delete Game.rooms["W8N4"].memory.queue; // JUST FOR TESTING
 delete Game.spawns["Spawn1"].memory.availableAdjacentLocations; // JUST FOR TESTING
 
-// for (const creep in Memory.creeps){ // JUST FOR TESTING
-//     delete Memory.creeps[creep];
-// }
-
 module.exports.loop = function () {    
+    
     console.log(`======================= TICK ${Game.time} =======================`)
-    console.log("Memory.creeps: ", JSON.stringify(Memory.creeps));
-    console.log("Game.creeps: ", JSON.stringify(Game.creeps));
+    // console.log("Memory.creeps: ", JSON.stringify(Memory.creeps));
+    // console.log("Game.creeps: ", JSON.stringify(Game.creeps));
     
     for (const roomKey in Game.rooms) {
         const room = Game.rooms[roomKey];
@@ -44,14 +40,19 @@ module.exports.loop = function () {
         executeCreepQueue(room);
 
 
+        // Clear room and global memory of dead creeps
+        for (let i = 0; i < room.memory.creeps.length; i++){
+            if(!Game.creeps[room.memory.creeps[i]]){
+                delete Memory.creeps[room.memory.creeps.splice(i,1)];
+            }
+        }
+
         // !!! drawing has non-insignificant impact on CPU usage
         draw.availableMiningSpots(room);
         draw.spawnToSourcePaths(room);
         draw.sourceToSpawnPaths(room);        
         draw.spawnAdjacentLocations(room);
     }
-    
-    console.log("Memory.creeps: ", JSON.stringify(Memory.creeps));
 
     for (const creep in Memory.creeps){
         console.log("Cycling through creeps: ", creep)
