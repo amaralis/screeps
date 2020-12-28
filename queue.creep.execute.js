@@ -3,12 +3,15 @@ const getBlueprint = require("blueprints");
 
 module.exports = function(room){
     const { creepQueue } = room.memory;
-    const availableSpawns = utils.getAvailableSpawns(room);
+
+    const availableSpawns = utils.getAvailableSpawns(creepQueue[0].creepType);
     
-    if(availableSpawns.length > 0){ // NEEDS ENERGY CHECK
+    if(availableSpawns.length > 0){ // NEEDS ENERGY CHECK - testing at getAvailableSpawns
+        console.log("creepQueue length before shift(): ", creepQueue.length);
         let nextInCreepQueue = creepQueue.shift();
+        console.log("creepQueue length after shift(): ", creepQueue.length);
         availableSpawns.forEach(spawn => {
-            // console.log("Spawn name at queue.creep.execute: ", spawn.name);
+            console.log("Spawn name at queue.creep.execute: ", spawn.name);
             switch(nextInCreepQueue.creepType){
                 case "miner": {
                     console.log("Spawning miner before adding name: ", JSON.stringify(nextInCreepQueue));
@@ -16,12 +19,12 @@ module.exports = function(room){
                     console.log("Spawning miner after adding name: ", JSON.stringify(nextInCreepQueue));
                     console.log("Spawn name at queue.creep.execute inside switch: ", spawn.name);
 
-                    let spawnTest = spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType).workerBody,
+                    let spawnTest = spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType).body,
                     nextInCreepQueue.name,
                     {
                         memory: {...getBlueprint(nextInCreepQueue.creepType).memory,
                         // moveToPos: room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0],
-                        // spawnTime: utils.getSpawnTimeFromBodyArray(getBlueprint(nextInCreepQueue.creepType).workerBody.length),
+                        // spawnTime: utils.getSpawnTimeFromBodyArray(getBlueprint(nextInCreepQueue.creepType).body.length),
                         toSourcePathIndex: nextInCreepQueue.pathToSourceIndex,
                         toSpawnPathIndex:nextInCreepQueue.pathToSpawnIndex,
                             },
@@ -34,21 +37,22 @@ module.exports = function(room){
                     // !!! .spawning only flags on the next tick. Do not use !!!
 
                     if(spawnTest === 0){
-                        spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType).workerBody,
+                        console.log("Spawning miner sanity check: ", JSON.stringify(nextInCreepQueue));
+                        spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType).body,
                         nextInCreepQueue.name,
                         {
                             memory: {...getBlueprint(nextInCreepQueue.creepType).memory,
                             // moveToPos: room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0],
-                            // spawnTime: utils.getSpawnTimeFromBodyArray(getBlueprint(nextInCreepQueue.creepType).workerBody.length),
+                            // spawnTime: utils.getSpawnTimeFromBodyArray(getBlueprint(nextInCreepQueue.creepType).body.length),
                             toSourcePathIndex: nextInCreepQueue.pathToSourceIndex,
                             toSpawnPathIndex:nextInCreepQueue.pathToSpawnIndex,
+                            ownedBy: room.name
                                 },
-                            directions: [spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0])]
+                            directions: spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0])
                         });
                         
-                        console.log("Spawning miner sanity check: ", JSON.stringify(nextInCreepQueue));
                         console.log("SPAWNING CREEP NAME: ", nextInCreepQueue.name);
-                        console.log("This creep shouldn't exist in Game.creeps and return undefined: ", Game.creeps[nextInCreepQueue.name]);
+                        console.log("Creep in Game.creeps: ", Game.creeps[nextInCreepQueue.name]);
                         room.memory.creepProductionQueue.push(nextInCreepQueue);
                     }
                     

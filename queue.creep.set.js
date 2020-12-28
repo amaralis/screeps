@@ -24,8 +24,8 @@ const queueMiner = function(room){
         sourceData.miningSpotsArray.forEach(miningSpotObj => {
             console.log("Creep queue length: ", room.memory.creepQueue.length);
             console.log("Miners short: ", minersShort);
-            while(room.memory.creepQueue.length < minersShort && miningSpotObj.miningSpot.isTakenBy < 6){
-                if(miningSpotObj.miningSpot.isTakenBy < 6){ // This needs an algorithm to decide how many miners per source we want in the early stages of a room
+            while(room.memory.creepQueue.length <= minersShort && miningSpotObj.miningSpot.isTakenBy < 5){ // This needs an algorithm to decide how many miners per source we want in the early stages of a room
+                // if(miningSpotObj.miningSpot.isTakenBy < 5){ // This should work without the && above, but it doesn't and I don't know why
                     const toSourcePathIndex = getCreepPathToSourceIndex(room, miningSpotObj.miningSpot);
                     const toSpawnPathIndex = getCreepPathToSpawnIndex(room, miningSpotObj.miningSpot);
 
@@ -35,9 +35,9 @@ const queueMiner = function(room){
                     pathToSourceIndex: toSourcePathIndex,
                     pathToSpawnIndex: toSpawnPathIndex});
 
-                    console.log("isTakenBy: ", miningSpotObj.miningSpot.isTakenBy);
                     miningSpotObj.miningSpot.isTakenBy++;
-                }
+                    console.log("This mining spot isTakenBy ", miningSpotObj.miningSpot.isTakenBy, " miners");
+                // }
             }
         });
     });

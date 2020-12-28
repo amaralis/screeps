@@ -22,11 +22,9 @@ delete Game.rooms["W2N5"].memory.creepProductionQueue; // JUST FOR TESTING
 delete Game.rooms["W2N5"].memory.queue; // JUST FOR TESTING
 delete Game.spawns["Spawn1"].memory.availableAdjacentLocations; // JUST FOR TESTING
 
-// for (const creep in Memory.creeps){ // JUST FOR TESTING
-//     if(!Game.creeps[creep]){
-//         delete Memory.creeps[creep];
-//     }
-// }
+for (const creep in Memory.creeps){ // JUST FOR TESTING
+    delete Memory.creeps[creep];
+}
 
 module.exports.loop = function () {    
     console.log(`======================= TICK ${Game.time} =======================`)
@@ -46,13 +44,26 @@ module.exports.loop = function () {
         if(!room.memory.initialized){
             roomInitializer(room);
         }
-        
+
+        // // Also add to existing miners any creeps currently spawning EXPERIMENTAL <<<<<<<<<<<<<<<<<===========================
+        // if(Game.creeps && (Object.keys(Game.creeps).length > 0)){
+        //     room.memory.creepProductionQueue.forEach(creep => {
+        //         if(!creep.memory.ownedBy){
+        //             for (const creepKey in Game.creeps){
+        //                 if(creepKey === creep.name){
+        //                     Game.creeps[creepKey].memory.ownedBy = room.name;
+        //                     room.memory.creeps.push(Game.creeps[creepKey]);
+        //                 }     
+        //             }
+        //         }
+        //     });
+        // }
+
         
         // Ideally, this isn't in main
         setCreepQueue(room);
         executeCreepQueue(room);
 
-        
         // !!! drawing has non-insignificant impact on CPU usage
         draw.availableMiningSpots(room);
         draw.spawnToSourcePaths(room);
@@ -60,11 +71,15 @@ module.exports.loop = function () {
         draw.spawnAdjacentLocations(room);
     }
     
+    console.log("Memory.creeps: ", JSON.stringify(Memory.creeps));
+
     for (const creep in Memory.creeps){
+        console.log("Cycling through creeps: ", creep)
         if(!Game.creeps[creep]){
             delete Memory.creeps[creep];
         } else {
-            creepController(creep);
+            console.log("Calling creepController on ", Game.creeps[creep]);
+            creepController(Game.creeps[creep]);
         }
     }
 
