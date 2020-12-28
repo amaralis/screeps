@@ -1,4 +1,4 @@
-const getTargetMiners = require("queue.miners");
+const getNeededMiners = require("queue.miners");
 
 const setCreepQueue = function(room){
     switch(room.memory.state){
@@ -15,8 +15,8 @@ const setCreepQueue = function(room){
 
 module.exports = setCreepQueue;
 
-const queueMiner = function(room){            
-    let minersShort = getTargetMiners(room);
+const queueMiner = function(room){
+    let minersShort = getNeededMiners(room);
     const { minersPerSource } = room.memory;
     console.log("minersShort at queue.creep.set: ", minersShort);
     console.log("Creep queue length queue.creep.set: ", room.memory.creepQueue.length);

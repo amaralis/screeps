@@ -9,6 +9,7 @@ module.exports = function(creep){
         case "awaiting ownership": {
             console.log(`CONTROLLER - Creep ${creep.name} is spawning and not assigned to any room`);
             creep.memory.ownedBy = creep.room.name;
+
             // Push name to room memory
             Game.rooms[creep.room.name].memory.creeps.push(creep.name);
             creep.memory.state = "spawning";
@@ -20,7 +21,7 @@ module.exports = function(creep){
                 creep.room.memory.creeps.forEach(creepName => {
                     for(let i = 0; i < creep.room.memory.creepProductionQueue.length; i++){
                         console.log(`CONTROLLER - queued creep's name: ${creep.room.memory.creepProductionQueue[i].name}`);
-                        console.log(`CONTROLLER - spawned creep's name: ${creepName.name}`);
+                        console.log(`CONTROLLER - spawned creep's name: ${creepName}`);
 
                         if(creep.room.memory.creepProductionQueue[i].name === creepName){
                             console.log(`CONTROLLER - Deleting queued creep ${JSON.stringify(creep.room.memory.creepProductionQueue[i])}`);

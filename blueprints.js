@@ -9,6 +9,5 @@ module.exports = function(type){
 
         default:
             return console.log("BLUEPRINT TYPE IS NOT VALID - blueprints.js");
-
     }
 }
