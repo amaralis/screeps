@@ -21,15 +21,19 @@ module.exports = function(){
     StructureSpawn.prototype.getDirections = function(targetPos){
         // console.log("Spawn getDirections() called");
         // console.log("Spawn getDirections() arg: ", JSON.stringify(targetPos));
+        let result = 0;
         let surroundingTiles = utils.getAdjacentLocations(this);
         surroundingTiles.forEach(tile => {
             if(tile.x === targetPos.x && tile.y === targetPos.y){
                 // console.log("Spawn getDirections() tile.x: ", tile.x);
                 // console.log("Spawn getDirections() targetPos.x: ", targetPos.x);
                 // console.log("Spawn getDirections() tile.y: ", tile.y);
-                // console.log("Spawn getDirections() targetPos.y: ", targetPos.y);
-                return targetPos.directionsToHere;
+                // // console.log("Spawn getDirections() targetPos.y: ", targetPos.y);
+                // console.log("Spawn getDirections() return value: ", tile.directionsToHere);
+                result = tile.directionsToHere;
             }
         });
+        // console.log("Result: ", result);
+        return result;
     }
 }

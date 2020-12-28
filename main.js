@@ -17,15 +17,15 @@ delete Game.rooms["W8N4"].memory.initialized; // JUST FOR TESTING
 delete Game.rooms["W8N4"].memory.objectives; // JUST FOR TESTING
 delete Game.rooms["W8N4"].memory.minersPerSource; // JUST FOR TESTING
 delete Game.rooms["W8N4"].memory.state; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.creeps; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.creeps; // JUST FOR TESTING
 delete Game.rooms["W8N4"].memory.creepQueue; // JUST FOR TESTING
 delete Game.rooms["W8N4"].memory.creepProductionQueue; // JUST FOR TESTING
 delete Game.rooms["W8N4"].memory.queue; // JUST FOR TESTING
 delete Game.spawns["Spawn1"].memory.availableAdjacentLocations; // JUST FOR TESTING
 
-for (const creep in Memory.creeps){ // JUST FOR TESTING
-    delete Memory.creeps[creep];
-}
+// for (const creep in Memory.creeps){ // JUST FOR TESTING
+//     delete Memory.creeps[creep];
+// }
 
 module.exports.loop = function () {    
     console.log(`======================= TICK ${Game.time} =======================`)

@@ -28,7 +28,7 @@ module.exports = function(room){
                         toSourcePathIndex: nextInCreepQueue.pathToSourceIndex,
                         toSpawnPathIndex:nextInCreepQueue.pathToSpawnIndex,
                             },
-                        directions: spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]),
+                        directions: [spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0])],
                         dryRun:true
                     });
 
@@ -37,6 +37,13 @@ module.exports = function(room){
                     // !!! .spawning only flags on the next tick. Do not use !!!
 
                     if(spawnTest === 0){
+                        // console.log("nextInCreepQueue => ", JSON.stringify(nextInCreepQueue));
+                        // console.log("nextInCreepQueue.pathToSourceIndex => ", nextInCreepQueue.pathToSourceIndex);
+                        // console.log("room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex] => ", JSON.stringify(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex]));
+                        // console.log("room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0] => ", JSON.stringify(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]));
+
+                        console.log("spawnDirections at queue.execute: ", spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]));
+
                         console.log("Spawning miner sanity check: ", JSON.stringify(nextInCreepQueue));
                         spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType).body,
                         nextInCreepQueue.name,
@@ -48,11 +55,12 @@ module.exports = function(room){
                             toSpawnPathIndex:nextInCreepQueue.pathToSpawnIndex,
                             ownedBy: room.name
                                 },
-                            directions: spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0])
+                            directions: [spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0])]
                         });
                         
                         // console.log("SPAWNING CREEP NAME: ", nextInCreepQueue.name);
                         // console.log("Creep in Game.creeps: ", Game.creeps[nextInCreepQueue.name]);
+                        console.log("SPAWN DIRECTIONS AT QUEUE EXECUTE: ", spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]));
                         room.memory.creepProductionQueue.push(nextInCreepQueue);
                     }
                     
@@ -82,6 +90,6 @@ module.exports = function(room){
         
         // console.log("creepQueue: ", JSON.stringify(room.memory.creepQueue));                            
     } else {
-        console.log("No available spawns to execute creepQueue in room " + room.name);
+        console.log("No available spawns in room " + room.name + " - at queue.creep.execute");
     }
 }

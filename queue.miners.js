@@ -7,7 +7,7 @@ module.exports = function(room){
 
         room.memory.creeps.forEach(creepName => {
             if(Game.creeps[creepName] && (Game.creeps[creepName].memory.role === "miner")){
-                existingMiners++;    
+                existingMiners++;
             }
         });
     }
