@@ -11,7 +11,7 @@ module.exports = function(room){
 
     const idleSpawns = utils.getIdleSpawns(room);
     
-    if(idleSpawns.length > 0){
+    if(idleSpawns.length > 0 && (room.memory.creepQueue.length > 0)){ // Add check to see if there's enough energy to spawn?
         const creepBlueprint = getBlueprint(creepQueue[0].creepType, room);
 
         idleSpawns.forEach(spawn => {
@@ -20,28 +20,21 @@ module.exports = function(room){
 
             if(room.energyAvailable >= creepBlueprint.cost){
 
-                console.log("creepQueue length before shift(): ", creepQueue.length);
-
-                let nextInCreepQueue = creepQueue.shift(); // THIS SHOULD MAYBE ONLY HAPPEN AFTER SPAWN TEST
-
-                console.log("creepQueue length after shift(): ", creepQueue.length);
-
-
-                switch(nextInCreepQueue.creepType){
+                switch(creepQueue[0].creepType){
                     case "miner": {
-                        // console.log("Spawning miner before adding name: ", JSON.stringify(nextInCreepQueue));
-                        nextInCreepQueue.name = `Busy Bee - ${Game.time}`;
-                        // console.log("Spawning miner after adding name: ", JSON.stringify(nextInCreepQueue));
+                        // console.log("Spawning miner before adding name: ", JSON.stringify(creepQueue[0]));
+                        creepQueue[0].name = `Busy Bee - ${Game.time}`;
+                        // console.log("Spawning miner after adding name: ", JSON.stringify(creepQueue[0]));
                         // console.log("Spawn name at queue.creep.execute inside switch: ", spawn.name);
 
                         let spawnTest = Game.spawns[spawn.name].spawnCreep(creepBlueprint.body,
-                        nextInCreepQueue.name,
+                        creepQueue[0].name,
                         {
                             memory: {...creepBlueprint.memory,
-                            toSourcePathIndex: nextInCreepQueue.pathToSourceIndex,
-                            toSpawnPathIndex:nextInCreepQueue.pathToSpawnIndex,
+                            toSourcePathIndex: creepQueue[0].pathToSourceIndex,
+                            toSpawnPathIndex:creepQueue[0].pathToSpawnIndex,
                                 },
-                            // directions: [spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0])],
+                            // directions: [spawn.getDirections(room.memory.spawnToSourcePaths[creepQueue[0].pathToSourceIndex].path[0])],
                             dryRun:true
                         });
 
@@ -50,6 +43,12 @@ module.exports = function(room){
                         // !!! .spawning only flags on the next tick. Do not use !!!
 
                         if(spawnTest === 0){
+                            console.log("creepQueue length before shift(): ", creepQueue.length);
+
+                            let nextInCreepQueue = creepQueue.shift(); // THIS SHOULD MAYBE ONLY HAPPEN AFTER SPAWN TEST
+
+                            console.log("creepQueue length after shift(): ", creepQueue.length);
+
                             // console.log("nextInCreepQueue => ", JSON.stringify(nextInCreepQueue));
                             // console.log("nextInCreepQueue.pathToSourceIndex => ", nextInCreepQueue.pathToSourceIndex);
                             // console.log("room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex] => ", JSON.stringify(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex]));
