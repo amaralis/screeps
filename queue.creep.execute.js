@@ -34,7 +34,7 @@ module.exports = function(room){
                             toSourcePathIndex: creepQueue[0].pathToSourceIndex,
                             toSpawnPathIndex:creepQueue[0].pathToSpawnIndex,
                                 },
-                            // directions: [spawn.getDirections(room.memory.spawnToSourcePaths[creepQueue[0].pathToSourceIndex].path[0])],
+                            // directions: [Game.spawns[spawn.name].getDirections(room.memory.spawnToSourcePaths[creepQueue[0].pathToSourceIndex].path[0])],
                             dryRun:true
                         });
 
@@ -65,7 +65,7 @@ module.exports = function(room){
                                 toSpawnPathIndex:nextInCreepQueue.pathToSpawnIndex,
                                 ownedBy: room.name
                                     },
-                                // directions: [Game.spawns[spawn.name].getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0])]
+                                directions: [Game.spawns[spawn.name].getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0])]
                             });
                             
                             // console.log("SPAWNING CREEP NAME: ", nextInCreepQueue.name);
