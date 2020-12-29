@@ -1,5 +1,3 @@
-const getBlueprint = require("blueprints");
-
 module.exports = {
     getAdjacentLocations: function(centerLocation) {
         let locations = [];
@@ -20,31 +18,41 @@ module.exports = {
         return PathFinder.search(from, to, opts);
     },
 
-    getAvailableSpawns: function(creepType){
+    getAvailableSpawns: function(room){
         let idleSpawns = [];
-        for (const spawnKey in Game.spawns){
-            if(!Game.spawns[spawnKey].spawning){
-                idleSpawns.push(Game.spawns[spawnKey]);
-                // console.log("Getting spawns at utils: ", spawnKey);
-            }
+        if(room.memory.roomSpawns && (room.memory.roomSpawns.length > 0)){
+            room.memory.roomSpawns.forEach(spawn => {
+                // console.log(`Is spawn ${spawn.name} spawning? ${spawn.spawning === true}`);
+                if(!spawn.spawning){
+                    idleSpawns.push(spawn);
+                }
+            });
         }
 
-        availableSpawns = idleSpawns.filter(spawn => {
-            return /* spawn.store.getUsedCapacity(RESOURCE_ENERGY) */ spawn.room.energyCapacityAvailable >= this.getBodyEnergyCostByBlueprint(creepType, spawn.room);
-        });
+        // for (const spawnKey in Game.spawns){
+        //     if(!Game.spawns[spawnKey].spawning){
+        //         idleSpawns.push(Game.spawns[spawnKey]);
+        //     }
+        // }
 
-        return availableSpawns;
+        // availableSpawns = idleSpawns.filter(spawn => {
+        //     return /* spawn.store.getUsedCapacity(RESOURCE_ENERGY) */ spawn.room.energyCapacityAvailable >= this.getBodyEnergyCostByBlueprint(creepType, spawn.room);
+        // });
+
+        console.log(`Idle spawns at utils: ${JSON.stringify(idleSpawns)}`);
+
+        return idleSpawns;
     },
 
-    getBodyEnergyCostByBlueprint: function(creepType, room){
-        const bodyArray = getBlueprint(creepType, room).body;
-        let sum = 0;
-        bodyArray.forEach(part => {
-            sum += BODYPART_COST[part];
-        });
+    // getBodyEnergyCostByBlueprint: function(creepType, room){
+    //     const bodyArray = getBlueprint(creepType, room).body;
+    //     let sum = 0;
+    //     bodyArray.forEach(part => {
+    //         sum += BODYPART_COST[part];
+    //     });
 
-        return sum;
-    },
+    //     return sum;
+    // },
 
     getSpawnTimeFromBodyArray: function(bodyArray){
         return bodyArray.length * 3;

@@ -9,7 +9,10 @@ module.exports = function(room){
             }
         });
     }
+
+    console.log(`Existing miners: ${existingMiners}\nMax miners: ${maxMiners}\nNeeded miners: ${(maxMiners - existingMiners)} - at queue.miners`)
+
+    let neededMiners = maxMiners - existingMiners;
     
-    const neededMiners = maxMiners - existingMiners;
     return neededMiners;
 }

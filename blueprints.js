@@ -3,7 +3,7 @@
  * 
  * @param {string} type 
  * @param {Room} room
- * @returns {Array}
+ * @returns {Object}
  */
 
 module.exports = function(type, room){
@@ -12,9 +12,13 @@ module.exports = function(type, room){
             console.log("Blueprints called");
             console.log("type: ", JSON.stringify(type));
             console.log("room: ", room.name);
-            let bodyArray = [WORK, CARRY, MOVE, CARRY, MOVE];
-            totalBodyCost = 0;
-            let dynamicBody = [];
+            let bodyArray = [/* WORK, CARRY,  */MOVE/* , CARRY, MOVE */];
+
+            // let initialBodyCost = bodyArray.reduce((sum, bodyPart) => {sum + BODYPART_COST[bodyPart]; console.log("Current bodypart cost:", BODYPART_COST[bodyPart]); console.log("Current sum: ", sum)}, 0);
+            
+            let totalBodyCost = 0;
+            bodyArray.forEach(bodypart => totalBodyCost += BODYPART_COST[bodypart]);
+            let dynamicBody = [...bodyArray];
 
             for(let i = 0; i < bodyArray.length; i++){
                 // console.log("For loop in blueprint");
@@ -25,6 +29,7 @@ module.exports = function(type, room){
                     console.log("bodyArray[i]: ", bodyArray[i]);
                     console.log("Bodypart cost at array[i]: ", BODYPART_COST[bodyArray[i]]);
                     console.log("Room energy available: ", room.energyAvailable);
+
                     dynamicBody.push(bodyArray[i]);
                     totalBodyCost += BODYPART_COST[bodyArray[i]];
                 }
@@ -35,6 +40,7 @@ module.exports = function(type, room){
 
             return {
                 body: dynamicBody,
+                cost: totalBodyCost,
                 memory: {role: "miner", type: "basic worker", state:"awaiting ownership"}
             }
         }

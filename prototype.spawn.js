@@ -1,5 +1,4 @@
 const utils = require("utils");
-const getBlueprint = require("blueprints");
 
 module.exports = function(){
     StructureSpawn.prototype.getOpenAdjacentLocations = function(){

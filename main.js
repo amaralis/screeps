@@ -65,5 +65,5 @@ module.exports.loop = function () {
     }
 
     // console.log(JSON.stringify(Game.creeps));
-    // console.log(Game.cpu.getUsed());
+    console.log(Game.cpu.getUsed());
 }
