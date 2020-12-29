@@ -30,14 +30,14 @@ module.exports = {
         }
 
         availableSpawns = idleSpawns.filter(spawn => {
-            return spawn.store.getUsedCapacity(RESOURCE_ENERGY) >= this.getBodyEnergyCostByBlueprint(creepType);
+            return /* spawn.store.getUsedCapacity(RESOURCE_ENERGY) */ spawn.room.energyCapacityAvailable >= this.getBodyEnergyCostByBlueprint(creepType, spawn.room);
         });
 
         return availableSpawns;
     },
 
-    getBodyEnergyCostByBlueprint: function(creepType){
-        const bodyArray = getBlueprint(creepType).body;
+    getBodyEnergyCostByBlueprint: function(creepType, room){
+        const bodyArray = getBlueprint(creepType, room).body;
         let sum = 0;
         bodyArray.forEach(part => {
             sum += BODYPART_COST[part];

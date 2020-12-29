@@ -6,9 +6,9 @@ module.exports = function(room){
 
     const availableSpawns = utils.getAvailableSpawns(creepQueue[0].creepType);
     
-    if(availableSpawns.length > 0){ // NEEDS ENERGY CHECK - testing at getAvailableSpawns
+    if(availableSpawns.length > 0){
         console.log("creepQueue length before shift(): ", creepQueue.length);
-        let nextInCreepQueue = creepQueue.shift();
+        let nextInCreepQueue = creepQueue.shift(); // THIS SHOULD MAYBE ONLY HAPPEN AFTER SPAWN TEST
         console.log("creepQueue length after shift(): ", creepQueue.length);
         availableSpawns.forEach(spawn => {
             // console.log("Spawn name at queue.creep.execute: ", spawn.name);
@@ -19,12 +19,12 @@ module.exports = function(room){
                     // console.log("Spawning miner after adding name: ", JSON.stringify(nextInCreepQueue));
                     // console.log("Spawn name at queue.creep.execute inside switch: ", spawn.name);
 
-                    let spawnTest = spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType).body,
+                    let spawnTest = spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType, room).body,
                     nextInCreepQueue.name,
                     {
-                        memory: {...getBlueprint(nextInCreepQueue.creepType).memory,
+                        memory: {...getBlueprint(nextInCreepQueue.creepType, room).memory,
                         // moveToPos: room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0],
-                        // spawnTime: utils.getSpawnTimeFromBodyArray(getBlueprint(nextInCreepQueue.creepType).body.length),
+                        // spawnTime: utils.getSpawnTimeFromBodyArray(getBlueprint(nextInCreepQueue.creepType, room).body.length),
                         toSourcePathIndex: nextInCreepQueue.pathToSourceIndex,
                         toSpawnPathIndex:nextInCreepQueue.pathToSpawnIndex,
                             },
@@ -45,12 +45,12 @@ module.exports = function(room){
                         console.log("spawnDirections at queue.execute: ", spawn.getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]));
 
                         console.log("Spawning miner sanity check: ", JSON.stringify(nextInCreepQueue));
-                        spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType).body,
+                        spawn.spawnCreep(getBlueprint(nextInCreepQueue.creepType, room).body,
                         nextInCreepQueue.name,
                         {
-                            memory: {...getBlueprint(nextInCreepQueue.creepType).memory,
+                            memory: {...getBlueprint(nextInCreepQueue.creepType, room).memory,
                             // moveToPos: room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0],
-                            // spawnTime: utils.getSpawnTimeFromBodyArray(getBlueprint(nextInCreepQueue.creepType).body.length),
+                            // spawnTime: utils.getSpawnTimeFromBodyArray(getBlueprint(nextInCreepQueue.creepType, room).body.length),
                             toSourcePathIndex: nextInCreepQueue.pathToSourceIndex,
                             toSpawnPathIndex:nextInCreepQueue.pathToSpawnIndex,
                             ownedBy: room.name
