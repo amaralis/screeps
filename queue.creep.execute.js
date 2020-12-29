@@ -10,9 +10,9 @@ module.exports = function(room){
     const { creepQueue } = room.memory;
 
     const idleSpawns = utils.getIdleSpawns(room);
+    const creepBlueprint = getBlueprint(creepQueue[0].creepType, room);
     
-    if(idleSpawns.length > 0 && (room.memory.creepQueue.length > 0)){ // Add check to see if there's enough energy to spawn?
-        const creepBlueprint = getBlueprint(creepQueue[0].creepType, room);
+    if(idleSpawns.length > 0 && (room.memory.creepQueue.length > 0) && room.energyAvailable >= creepBlueprint.cost){ // Add check to see if there's enough energy to spawn?
 
         idleSpawns.forEach(spawn => {
             console.log("Idle spawn at queue.execute: ", JSON.stringify(spawn));
@@ -65,7 +65,7 @@ module.exports = function(room){
                                 toSpawnPathIndex:nextInCreepQueue.pathToSpawnIndex,
                                 ownedBy: room.name
                                     },
-                                directions: [Game.spawns[spawn.name].getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0])]
+                                // directions: [Game.spawns[spawn.name].getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0])]
                             });
                             
                             // console.log("SPAWNING CREEP NAME: ", nextInCreepQueue.name);
