@@ -18,7 +18,7 @@ module.exports = {
         return PathFinder.search(from, to, opts);
     },
 
-    getAvailableSpawns: function(room){
+    getIdleSpawns: function(room){
         let idleSpawns = [];
         if(room.memory.roomSpawns && (room.memory.roomSpawns.length > 0)){
             room.memory.roomSpawns.forEach(spawn => {

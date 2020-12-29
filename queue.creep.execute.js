@@ -9,13 +9,13 @@ const getBlueprint = require("blueprints");
 module.exports = function(room){
     const { creepQueue } = room.memory;
 
-    const availableSpawns = utils.getAvailableSpawns(room);
+    const idleSpawns = utils.getIdleSpawns(room);
     
-    if(availableSpawns.length > 0){
+    if(idleSpawns.length > 0){
         const creepBlueprint = getBlueprint(creepQueue[0].creepType, room);
 
-        availableSpawns.forEach(spawn => {
-            console.log("Spawn available at queue.execute: ", JSON.stringify(spawn));
+        idleSpawns.forEach(spawn => {
+            console.log("Idle spawn at queue.execute: ", JSON.stringify(spawn));
             console.log("Creep blueprint cost: ", creepBlueprint.cost);
 
             if(room.energyAvailable >= creepBlueprint.cost){
