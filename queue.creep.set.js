@@ -27,7 +27,7 @@ const queueMiner = function(room){
                 let str = "";
                 let i = 0;
                 while(i<15){
-                    str += String.fromCharCode(Math.floor(Math.random() * (866 - 697)) + 697);
+                    str += String.fromCharCode(Math.floor(Math.random() * (2304 - 2482)) + 2482);
 
                     // str += String.fromCharCode(Math.floor(Math.random() * (2304 - 2307)) + 2307);
                     // str += String.fromCharCode(Math.floor(Math.random() * (2561 - 2563)) + 2563);

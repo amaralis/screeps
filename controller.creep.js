@@ -16,20 +16,19 @@ module.exports = function(creep){
             break;
         }
         case "spawning": {
-            if(creep.id){
+            if(!creep.spawning){
+                console.log(`Spawned creep's state before switch: ${creep.memory.state}`);
                 creep.memory.state = creep.memory.role; // Will start doing its thing next tick, when controller runs again
-                creep.room.memory.creeps.forEach(creepName => {
-                    for(let i = 0; i < creep.room.memory.creepProductionQueue.length; i++){
-                        // console.log(`CONTROLLER - queued creep's name: ${creep.room.memory.creepProductionQueue[i].name}`);
-                        // console.log(`CONTROLLER - spawned creep's name: ${creepName}`);
-
-                        if(creep.room.memory.creepProductionQueue[i].name === creepName){
-                            console.log(`CONTROLLER - Deleting queued creep ${JSON.stringify(creep.room.memory.creepProductionQueue[i])}`);
-                            console.log(`CONTROLLER - Deleting queued creep's ID: ${creep.id}`);
-                            return creep.room.memory.creepProductionQueue.splice(i,1);
-                        }
+                console.log(`Spawned creep's state: ${creep.memory.state}`);
+                console.log(`Spawned creep's role: ${creep.memory.role}`);
+                
+                for(let i = 0; i < creep.room.memory.creepProductionQueue.length; i++){
+                    if(creep.room.memory.creepProductionQueue[i].name === creep.name){
+                        console.log(`CONTROLLER - Deleting queued creep: ${JSON.stringify(creep.room.memory.creepProductionQueue[i])}`);
+                        console.log(`CONTROLLER - Spawned creep's name: ${creep.name}`);
+                        creep.room.memory.creepProductionQueue.splice(i,1);
                     }
-                });
+                }
             }
             console.log(`CONTROLLER - Creep ${creep.name} is spawning`);
             break;
