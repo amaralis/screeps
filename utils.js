@@ -23,6 +23,7 @@ module.exports = {
         if(room.memory.roomSpawns && (room.memory.roomSpawns.length > 0)){
             room.memory.roomSpawns.forEach(spawn => {
                 // console.log(`Is spawn ${spawn.name} spawning? ${spawn.spawning === true}`);
+                console.log(JSON.stringify(spawn));
                 if(!Game.spawns[spawn.name].spawning){
                     idleSpawns.push(spawn);
                 }

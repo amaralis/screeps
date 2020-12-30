@@ -11,7 +11,7 @@ const initializer = function(room) {
         const spawns = room.find(FIND_MY_SPAWNS);
         if(spawns){
             spawns.forEach(spawn => {
-                room.memory.roomSpawns.push(spawn);
+                room.memory.roomSpawns.push({name: spawn.name, id: spawn.id});
                 spawn.memory.availableAdjacentLocations = [];
                 spawn.getOpenAdjacentLocations();
             });

@@ -26,8 +26,8 @@ const queueMiner = function(room){
             const beeCode = function(){
                 let str = "";
                 let i = 0;
-                while(i<15){
-                    str += String.fromCharCode(Math.floor(Math.random() * (2304 - 2482)) + 2482);
+                while(i<5){
+                    str += String.fromCharCode(Math.floor(Math.random() * (0x30A0 - 0x30FF)) + 0x30FF);
 
                     // str += String.fromCharCode(Math.floor(Math.random() * (2304 - 2307)) + 2307);
                     // str += String.fromCharCode(Math.floor(Math.random() * (2561 - 2563)) + 2563);
@@ -44,7 +44,11 @@ const queueMiner = function(room){
             // const flairReversed = flair.split("").reverse().join();
             const creepName = `${flair} - Busy Bee - ${flair}`;
             // const creepName = `Busy Bee - ${Game.time}`;
+            console.log("CREEP QUEUE LENGTH: ", room.memory.creepQueue.length);
+            console.log("miningSpotObj.isTakenBy.length: ", miningSpotObj.isTakenBy.length);
             if(room.memory.creepQueue.length < minersShort && miningSpotObj.isTakenBy.length < 5){
+
+                console.log("TEST")
                 const toSourcePathIndex = getCreepPathToSourceIndex(room, miningSpotObj);
                 const toSpawnPathIndex = getCreepPathToSpawnIndex(room, miningSpotObj);
 

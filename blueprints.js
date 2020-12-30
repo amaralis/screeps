@@ -85,6 +85,6 @@ module.exports = function(type, room){
 
         }
         default:
-            return console.log("BLUEPRINT TYPE IS NOT VALID - blueprints.js");
+            console.log("BLUEPRINT TYPE IS NOT VALID - blueprints.js");
     }
 }
