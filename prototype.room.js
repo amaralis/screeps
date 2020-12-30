@@ -7,19 +7,55 @@ const minerTestingMultiplier = 5; // FOR TESTING
 
 module.exports = function(){
 
+    /**
+     * Pushes mining spots from sources to a generic miningLocations array
+     */
     Room.prototype.setMiningLocations = function() {
-        this.memory.sources.forEach(source => {
-            let adjacentLocationsArray = utils.getAdjacentLocations(source);
-            const terrain = new Room.Terrain(this.name);
-            adjacentLocationsArray.forEach(location => {
-                if(terrain.get(location.x, location.y) === 0 || terrain.get(location.x, location.y) === 2){
-                    return this.memory.miningLocations.push(location);
-                }
-            });            
+        this.memory.minersPerSource.forEach(source => {
+            source.miningSpotsArray.forEach(spot => {
+                this.memory.miningLocations.push(spot);
+            })
         });
-
+    },
+        
+    /**
+     * Dangerously initializes mining spots per source. Only perform this operation at room start.
+     * @param {Source} source 
+     */
+    Room.prototype.initializeMiningSpotsPerSource = function(source){
+        let adjacentLocationsArray = utils.getAdjacentLocations(source);
+        const terrain = new Room.Terrain(this.name);
+        let miningSpotsArray= [];
+        
+        adjacentLocationsArray.forEach(location => {
+            if(terrain.get(location.x, location.y) === 0 || terrain.get(location.x, location.y) === 2){
+                miningSpotsArray.push(location);
+            }            
+        });
+        
+        const workAmount = Math.ceil(source.energyCapacity/2/SPAWN_ENERGY_CAPACITY/miningSpotsArray.length);
+        spotsPerSourceData = {miningSpotsArray, workPerMiner: workAmount, source};        
+        this.memory.minersPerSource.push(spotsPerSourceData);
     },
 
+    /**
+     * Get an array of objects with a mining spot and its corresponding source
+     * @param {Source}
+     * @returns {Array}
+     */
+
+    Room.prototype.getMiningSpotsPerSource = function(source){
+        let spotsPerSource = [];
+
+        source.miningSpotsArray.forEach(miningSpotData => {
+            if(miningSpotData.miningSpot.adjacentTo.id == source.id){
+                spotsPerSource.push({miningSpot, source});    
+            }
+        });
+
+        return spotsPerSource;
+    },
+            
     Room.prototype.setSpawnToSourcePaths = function(){
         this.find(FIND_MY_SPAWNS).forEach(spawn => {
             this.memory.miningLocations.forEach(location => {
@@ -34,17 +70,6 @@ module.exports = function(){
                 tempPathArray = tempPathArray.reverse();
                 this.memory.sourceToSpawnPaths.push(tempPathArray);
         })
-    },
-
-    Room.prototype.getMiningSpotsPerSource = function(source){
-        let spotsPerSource = [];
-        this.memory.miningLocations.forEach(miningSpot => {
-            if(miningSpot.adjacentTo.id == source.id){
-                spotsPerSource.push({miningSpot, source});
-            }
-        });
-
-        return spotsPerSource;
     },
     
     Room.prototype.setState = function(state){

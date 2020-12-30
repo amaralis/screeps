@@ -4,12 +4,10 @@ module.exports = function(){
     StructureSpawn.prototype.getOpenAdjacentLocations = function(){
         const adjacentLocationsArray = utils.getAdjacentLocations(this);
         const terrain = new Room.Terrain(this.room.name);
-        
-        // Refactor to use filter method
+
         let newArray = [];
         adjacentLocationsArray.forEach(location => {
             if(terrain.get(location.x, location.y) === 0 || terrain.get(location.x, location.y) === 2){
-                // return this.memory.availableAdjacentLocations.push(location);
                 newArray.push(location);
             }
         })

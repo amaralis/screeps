@@ -25,6 +25,7 @@ module.exports = function(creep){
 
                         if(creep.room.memory.creepProductionQueue[i].name === creepName){
                             console.log(`CONTROLLER - Deleting queued creep ${JSON.stringify(creep.room.memory.creepProductionQueue[i])}`);
+                            console.log(`CONTROLLER - Deleting queued creep's ID: ${creep.id}`);
                             return creep.room.memory.creepProductionQueue.splice(i,1);
                         }
                     }

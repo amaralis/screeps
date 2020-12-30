@@ -1,6 +1,10 @@
-initializer = function(room) {
+/**
+ * Initializes a room. Destroys all existing memory and functionality.
+ * @param {Room} room 
+ */
+const initializer = function(room) {
     room.memory.initialized = false;
-
+    
     // Push spawns to memory
     if(!room.memory.roomSpawns || !room.memory.roomSpawns.length){
         room.memory.roomSpawns = [];
@@ -12,10 +16,8 @@ initializer = function(room) {
                 spawn.getOpenAdjacentLocations();
             });
         }
-    }
-
+    }    
     
-
     // Push sources to memory
     if(!room.memory.sources || !room.memory.sources.length){
         room.memory.sources = [];
@@ -23,13 +25,21 @@ initializer = function(room) {
             room.memory.sources.push(source);
         });
     }
-
+    
+    // Find how many work units and miners per source are needed
+    if((!room.memory.minersPerSource || !(room.memory.minersPerSource.length > 0)) && room.memory.sources){
+        room.memory.minersPerSource = [];
+        room.memory.sources.forEach(source => {
+            room.initializeMiningSpotsPerSource(source);
+        });
+    }
+    
     // Push mining locations to memory
     if(!room.memory.miningLocations || !room.memory.miningLocations.length){
         room.memory.miningLocations = [];
         room.setMiningLocations();
     }    
-
+    
     // Find path from spawn to energy sources, commit to room memory
     if(!room.memory.spawnToSourcePaths || !room.memory.spawnToSourcePaths.length){
         room.memory.spawnToSourcePaths = [];
@@ -45,16 +55,6 @@ initializer = function(room) {
     // Create creeps array
     if(!room.memory.creeps || !room.memory.creeps.length){
         room.memory.creeps = [];
-    }
-    
-    // Find how many work units and miners per source are needed
-    if(!room.memory.minersPerSource && room.memory.sources){
-        room.memory.minersPerSource = [];
-        room.memory.sources.forEach(source => {
-            const miningSpotsArray = room.getMiningSpotsPerSource(source);
-            const workAmount = Math.ceil(source.energyCapacity/2/SPAWN_ENERGY_CAPACITY/miningSpotsArray.length);
-            room.memory.minersPerSource.push({miningSpotsArray, workPerMiner: workAmount, source});
-        });
     }
 
     // Set objectives

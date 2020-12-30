@@ -23,7 +23,6 @@ module.exports = function(room){
                 switch(creepQueue[0].creepType){
                     case "miner": {
                         // console.log("Spawning miner before adding name: ", JSON.stringify(creepQueue[0]));
-                        creepQueue[0].name = `Busy Bee - ${Game.time}`;
                         // console.log("Spawning miner after adding name: ", JSON.stringify(creepQueue[0]));
                         // console.log("Spawn name at queue.creep.execute inside switch: ", spawn.name);
 
@@ -70,7 +69,7 @@ module.exports = function(room){
                             
                             // console.log("SPAWNING CREEP NAME: ", nextInCreepQueue.name);
                             // console.log("Creep in Game.creeps: ", Game.creeps[nextInCreepQueue.name]);
-                            console.log("SPAWN DIRECTIONS AT QUEUE EXECUTE: ", Game.spawns[spawn.name].getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]));
+                            // console.log("SPAWN DIRECTIONS AT QUEUE EXECUTE: ", Game.spawns[spawn.name].getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]));
                             room.memory.creepProductionQueue.push(nextInCreepQueue);
                         }
                         

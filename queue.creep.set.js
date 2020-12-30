@@ -22,18 +22,44 @@ const queueMiner = function(room){
     console.log("Creep queue length queue.creep.set: ", room.memory.creepQueue.length);
     minersPerSource.forEach(sourceData => {
         sourceData.miningSpotsArray.forEach(miningSpotObj => {
-            while(room.memory.creepQueue.length < minersShort && miningSpotObj.miningSpot.isTakenBy < 5){ // This needs a creep reference AND an algorithm to decide how many miners per source we want in the early stages of a room
-                const toSourcePathIndex = getCreepPathToSourceIndex(room, miningSpotObj.miningSpot);
-                const toSpawnPathIndex = getCreepPathToSpawnIndex(room, miningSpotObj.miningSpot);
+            // while(room.memory.creepQueue.length < minersShort && miningSpotObj.isTakenBy < 5){ // This needs a creep reference AND an algorithm to decide how many miners per source we want in the early stages of a room
+            const beeCode = function(){
+                let str = "";
+                let i = 0;
+                while(i<15){
+                    str += String.fromCharCode(Math.floor(Math.random() * (866 - 697)) + 697);
+
+                    // str += String.fromCharCode(Math.floor(Math.random() * (2304 - 2307)) + 2307);
+                    // str += String.fromCharCode(Math.floor(Math.random() * (2561 - 2563)) + 2563);
+                    // str += String.fromCharCode(Math.floor(Math.random() * (2810 - 2815)) + 2815);
+
+                    // str += String.fromCharCode(Math.floor(Math.random() * (1425 - 1479)) + 1479);
+
+                    // str += String.fromCharCode(0x30A0 + Math.floor(Math.random() + 96));
+                    i++;
+                }
+                return str;
+            }
+            const flair = beeCode();
+            // const flairReversed = flair.split("").reverse().join();
+            const creepName = `${flair} - Busy Bee - ${flair}`;
+            // const creepName = `Busy Bee - ${Game.time}`;
+            if(room.memory.creepQueue.length < minersShort && miningSpotObj.isTakenBy.length < 5){
+                const toSourcePathIndex = getCreepPathToSourceIndex(room, miningSpotObj);
+                const toSpawnPathIndex = getCreepPathToSpawnIndex(room, miningSpotObj);
+
+                miningSpotObj.isTakenBy.push(creepName);
 
                 room.memory.creepQueue.push({creepType: "miner",
                 workUnits: sourceData.workPerMiner,
                 targetSourceId: sourceData.source.id,
+                name: creepName,
                 pathToSourceIndex: toSourcePathIndex,
                 pathToSpawnIndex: toSpawnPathIndex});
 
-                miningSpotObj.miningSpot.isTakenBy++;
-                // console.log("This mining spot isTakenBy ", miningSpotObj.miningSpot.isTakenBy, " miners");
+                // miningSpotObj.isTakenBy++;
+                // console.log("This mining spot isTakenBy ", miningSpotObj.isTakenBy, " miners");
+            // }
             }
         });
     });
