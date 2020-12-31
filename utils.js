@@ -22,23 +22,11 @@ module.exports = {
         let idleSpawns = [];
         if(room.memory.roomSpawns && (room.memory.roomSpawns.length > 0)){
             room.memory.roomSpawns.forEach(spawn => {
-                // console.log(`Is spawn ${spawn.name} spawning? ${spawn.spawning === true}`);
-                console.log(JSON.stringify(spawn));
                 if(!Game.spawns[spawn.name].spawning){
                     idleSpawns.push(spawn);
                 }
             });
         }
-
-        // for (const spawnKey in Game.spawns){
-        //     if(!Game.spawns[spawnKey].spawning){
-        //         idleSpawns.push(Game.spawns[spawnKey]);
-        //     }
-        // }
-
-        // availableSpawns = idleSpawns.filter(spawn => {
-        //     return /* spawn.store.getUsedCapacity(RESOURCE_ENERGY) */ spawn.room.energyCapacityAvailable >= this.getBodyEnergyCostByBlueprint(creepType, spawn.room);
-        // });
 
         console.log(`Idle spawns at utils: ${JSON.stringify(idleSpawns)}`);
 
@@ -57,5 +45,14 @@ module.exports = {
 
     getSpawnTimeFromBodyArray: function(bodyArray){
         return bodyArray.length * 3;
-    }
+    },
+
+    // /**
+    //  * Pushes a creep name to a mining spot's isTakenBy array
+    //  * @param {String} creepName
+    //  * @param {Object} miningSpot 
+    //  */
+    // fillMiningSpot: function(creepName, miningSpot){
+    //     miningSpot.isTakenBy.push(creepName);
+    // }
 }

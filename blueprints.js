@@ -9,10 +9,7 @@
 module.exports = function(type, room){
     switch (type){
         case "miner":{
-            console.log("Blueprints called");
-            console.log("type: ", JSON.stringify(type));
-            console.log("room: ", room.name);
-            
+            console.log(`Blueprints called for creep type ${type} at room ${room.name}`);            
             
             /* ======================================= COMMENT OUT BELOW FOR TESTING ================================================== */
             

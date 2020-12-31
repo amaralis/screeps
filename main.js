@@ -43,6 +43,8 @@ module.exports.loop = function () {
         // Clear room and global memory of dead creeps
         for (let i = 0; i < room.memory.creeps.length; i++){
             if(!Game.creeps[room.memory.creeps[i]]){
+                console.log(`DELETING CREEP ${Game.creeps[room.memory.creeps[i]]} FROM MEMORY`);
+                console.log(`CREEP ${Game.creeps[room.memory.creeps[i]]} memory in Memory: ${JSON.stringify(Memory.creeps[Game.creeps[room.memory.creeps[i]]])}`);
                 delete Memory.creeps[room.memory.creeps.splice(i,1)];
             }
         }
@@ -59,7 +61,7 @@ module.exports.loop = function () {
         if(!Game.creeps[creep]){
             delete Memory.creeps[creep];
         } else {
-            console.log("Calling creepController on ", Game.creeps[creep]);
+            // console.log("Calling creepController on ", Game.creeps[creep]);
             creepController(Game.creeps[creep]);
         }
     }

@@ -34,7 +34,7 @@ const initializer = function(room) {
         });
     }
     
-    // Push mining locations to memory
+    // Push mining locations to memory (!!! ONLY DO THIS THROUGH initializeMiningSpotsPerSource() !!!)
     if(!room.memory.miningLocations || !room.memory.miningLocations.length){
         room.memory.miningLocations = [];
         room.setMiningLocations();

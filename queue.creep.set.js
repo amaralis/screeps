@@ -44,20 +44,18 @@ const queueMiner = function(room){
             // const flairReversed = flair.split("").reverse().join();
             const creepName = `${flair} - Busy Bee - ${flair}`;
             // const creepName = `Busy Bee - ${Game.time}`;
-            console.log("CREEP QUEUE LENGTH: ", room.memory.creepQueue.length);
             console.log("miningSpotObj.isTakenBy.length: ", miningSpotObj.isTakenBy.length);
-            if(room.memory.creepQueue.length < minersShort && miningSpotObj.isTakenBy.length < 5){
-
-                console.log("TEST")
+            if(room.memory.creepQueue.length < minersShort/*  && miningSpotObj.isTakenBy.length < 5 */){
                 const toSourcePathIndex = getCreepPathToSourceIndex(room, miningSpotObj);
                 const toSpawnPathIndex = getCreepPathToSpawnIndex(room, miningSpotObj);
 
-                miningSpotObj.isTakenBy.push(creepName);
+                // miningSpotObj.isTakenBy.push(creepName);
 
                 room.memory.creepQueue.push({creepType: "miner",
                 workUnits: sourceData.workPerMiner,
                 targetSourceId: sourceData.source.id,
                 name: creepName,
+                hasMiningSpot: false,
                 pathToSourceIndex: toSourcePathIndex,
                 pathToSpawnIndex: toSpawnPathIndex});
 
@@ -68,6 +66,7 @@ const queueMiner = function(room){
         });
     });
 
+    console.log("CREEP QUEUE LENGTH: ", room.memory.creepQueue.length);
     // console.log("creepQueue: ", JSON.stringify(room.memory.creepQueue));
 }
 

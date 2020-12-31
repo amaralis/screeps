@@ -16,9 +16,12 @@ module.exports = function(creep){
             break;
         }
         case "spawning": {
+
             if(!creep.spawning){
                 console.log(`Spawned creep's state before switch: ${creep.memory.state}`);
-                creep.memory.state = creep.memory.role; // Will start doing its thing next tick, when controller runs again
+
+                creep.memory.state = creep.memory.role; // Roles have same name as states
+
                 console.log(`Spawned creep's state: ${creep.memory.state}`);
                 console.log(`Spawned creep's role: ${creep.memory.role}`);
                 
@@ -29,7 +32,9 @@ module.exports = function(creep){
                         creep.room.memory.creepProductionQueue.splice(i,1);
                     }
                 }
+                creep.assignMiningSpot();
             }
+
             console.log(`CONTROLLER - Creep ${creep.name} is spawning`);
             break;
         }
@@ -40,6 +45,7 @@ module.exports = function(creep){
         case "miner": {
             console.log(`CONTROLLER - Creep ${creep.name} is mining`);
             mine(creep);
+
             break;
         }
         // case "": {

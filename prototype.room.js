@@ -34,26 +34,25 @@ module.exports = function(){
         });
         
         const workAmount = Math.ceil(source.energyCapacity/2/SPAWN_ENERGY_CAPACITY/miningSpotsArray.length);
-        spotsPerSourceData = {miningSpotsArray, workPerMiner: workAmount, source};        
+        spotsPerSourceData = {miningSpotsArray, workPerMiner: workAmount, source};
         this.memory.minersPerSource.push(spotsPerSourceData);
     },
 
     /**
-     * Get an array of objects with a mining spot and its corresponding source
+     * Get an object with an array with mining spot location objects, with work units per miner, and with relevant source
      * @param {Source}
-     * @returns {Array}
+     * @returns {Object} - miningSpotsArray, workPerMiner, source
      */
 
     Room.prototype.getMiningSpotsPerSource = function(source){
-        let spotsPerSource = [];
-
-        source.miningSpotsArray.forEach(miningSpotData => {
-            if(miningSpotData.miningSpot.adjacentTo.id == source.id){
-                spotsPerSource.push({miningSpot, source});    
+        let spotsArray = [];
+        this.memory.minersPerSource.forEach(sourceData => {
+            if(sourceData.source.id === source.id){
+                spotsArray = sourceData.miningSpotsArray;
             }
         });
 
-        return spotsPerSource;
+        return spotsArray;
     },
             
     Room.prototype.setSpawnToSourcePaths = function(){
