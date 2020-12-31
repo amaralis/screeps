@@ -58,32 +58,40 @@ module.exports.loop = function () {
                     console.log(`Freeing up ${deadCreepName} from room's creeps array.`);
                     // Clear creep from owner room's creeps array
                     owningRoom.memory.creeps.splice(owningRoom.memory.creeps.indexOf(deadCreepName), 1);
-                    
-                    owningRoom.memory.sources.forEach(source => {
+
+                    loop1:
+                    for(let j = 0; j < owningRoom.memory.sources.length; j++){
                         console.log("Searching through sources...");
-                        let miningSpotsArray = owningRoom.getMiningSpotsPerSource(source);
-                        loop1:
-                        miningSpotsArray.forEach(spot => {
+                        let miningSpotsArray = owningRoom.getMiningSpotsPerSource(owningRoom.memory.sources[j]);
+                        
+                        for(let k = 0; k < miningSpotsArray.length; k++){
                             console.log("Searching through mining spots...");
-                            let deadCreepIndex = spot.isTakenBy.indexOf(deadCreepName);
-                            console.log("Dead creep's index in mining spot's isTakenBy array: ", spot.isTakenBy.indexOf(deadCreepName));
+                            let deadCreepIndex = miningSpotsArray[k].isTakenBy.indexOf(deadCreepName);
+                            console.log("Dead creep's index in mining spot's isTakenBy array: ", miningSpotsArray[k].isTakenBy.indexOf(deadCreepName));
                             if(deadCreepIndex >= 0){
                                 console.log("Clearing up spot.isTakenBy array from dead creep ", deadCreepName);
                                 // Clear creep from mining spot
-                                spot.isTakenBy.splice(deadCreepIndex, 1);
-                                break;
+                                miningSpotsArray[k].isTakenBy.splice(deadCreepIndex, 1);
+                                break loop1;
                             }
+                        }
+                        miningSpotsArray.forEach(spot => {
                         });
+                    }
+                    
+                    owningRoom.memory.sources.forEach(source => {
                     });
                 }
                 
-                console.log(`DELETING CREEP ${Game.creeps[room.memory.creeps[i]]} FROM MEMORY`);
+                console.log(`DELETING CREEP ${Memory.creeps[deadCreepName]} FROM MEMORY`);
                 // Cleare creep from global memory
                 delete Memory.creeps[deadCreepName];
-            } else {
-            // console.log("Calling creepController on ", Game.creeps[creep]);
-            creepController(Game.creeps[creep]);
+            }
         }
+
+        for(const creepName in Game.creeps){
+            console.log("Calling creepController on ", Game.creeps[creepName]);
+            creepController(Game.creeps[creepName]);
         }
 
         // !!! drawing has non-insignificant impact on CPU usage
