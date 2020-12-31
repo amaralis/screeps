@@ -83,9 +83,10 @@ module.exports.loop = function () {
                     });
                 }
                 
-                console.log(`DELETING CREEP ${Memory.creeps[deadCreepName]} FROM MEMORY`);
-                // Cleare creep from global memory
+                console.log(`DELETING CREEP ${JSON.stringify(Memory.creeps[deadCreepName])} FROM MEMORY`);
+                // Clear creep from global memory
                 delete Memory.creeps[deadCreepName];
+                console.log(`DELETED CREEP ${JSON.stringify(Memory.creeps[deadCreepName])} FROM MEMORY? IF YES, NOTHING HERE`);
             }
         }
 

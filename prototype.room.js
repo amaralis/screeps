@@ -6,18 +6,6 @@ const executeCreepQueue = require("queue.creep.execute");
 const minerTestingMultiplier = 5; // FOR TESTING
 
 module.exports = function(){
-
-    /**
-     * Pushes mining spots from sources to a generic miningLocations array
-     */
-    Room.prototype.setMiningLocations = function() {
-        this.memory.minersPerSource.forEach(source => {
-            source.miningSpotsArray.forEach(spot => {
-                this.memory.miningLocations.push(spot);
-            })
-        });
-    },
-        
     /**
      * Dangerously initializes mining spots per source. Only perform this operation at room start.
      * @param {Source} source 
@@ -57,9 +45,14 @@ module.exports = function(){
             
     Room.prototype.setSpawnToSourcePaths = function(){
         this.find(FIND_MY_SPAWNS).forEach(spawn => {
-            this.memory.miningLocations.forEach(location => {
-                this.memory.spawnToSourcePaths.push({spawn: spawn, location: location, path: utils.findPath(spawn.pos, new RoomPosition(location.x, location.y, this.name)).path});
-            });
+            this.memory.minersPerSource.forEach(sourceData => {
+                sourceData.miningSpotsArray.forEach(location => {
+                    this.memory.spawnToSourcePaths.push({spawn: spawn, location: location, path: utils.findPath(spawn.pos, new RoomPosition(location.x, location.y, this.name)).path});
+                });
+            })
+            // this.memory.miningLocations.forEach(location => {
+            //     this.memory.spawnToSourcePaths.push({spawn: spawn, location: location, path: utils.findPath(spawn.pos, new RoomPosition(location.x, location.y, this.name)).path});
+            // });
         });
     },
 

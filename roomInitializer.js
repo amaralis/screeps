@@ -32,13 +32,7 @@ const initializer = function(room) {
         room.memory.sources.forEach(source => {
             room.initializeMiningSpotsPerSource(source);
         });
-    }
-    
-    // Push mining locations to memory (!!! ONLY DO THIS THROUGH initializeMiningSpotsPerSource() !!!)
-    if(!room.memory.miningLocations || !room.memory.miningLocations.length){
-        room.memory.miningLocations = [];
-        room.setMiningLocations();
-    }    
+    }  
     
     // Find path from spawn to energy sources, commit to room memory
     if(!room.memory.spawnToSourcePaths || !room.memory.spawnToSourcePaths.length){
