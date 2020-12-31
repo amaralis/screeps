@@ -22,7 +22,6 @@ const queueMiner = function(room){
     console.log("Creep queue length queue.creep.set: ", room.memory.creepQueue.length);
     minersPerSource.forEach(sourceData => {
         sourceData.miningSpotsArray.forEach(miningSpotObj => {
-            // while(room.memory.creepQueue.length < minersShort && miningSpotObj.isTakenBy < 5){ // This needs a creep reference AND an algorithm to decide how many miners per source we want in the early stages of a room
             const beeCode = function(){
                 let str = "";
                 let i = 0;
@@ -58,10 +57,6 @@ const queueMiner = function(room){
                 hasMiningSpot: false,
                 pathToSourceIndex: toSourcePathIndex,
                 pathToSpawnIndex: toSpawnPathIndex});
-
-                // miningSpotObj.isTakenBy++;
-                // console.log("This mining spot isTakenBy ", miningSpotObj.isTakenBy, " miners");
-            // }
             }
         });
     });

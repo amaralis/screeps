@@ -20,7 +20,10 @@ delete Game.rooms["W8N4"].memory.state; // JUST FOR TESTING
 delete Game.rooms["W8N4"].memory.creepQueue; // JUST FOR TESTING
 delete Game.rooms["W8N4"].memory.creepProductionQueue; // JUST FOR TESTING
 delete Game.rooms["W8N4"].memory.queue; // JUST FOR TESTING
-delete Game.spawns["Spawn1"].memory.availableAdjacentLocations; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.creeps; // JUST FOR TESTING
+// delete Game.spawns["Spawn1"].memory.availableAdjacentLocations; // JUST FOR TESTING
+
+// delete Memory.creeps; // JUST FOR TESTING
 
 module.exports.loop = function () {    
     
@@ -40,13 +43,47 @@ module.exports.loop = function () {
         executeCreepQueue(room);
 
 
-        // Clear room and global memory of dead creeps
+        // Clear mining spots, room, and global memory of dead creeps
         for (let i = 0; i < room.memory.creeps.length; i++){
-            if(!Game.creeps[room.memory.creeps[i]]){
+            let deadCreepName = Memory.creeps[room.memory.creeps[i]].name;
+            console.log(`CREEP ${deadCreepName}'s memory: ${JSON.stringify(Memory.creeps[deadCreepName])}`);
+            
+            if(!Game.creeps[deadCreepName]){    
+                if(Memory.creeps[deadCreepName].role === "miner"){
+                    console.log(`Freeing up ${deadCreepName}'s mining spot.`);
+                    let owningRoom = Game.rooms[Memory.creeps[deadCreepName].ownedBy];
+                    let roomName = Memory.creeps[deadCreepName].ownedBy;
+                    console.log(`Dead creep's owning room is ${roomName}.`);
+                    
+                    console.log(`Freeing up ${deadCreepName} from room's creeps array.`);
+                    // Clear creep from owner room's creeps array
+                    owningRoom.memory.creeps.splice(owningRoom.memory.creeps.indexOf(deadCreepName), 1);
+                    
+                    owningRoom.memory.sources.forEach(source => {
+                        console.log("Searching through sources...");
+                        let miningSpotsArray = owningRoom.getMiningSpotsPerSource(source);
+                        loop1:
+                        miningSpotsArray.forEach(spot => {
+                            console.log("Searching through mining spots...");
+                            let deadCreepIndex = spot.isTakenBy.indexOf(deadCreepName);
+                            console.log("Dead creep's index in mining spot's isTakenBy array: ", spot.isTakenBy.indexOf(deadCreepName));
+                            if(deadCreepIndex >= 0){
+                                console.log("Clearing up spot.isTakenBy array from dead creep ", deadCreepName);
+                                // Clear creep from mining spot
+                                spot.isTakenBy.splice(deadCreepIndex, 1);
+                                break;
+                            }
+                        });
+                    });
+                }
+                
                 console.log(`DELETING CREEP ${Game.creeps[room.memory.creeps[i]]} FROM MEMORY`);
-                console.log(`CREEP ${Game.creeps[room.memory.creeps[i]]} memory in Memory: ${JSON.stringify(Memory.creeps[Game.creeps[room.memory.creeps[i]]])}`);
-                delete Memory.creeps[room.memory.creeps.splice(i,1)];
-            }
+                // Cleare creep from global memory
+                delete Memory.creeps[deadCreepName];
+            } else {
+            // console.log("Calling creepController on ", Game.creeps[creep]);
+            creepController(Game.creeps[creep]);
+        }
         }
 
         // !!! drawing has non-insignificant impact on CPU usage
@@ -54,16 +91,6 @@ module.exports.loop = function () {
         draw.spawnToSourcePaths(room);
         draw.sourceToSpawnPaths(room);        
         draw.spawnAdjacentLocations(room);
-    }
-
-    for (const creep in Memory.creeps){
-        console.log("Cycling through creeps: ", creep)
-        if(!Game.creeps[creep]){
-            delete Memory.creeps[creep];
-        } else {
-            // console.log("Calling creepController on ", Game.creeps[creep]);
-            creepController(Game.creeps[creep]);
-        }
     }
 
     // console.log(JSON.stringify(Game.creeps));
