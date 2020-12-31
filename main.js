@@ -46,30 +46,30 @@ module.exports.loop = function () {
         // Clear mining spots, room, and global memory of dead creeps
         for (let i = 0; i < room.memory.creeps.length; i++){
             let deadCreepName = Memory.creeps[room.memory.creeps[i]].name;
-            console.log(`CREEP ${deadCreepName}'s memory: ${JSON.stringify(Memory.creeps[deadCreepName])}`);
+            // console.log(`CREEP ${deadCreepName}'s memory: ${JSON.stringify(Memory.creeps[deadCreepName])}`);
             
             if(!Game.creeps[deadCreepName]){    
                 if(Memory.creeps[deadCreepName].role === "miner"){
-                    console.log(`Freeing up ${deadCreepName}'s mining spot.`);
+                    // console.log(`Freeing up ${deadCreepName}'s mining spot.`);
                     let owningRoom = Game.rooms[Memory.creeps[deadCreepName].ownedBy];
                     let roomName = Memory.creeps[deadCreepName].ownedBy;
-                    console.log(`Dead creep's owning room is ${roomName}.`);
+                    // console.log(`Dead creep's owning room is ${roomName}.`);
                     
-                    console.log(`Freeing up ${deadCreepName} from room's creeps array.`);
+                    // console.log(`Freeing up ${deadCreepName} from room's creeps array.`);
                     // Clear creep from owner room's creeps array
                     owningRoom.memory.creeps.splice(owningRoom.memory.creeps.indexOf(deadCreepName), 1);
 
                     loop1:
                     for(let j = 0; j < owningRoom.memory.sources.length; j++){
-                        console.log("Searching through sources...");
+                        // console.log("Searching through sources...");
                         let miningSpotsArray = owningRoom.getMiningSpotsPerSource(owningRoom.memory.sources[j]);
                         
                         for(let k = 0; k < miningSpotsArray.length; k++){
-                            console.log("Searching through mining spots...");
+                            // console.log("Searching through mining spots...");
                             let deadCreepIndex = miningSpotsArray[k].isTakenBy.indexOf(deadCreepName);
-                            console.log("Dead creep's index in mining spot's isTakenBy array: ", miningSpotsArray[k].isTakenBy.indexOf(deadCreepName));
+                            // console.log("Dead creep's index in mining spot's isTakenBy array: ", miningSpotsArray[k].isTakenBy.indexOf(deadCreepName));
                             if(deadCreepIndex >= 0){
-                                console.log("Clearing up spot.isTakenBy array from dead creep ", deadCreepName);
+                                // console.log("Clearing up spot.isTakenBy array from dead creep ", deadCreepName);
                                 // Clear creep from mining spot
                                 miningSpotsArray[k].isTakenBy.splice(deadCreepIndex, 1);
                                 break loop1;

@@ -61,7 +61,7 @@ const queueMiner = function(room){
         });
     });
 
-    console.log("CREEP QUEUE LENGTH: ", room.memory.creepQueue.length);
+    // console.log("CREEP QUEUE LENGTH: ", room.memory.creepQueue.length);
     // console.log("creepQueue: ", JSON.stringify(room.memory.creepQueue));
 }
 
