@@ -24,24 +24,37 @@ const queueMiner = function(room){
         sourceData.miningSpotsArray.forEach(miningSpotObj => {
             const beeCode = function(){
                 let str = "";
-                let i = 0;
-                while(i<5){
-                    str += String.fromCharCode(Math.floor(Math.random() * (0x30A0 - 0x30FF)) + 0x30FF);
+                function createFlair(char){
+                    if(char != "\"" || char != "\'"){
+                        str += char;
+                    }
+                }
+                while(str.length < 10){
+                    // str += String.fromCharCode(Math.floor(Math.random() * (0x30A0 - 0x30FF)) + 0x30FF);
+                    // str += String.fromCharCode(Math.floor(Math.random() * (0x19E0 - 0x19FF)) + 0x19FF); // Cherokee
+                    // createFlair(String.fromCharCode(Math.floor(Math.random() * (0x1000 - 0x109F)) + 0x109F)); // Myanmar
+                    createFlair(String.fromCharCode(Math.floor(Math.random() * (0xA980 - 0xA9DF)) + 0xA9DF)); // Javanese / Hanakaraka
+                    // str += String.fromCharCode(Math.floor(Math.random() * (0x2C00 - 0x2C5F)) + 0x2C5F); // Glagolitic
+                    // createFlair(String.fromCharCode(Math.floor(Math.random() * (0x10A0 - 0x10FF)) + 0x10FF)); // Georgian
+                    // createFlair(String.fromCharCode(Math.floor(Math.random() * (0x1C90 - 0x1CBF)) + 0x1CBF)); // Georgian extended
 
-                    // str += String.fromCharCode(Math.floor(Math.random() * (2304 - 2307)) + 2307);
-                    // str += String.fromCharCode(Math.floor(Math.random() * (2561 - 2563)) + 2563);
-                    // str += String.fromCharCode(Math.floor(Math.random() * (2810 - 2815)) + 2815);
+                    // createFlair(String.fromCharCode(Math.floor(Math.random() * (697 - 866)) + 866)); // Dust
+                    // createFlair(String.fromCharCode(Math.floor(Math.random() * (1425 - 1479)) + 1479)); // Dust
+
+                    // createFlair(String.fromCharCode(Math.floor(Math.random() * (2304 - 2307)) + 2307));
+                    // createFlair(String.fromCharCode(Math.floor(Math.random() * (2561 - 2563)) + 2563));
+                    // createFlair(String.fromCharCode(Math.floor(Math.random() * (2810 - 2815)) + 2815));
 
                     // str += String.fromCharCode(Math.floor(Math.random() * (1425 - 1479)) + 1479);
 
-                    // str += String.fromCharCode(0x30A0 + Math.floor(Math.random() + 96));
-                    i++;
+
                 }
                 return str;
             }
+
             const flair = beeCode();
-            // const flairReversed = flair.split("").reverse().join();
-            const creepName = `${flair} - Busy Bee - ${flair}`;
+            let flairReversed = flair.split("").reverse().join("");
+            const creepName = `Busy Bee ${flair}`;
             // const creepName = `Busy Bee - ${Game.time}`;
             console.log("miningSpotObj.isTakenBy.length: ", miningSpotObj.isTakenBy.length);
             if(room.memory.creepQueue.length < minersShort/*  && miningSpotObj.isTakenBy.length < 5 */){
