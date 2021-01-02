@@ -52,7 +52,6 @@ module.exports.loop = function () {
                 if(Memory.creeps[deadCreepName].role === "miner"){
                     // console.log(`Freeing up ${deadCreepName}'s mining spot.`);
                     let owningRoom = Game.rooms[Memory.creeps[deadCreepName].ownedBy];
-                    let roomName = Memory.creeps[deadCreepName].ownedBy;
                     // console.log(`Dead creep's owning room is ${roomName}.`);
                     
                     // console.log(`Freeing up ${deadCreepName} from room's creeps array.`);
@@ -75,29 +74,24 @@ module.exports.loop = function () {
                                 break loop1;
                             }
                         }
-                        miningSpotsArray.forEach(spot => {
-                        });
                     }
-                    
-                    owningRoom.memory.sources.forEach(source => {
-                    });
                 }
                 
-                console.log(`DELETING CREEP ${JSON.stringify(Memory.creeps[deadCreepName])} FROM MEMORY`);
+                // console.log(`DELETING CREEP ${JSON.stringify(Memory.creeps[deadCreepName])} FROM MEMORY`);
                 // Clear creep from global memory
                 delete Memory.creeps[deadCreepName];
-                console.log(`DELETED CREEP ${JSON.stringify(Memory.creeps[deadCreepName])} FROM MEMORY? IF YES, NOTHING HERE`);
+                // console.log(`DELETED CREEP ${JSON.stringify(Memory.creeps[deadCreepName])} FROM MEMORY? IF YES, NOTHING HERE`);
             }
         }
 
         for(const creepName in Game.creeps){
-            console.log("Calling creepController on ", Game.creeps[creepName]);
+            // console.log("Calling creepController on ", Game.creeps[creepName]);
             creepController(Game.creeps[creepName]);
         }
 
         // !!! drawing has non-insignificant impact on CPU usage
         draw.availableMiningSpots(room);
-        draw.spawnToSourcePaths(room);
+        // draw.spawnToSourcePaths(room);
         draw.sourceToSpawnPaths(room);        
         draw.spawnAdjacentLocations(room);
     }

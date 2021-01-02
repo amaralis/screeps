@@ -9,21 +9,21 @@ module.exports = function(creep){
     // console.log("Creep in controller's name: ", JSON.stringify(creep.name));
     switch(creep.memory.state){
         case "awaiting ownership": {
-            console.log(`CONTROLLER - Creep ${creep.name} is spawning and not assigned to any room`);
+            // console.log(`CONTROLLER - Creep ${creep.name} is spawning and not assigned to any room`);
             handleAwaitingOwnership(creep);
             break;
         }
         case "spawning": {
-            console.log(`CONTROLLER - Creep ${creep.name} is spawning`);
+            // console.log(`CONTROLLER - Creep ${creep.name} is spawning`);
             handleSpawning(creep);
             break;
         }
         case "idle": {
-            console.log(`CONTROLLER - Creep ${creep.name} is idle`);
+            // console.log(`CONTROLLER - Creep ${creep.name} is idle`);
             break;
         }
         case "miner": {
-            console.log(`CONTROLLER - Creep ${creep.name} is mining`);
+            // console.log(`CONTROLLER - Creep ${creep.name} is mining`);
             handleMining(creep);
 
             break;

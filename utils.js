@@ -15,6 +15,9 @@ module.exports = {
     },
 
     findPath: function(from, to, opts = undefined){
+        if(opts){
+            console.log("Options present at utils");
+        }
         return PathFinder.search(from, to, opts);
     },
 
