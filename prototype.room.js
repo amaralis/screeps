@@ -91,7 +91,7 @@ module.exports = function(){
                         // console.log("Path", j, "created");
                         
                         return costs;
-                    }})});
+                    }})}.path);
                     // j++;
                 });
                 // i++;
