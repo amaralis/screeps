@@ -4,7 +4,9 @@ const setCreepQueue = function(room){
     switch(room.memory.state){
         
         case "improving": {
-            queueMiner(room);            
+            if(!room.memory.creepQueue.length){
+                queueMiner(room);
+            }
             break;
         }
 
@@ -57,7 +59,7 @@ const queueMiner = function(room){
             const creepName = `Busy Bee ${flair}`;
             // const creepName = `Busy Bee - ${Game.time}`;
             console.log("Mining spot X", miningSpotObj.x, "Y", miningSpotObj.y,".isTakenBy.length: ", miningSpotObj.isTakenBy.length, "--- Creeps taking it:", JSON.stringify(miningSpotObj.isTakenBy));
-            if(room.memory.creepQueue.length < minersShort/*  && miningSpotObj.isTakenBy.length < 5 */){
+            if(room.memory.creepQueue.length < minersShort){
                 const pathToSourceIndex = getCreepPathToSourceIndex(room, miningSpotObj);
                 const pathToSpawnIndex = getCreepPathToSpawnIndex(room, miningSpotObj);
 
