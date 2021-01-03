@@ -74,7 +74,7 @@ module.exports = function(type, room){
             
             // For testing
             return {
-                body: [MOVE],
+                body: [WORK, CARRY, MOVE],
                 cost: 50,
                 memory: {role: "miner", type: "basic worker", state:"awaiting ownership"}
             }

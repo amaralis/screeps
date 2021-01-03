@@ -48,30 +48,31 @@ module.exports = function(room){
                         // console.log("room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex] => ", JSON.stringify(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex]));
                         // console.log("room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0] => ", JSON.stringify(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]));
 
-                        console.log("spawnDirections at queue.execute: ", Game.spawns[spawn.name].getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]));
+                        // console.log("spawnDirections at queue.execute: ", Game.spawns[spawn.name].getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]));
 
-                        console.log("Spawning miner sanity check: ", JSON.stringify(nextInCreepQueue));
+                        // console.log("Spawning miner sanity check: ", JSON.stringify(nextInCreepQueue));
                         Game.spawns[spawn.name].spawnCreep(creepBlueprint.body,
                         nextInCreepQueue.name,
                         {
                             memory: {...creepBlueprint.memory, // state, role, type
-                            toSourcePathIndex: nextInCreepQueue.pathToSourceIndex,
-                            toSpawnPathIndex:nextInCreepQueue.pathToSpawnIndex,
+                            toSourcePathIndex: nextInCreepQueue.toSourcePathIndex,
+                            toSpawnPathIndex:nextInCreepQueue.toSpawnPathIndex,
                             ownedBy: room.name,
                             name: nextInCreepQueue.name,
                             hasMiningSpot: false,
-                            targetSourceId: nextInCreepQueue.targetSourceId
+                            targetSourceId: nextInCreepQueue.targetSourceId,
+                            spawnedBy: spawn.id
                                 },
-                            // directions: [Game.spawns[spawn.name].getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0])]
+                            directions: [Game.spawns[spawn.name].getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.toSourcePathIndex].path[0])]
                         });
                         
                         // console.log("SPAWNING CREEP NAME: ", nextInCreepQueue.name);
                         // console.log("Creep in Game.creeps: ", Game.creeps[nextInCreepQueue.name]);
                         // console.log("SPAWN DIRECTIONS AT QUEUE EXECUTE: ", Game.spawns[spawn.name].getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.pathToSourceIndex].path[0]));
                         creepProductionQueue.push(nextInCreepQueue);
-                        console.log("creepQueue length before shift(): ", creepQueue.length);
+                        // console.log("creepQueue length before shift(): ", creepQueue.length);
                         creepQueue.shift();
-                        console.log("creepQueue length after shift(): ", creepQueue.length);
+                        // console.log("creepQueue length after shift(): ", creepQueue.length);
                     }
                     
                     // console.log(`SPAWN TEST CODE: ${spawnTest}`);

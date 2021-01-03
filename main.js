@@ -91,7 +91,7 @@ module.exports.loop = function () {
 
         // !!! drawing has non-insignificant impact on CPU usage
         draw.availableMiningSpots(room);
-        // draw.spawnToSourcePaths(room);
+        draw.spawnToSourcePaths(room);
         draw.sourceToSpawnPaths(room);        
         draw.spawnAdjacentLocations(room);
     }

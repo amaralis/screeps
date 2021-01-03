@@ -58,8 +58,8 @@ const queueMiner = function(room){
             // const creepName = `Busy Bee - ${Game.time}`;
             console.log("miningSpotObj.isTakenBy.length: ", miningSpotObj.isTakenBy.length);
             if(room.memory.creepQueue.length < minersShort/*  && miningSpotObj.isTakenBy.length < 5 */){
-                const toSourcePathIndex = getCreepPathToSourceIndex(room, miningSpotObj);
-                const toSpawnPathIndex = getCreepPathToSpawnIndex(room, miningSpotObj);
+                const pathToSourceIndex = getCreepPathToSourceIndex(room, miningSpotObj);
+                const pathToSpawnIndex = getCreepPathToSpawnIndex(room, miningSpotObj);
 
                 // miningSpotObj.isTakenBy.push(creepName);
 
@@ -68,8 +68,9 @@ const queueMiner = function(room){
                 targetSourceId: sourceData.source.id,
                 name: creepName,
                 hasMiningSpot: false,
-                pathToSourceIndex: toSourcePathIndex,
-                pathToSpawnIndex: toSpawnPathIndex});
+                miningSpot: room.memory.sourceToSpawnPaths[pathToSpawnIndex][0],
+                toSourcePathIndex: pathToSourceIndex,
+                toSpawnPathIndex: pathToSpawnIndex});
             }
         });
     });

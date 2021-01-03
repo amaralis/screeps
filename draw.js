@@ -50,7 +50,7 @@ module.exports = {
                 "orange"
             ];
             obj.path.forEach(pos => {
-                new RoomVisual(pos.roomName).circle(pos.x, pos.y, {fill: "", stroke: pathColor[i], strokeWidth: line[i]});
+                new RoomVisual(pos.roomName).circle(pos.x, pos.y, {fill: "", stroke: pathColor[i]/* , strokeWidth: line[i] */});
             })
             i++;
         });
@@ -80,7 +80,7 @@ module.exports = {
                 "orange"
             ];
             path.forEach(pos => {
-                new RoomVisual(pos.roomName).circle(pos.x, pos.y, {fill: "", stroke: pathColor[i], strokeWidth: line[i]});
+                new RoomVisual(pos.roomName).circle(pos.x, pos.y, {fill: "", stroke: pathColor[i]/* , strokeWidth: line[i] */});
             });
             i++;
         });

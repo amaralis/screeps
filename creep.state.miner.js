@@ -1,4 +1,5 @@
 const utils = require("utils");
+const { spawnToSourcePaths } = require("./draw");
 
 /**
  * 
@@ -7,20 +8,55 @@ const utils = require("utils");
 
 module.exports = function(creep){
     console.log("creep.state.miner called");
-    const { room } = creep;
-
-    // Do things
-    
-    // creep.store[RESOURCE_ENERGY] < creep.store.getCapacity() ? harvestEnergy(creep) : deliverCargo(creep);
+    const { miningSpot, targetSourceId, spawnedBy } = creep.memory;
 
     const spawnToSourcePath = creep.getSpawnToSourcePath();
     const sourceToSpawnPath = creep.getSourceToSpawnPath();
+    const transferPos = spawnToSourcePath[0];
 
-    (creep.store[RESOURCE_ENERGY] < creep.store.getCapacity()) ? creep.moveByPath(spawnToSourcePath) : creep.moveByPath(sourceToSpawnPath);
+    console.log("Creep pos: ", creep.pos, "\nTransfer pos: ", JSON.stringify(transferPos), "\nCreep store, ", creep.store[RESOURCE_ENERGY], "\nCreep capacity: ", creep.store.getCapacity());
 
-    creep.moveByPath(sourceToSpawnPath);
+    console.log("Mining spot: ", JSON.stringify(miningSpot));
+    console.log("Path to source: ", JSON.stringify(spawnToSourcePath));
+    console.log("Path to spawn: ", JSON.stringify(sourceToSpawnPath));
 
-    // const harvestEnergy = function(creep){
-    //     creep.memory.
-    // }
+    if(creep.pos.x == miningSpot.x && creep.pos.y == miningSpot.y){
+        console.log("Creep is at mining spot...");
+        if(creep.store[RESOURCE_ENERGY] < creep.store.getCapacity()){
+            console.log("Creep is harvesting");
+            creep.harvest(Game.getObjectById(targetSourceId));
+        } else if(creep.store[RESOURCE_ENERGY] == creep.store.getCapacity()){
+            console.log("Creep is moving to spawn");
+            creep.moveByPath(sourceToSpawnPath);
+            console.log(JSON.stringify(sourceToSpawnPath));
+        }
+    } else if(creep.pos.x == transferPos.x && creep.pos.y == transferPos.y) {
+        console.log("Creep is at transfer position");
+        if(creep.store[RESOURCE_ENERGY] < creep.store.getCapacity() && creep.store[RESOURCE_ENERGY] > 0){
+            console.log("Creep is transferring");
+            creep.transfer(Game.getObjectById(spawnedBy), RESOURCE_ENERGY);
+        } else if(creep.store[RESOURCE_ENERGY] < creep.store.getCapacity() && creep.store[RESOURCE_ENERGY] == 0){
+            creep.moveByPath(spawnToSourcePath);
+            console.log("Creep is moving to source");
+            console.log(creep.moveByPath(spawnToSourcePath));
+        }
+    } else if((creep.pos.x != miningSpot.x && creep.pos.y != miningSpot.y)  && creep.store[RESOURCE_ENERGY] < creep.store.getCapacity()){
+        console.log("Creep is moving to source");
+        creep.moveByPath(spawnToSourcePath);
+        console.log(JSON.stringify(spawnToSourcePath));
+    } else if((creep.pos.x != transferPos.x && creep.pos.y != transferPos.y) && creep.store[RESOURCE_ENERGY] < creep.store.getCapacity()){
+        console.log("Creep is moving to source");
+        creep.moveByPath(spawnToSourcePath);
+        console.log(JSON.stringify(spawnToSourcePath));
+    } else if((creep.pos.x != miningSpot.x && creep.pos.y != miningSpot.y) && creep.store[RESOURCE_ENERGY] == creep.store.getCapacity()){
+        console.log("Creep is moving to spawn");
+        creep.moveByPath(sourceToSpawnPath);
+        console.log(JSON.stringify(sourceToSpawnPath));
+    } else if((creep.pos.x != transferPos.x && creep.pos.y != transferPos.y) && creep.store[RESOURCE_ENERGY] == creep.store.getCapacity()){
+        console.log("Creep is moving to source");
+        creep.moveByPath(spawnToSourcePath);
+        console.log(JSON.stringify(spawnToSourcePath));
+    } else {
+        console.log("NO CREEP ORDERS");
+    }
 }
