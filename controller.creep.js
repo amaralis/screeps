@@ -23,7 +23,7 @@ module.exports = function(creep){
             break;
         }
         case "miner": {
-            console.log(`CONTROLLER - Creep ${creep.name} is mining`);
+            // console.log(`CONTROLLER - Creep ${creep.name} is mining`);
             handleMining(creep);
 
             break;

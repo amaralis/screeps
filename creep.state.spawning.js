@@ -1,9 +1,6 @@
 module.exports = function(creep){
     if(!creep.spawning){
         // console.log(`Spawned creep's state before switch: ${creep.memory.state}`);
-
-        creep.memory.state = creep.memory.role; // Roles have same name as states
-
         // console.log(`Spawned creep's state: ${creep.memory.state}`);
         // console.log(`Spawned creep's role: ${creep.memory.role}`);
         
@@ -16,5 +13,6 @@ module.exports = function(creep){
             }
         }
         creep.assignMiningSpot();
+        creep.memory.state = creep.memory.role; // Roles have same name as states
     }
 }

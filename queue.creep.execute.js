@@ -17,8 +17,8 @@ module.exports = function(room){
     if(idleSpawns.length > 0 && (room.memory.creepQueue.length > 0) && room.energyAvailable >= creepBlueprint.cost){
 
         idleSpawns.forEach(spawn => {
-            console.log("Idle spawn at queue.execute: ", JSON.stringify(spawn));
-            console.log("Creep blueprint cost: ", creepBlueprint.cost);
+            // console.log("Idle spawn at queue.execute: ", JSON.stringify(spawn));
+            // console.log("Creep blueprint cost: ", creepBlueprint.cost);
 
             switch(creepQueue[0].creepType){
                 case "miner": {
@@ -37,7 +37,7 @@ module.exports = function(room){
                         dryRun:true
                     });
 
-                    console.log("Spawn test code: ", spawnTest);
+                    // console.log("Spawn test code: ", spawnTest);
 
                     // !!! .spawning only flags on the next tick. Do not use !!!
 

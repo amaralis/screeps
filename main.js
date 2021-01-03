@@ -40,7 +40,9 @@ module.exports.loop = function () {
         
         // Ideally, this isn't in main <<<<<<<<<<<======================================================================
         setCreepQueue(room);
-        executeCreepQueue(room);
+        if(room.memory.creepQueue.length){
+            executeCreepQueue(room);
+        }
 
 
         // Clear mining spots, room, and global memory of dead creeps
