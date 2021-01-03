@@ -11,7 +11,7 @@ module.exports = function(room){
 
     const idleSpawns = utils.getIdleSpawns(room);
     const creepBlueprint = getBlueprint(creepQueue[0].creepType, room);
-    let nextInCreepQueue = creepQueue[0]; // THIS SHOULD MAYBE ONLY HAPPEN AFTER SPAWN TEST
+    let nextInCreepQueue = creepQueue[0];
 
     
     if(idleSpawns.length > 0 && (room.memory.creepQueue.length > 0) && room.energyAvailable >= creepBlueprint.cost){
@@ -56,7 +56,7 @@ module.exports = function(room){
                         {
                             memory: {...creepBlueprint.memory, // state, role, type
                             toSourcePathIndex: nextInCreepQueue.toSourcePathIndex,
-                            toSpawnPathIndex:nextInCreepQueue.toSpawnPathIndex,
+                            toSpawnPathIndex: nextInCreepQueue.toSpawnPathIndex,
                             ownedBy: room.name,
                             name: nextInCreepQueue.name,
                             hasMiningSpot: false,

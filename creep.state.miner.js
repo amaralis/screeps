@@ -16,9 +16,9 @@ module.exports = function(creep){
 
     // console.log("Creep pos: ", creep.pos, "\nTransfer pos: ", JSON.stringify(transferPos), "\nCreep store, ", creep.store[RESOURCE_ENERGY], "\nCreep capacity: ", creep.store.getCapacity());
 
-    console.log("Mining spot: ", JSON.stringify(miningSpot));
-    console.log("Path to source: ", JSON.stringify(spawnToSourcePath));
-    console.log("Path to spawn: ", JSON.stringify(sourceToSpawnPath));
+    console.log("Creep", creep.name,"has mining spot: ", JSON.stringify(miningSpot), "in memory");
+    console.log("Mining position at spawnToSourcePath: ", JSON.stringify(spawnToSourcePath[spawnToSourcePath.length - 1]), "for creep", creep.name);
+    console.log("Mining position at sourceToSpawnPath: ", JSON.stringify(sourceToSpawnPath[sourceToSpawnPath.length - 1]), "for creep", creep.name);
 
     if(creep.pos.x == miningSpot.x && creep.pos.y == miningSpot.y){
         // console.log("Creep is at mining spot...");
