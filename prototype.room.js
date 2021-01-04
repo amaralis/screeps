@@ -196,6 +196,39 @@ module.exports = function(){
         });
         return maxMiners * minerTestingMultiplier; // TESTING MULTIPLIER
     },
+    Room.prototype.getExistingMiners = function(){
+        existingMiners = 0;
+
+        if(this.memory.creeps && this.memory.creeps.length > 0){
+            room.memory.creeps.forEach(creepName => {
+                if(Game.creeps[creepName] && (Game.creeps[creepName].memory.role === "miner")){
+                    existingMiners++;
+                }
+            });
+        }
+
+        return existingMiners;
+    },
+
+     Room.prototype.getNeededMiners = function(){
+        const maxMiners = this.memory.objectives.creeps.miner;
+        let existingMiners = this.getExistingMiners(); // was = 0
+        
+        // if(this.memory.creeps && this.memory.creeps.length > 0){
+        //     this.memory.creeps.forEach(creepName => {
+        //         if(Game.creeps[creepName] && (Game.creeps[creepName].memory.role === "miner")){
+        //             existingMiners++;
+        //         }
+        //     });
+        // }
+    
+        console.log(`Existing miners: ${existingMiners}\nMax miners: ${maxMiners}\nNeeded miners: ${(maxMiners - existingMiners)} - at queue.miners`)
+    
+        let neededMiners = maxMiners - existingMiners;
+        
+        return neededMiners;
+    },
+
     Room.prototype.getMaxRepairers = function(){
         return 5;
     },
