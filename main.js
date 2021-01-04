@@ -98,7 +98,8 @@ module.exports.loop = function () {
         draw.sourceToSpawnPaths(room);        
         draw.spawnAdjacentLocations(room);
         draw.upgradingLocations(room);
-        draw.spawnToControllerPaths(room);
+        // draw.spawnToControllerPaths(room);
+        draw.controllerToSpawnPaths(room);
     }
 
     // console.log(JSON.stringify(Game.creeps));

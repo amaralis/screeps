@@ -62,6 +62,12 @@ const initializer = function(room) {
         room.setSpawnToControllerPaths();
     }
 
+    // Find path from controller to spawn, commit to room memory
+    if(!room.memory.controllerToSpawnPaths || !room.memory.controllerToSpawnPaths.length){
+        room.memory.controllerToSpawnPaths = [];
+        room.setControllerToSpawnPaths();
+    }
+
     // Set objectives
     if(!room.memory.objectives){
         room.memory.objectives = {

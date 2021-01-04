@@ -100,6 +100,14 @@ module.exports = function(){
         });
     },
 
+    Room.prototype.setSourceToSpawnPaths = function(){
+        this.memory.spawnToSourcePaths.forEach(obj => {
+                let tempPathArray = [...obj.path];
+                tempPathArray = tempPathArray.reverse();
+                this.memory.sourceToSpawnPaths.push(tempPathArray);
+        })
+    },
+
     /**
      * Sets the array of available locations for upgrading the room's controller
      * 
@@ -108,11 +116,9 @@ module.exports = function(){
      */
     Room.prototype.setControllerUpgradeLocations = function(controller){
         this.memory.controllerUpgradeLocations = utils.getUpgradingLocations(controller);
-        console.log("Setting controller upgrade locations");
     },
 
     Room.prototype.setSpawnToControllerPaths = function(){
-        console.log("Setting source to controller paths");
         let costs = new PathFinder.CostMatrix;
         let avoidPos = [];
         let controller = this.controller;
@@ -163,14 +169,14 @@ module.exports = function(){
         });
     },
 
-    Room.prototype.setSourceToSpawnPaths = function(){
-        this.memory.spawnToSourcePaths.forEach(obj => {
-                let tempPathArray = [...obj.path];
-                tempPathArray = tempPathArray.reverse();
-                this.memory.sourceToSpawnPaths.push(tempPathArray);
-        })
+    Room.prototype.setControllerToSpawnPaths = function(){
+        this.memory.spawnToControllerPaths.forEach(obj => {
+            let tempPathArray = [...obj.path];
+            tempPathArray = tempPathArray.reverse();
+            this.memory.controllerToSpawnPaths.push(tempPathArray);
+        });
     },
-    
+
     Room.prototype.setState = function(state){
         this.memory.state = state;
     },
