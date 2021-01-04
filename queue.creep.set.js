@@ -58,7 +58,8 @@ const queueMiner = function(room){
             let flairReversed = flair.split("").reverse().join("");
             const creepName = `Busy Bee ${flair}`;
             // const creepName = `Busy Bee - ${Game.time}`;
-            console.log("Mining spot X", miningSpotObj.x, "Y", miningSpotObj.y,".isTakenBy.length: ", miningSpotObj.isTakenBy.length, "--- Creeps taking it:", JSON.stringify(miningSpotObj.isTakenBy));
+            // console.log("Mining spot X", miningSpotObj.x, "Y", miningSpotObj.y,".isTakenBy.length: ", miningSpotObj.isTakenBy.length, "--- Creeps taking it:", JSON.stringify(miningSpotObj.isTakenBy));
+
             if(room.memory.creepQueue.length < minersShort){
                 const pathToSourceIndex = getCreepPathToSourceIndex(room, miningSpotObj);
                 const pathToSpawnIndex = getCreepPathToSpawnIndex(room, miningSpotObj);

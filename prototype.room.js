@@ -65,6 +65,7 @@ module.exports = function(){
                     targetPos = new RoomPosition(location.x, location.y, this.name);
                     this.memory.spawnToSourcePaths.push({spawn: spawn, location: location, path: PathFinder.search(spawn.pos, targetPos, {roomCallback: /* pathingDetails(name) */() => {
                         
+                        // Set tiles where miners will be mining as unwalkable
                         
                         // let k = 1;
                         innerLoop:
@@ -97,12 +98,69 @@ module.exports = function(){
                 // i++;
             });
         });
+    },
 
-        // this.memory.minersPerSource.forEach(sourceData => {
-        //     sourceData.miningSpotsArray.forEach(spot => {
-        //         console.log("Spot to avoid: X ", spot.x, " Y ", spot.y);
-        //     });
-        // });
+    /**
+     * Sets the array of available locations for upgrading the room's controller
+     * 
+     * @param {StructureController} controller
+     * @returns {Array} 
+     */
+    Room.prototype.setControllerUpgradeLocations = function(controller){
+        this.memory.controllerUpgradeLocations = utils.getUpgradingLocations(controller);
+        console.log("Setting controller upgrade locations");
+    },
+
+    Room.prototype.setSpawnToControllerPaths = function(){
+        console.log("Setting source to controller paths");
+        let costs = new PathFinder.CostMatrix;
+        let avoidPos = [];
+        let controller = this.controller;
+
+        this.memory.controllerUpgradeLocations.forEach(upgradeLocation => {
+            avoidPos.push(upgradeLocation);
+            // console.log("Pushing spot to avoid: X ", spot.x, " Y ", spot.y);
+        });
+
+        this.find(FIND_MY_SPAWNS).forEach(spawn => {
+            // let i = 1;
+
+            this.memory.controllerUpgradeLocations.forEach(upgradeLocation => {
+                // console.log("Iterating through mining upgradeLocation ", j);
+                targetPos = new RoomPosition(upgradeLocation.x, upgradeLocation.y, this.name);
+                this.memory.spawnToControllerPaths.push({spawn: spawn.id, upgradeLocation, path: PathFinder.search(spawn.pos, targetPos, {roomCallback: /* pathingDetails(name) */() => {
+                    
+                    // Set tiles where upgraders will be upgrading as unwalkable
+                    
+                    // let k = 1;
+                    // innerLoop:
+                    for(let l = 0; l < avoidPos.length; l++){
+                        costs.set(avoidPos[l].x, avoidPos[l].y, 255);
+                        // console.log("Iterating through positions to avoid: ", k);
+                        if(avoidPos[l].x == targetPos.x && avoidPos[l].y == targetPos.y){
+                            // console.log("Not avoiding X ", avoidPos[l].x, " and Y ", avoidPos[l].y, "- Target pos X ", targetPos.x, " Y ", targetPos.y);
+                            costs.set(avoidPos[l].x, avoidPos[l].y, 0);
+                            // k++;
+                            // continue innerLoop;
+                        }
+                        // if(avoidPos[l].x != targetPos.x && avoidPos[l].y != targetPos.y){
+                        //     // console.log("Avoiding X ", avoidPos[l].x, " and Y ", avoidPos[l].y, "- Target pos X ", targetPos.x, " Y ", targetPos.y);
+                        //     costs.set(avoidPos[l].x, avoidPos[l].y, 255);
+                        //     // k++;
+                        //     continue innerLoop;
+                        // }
+                        // console.log("No collisions for X ", avoidPos[l].x, "Y", avoidPos[l].y);
+                        // k++;
+
+                    }
+
+                    // console.log("Path", j, "created");
+                    
+                    return costs;
+                }})}.path);
+                // j++;
+            });
+        });
     },
 
     Room.prototype.setSourceToSpawnPaths = function(){

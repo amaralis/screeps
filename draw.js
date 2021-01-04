@@ -27,6 +27,38 @@ module.exports = {
             });
         });
     },
+    
+    spawnToControllerPaths: function(room){
+        let i = 0;
+        room.memory.spawnToControllerPaths.forEach(obj => {
+            let line = [
+                0.1,
+                0.2,
+                0.3,
+                0.4,
+                0.5,
+                0.6,
+                0.7,
+                0.8
+            ]
+            let pathColor = [
+                "white",
+                "red",
+                "blue",
+                "yellow",
+                "purple",
+                "cyan",
+                "magenta",
+                "green",
+                "orange"
+            ];
+            obj.path.forEach(pos => {
+                new RoomVisual(pos.roomName).circle(pos.x, pos.y, {fill: "", stroke: pathColor[i]/* , strokeWidth: line[i] */});
+            })
+            i++;
+        });
+    },
+
     spawnToSourcePaths: function(room){
         let i = 0;
         room.memory.spawnToSourcePaths.forEach(obj => {
@@ -57,6 +89,7 @@ module.exports = {
             i++;
         });
     },
+
     sourceToSpawnPaths: function(room){
         let i = 0;
         room.memory.sourceToSpawnPaths.forEach(path => {

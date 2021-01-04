@@ -51,6 +51,17 @@ const initializer = function(room) {
         room.memory.creeps = [];
     }
 
+    // Create controller upgrade locations array
+    if(!room.memory.controllerUpgradeLocations || !room.memory.controllerUpgradeLocations.length){
+        room.setControllerUpgradeLocations(room.controller);
+    }
+
+    // Find path from spawn to controller, commit to room memory
+    if(!room.memory.spawnToControllerPaths || !room.memory.spawnToControllerPaths.length){
+        room.memory.spawnToControllerPaths = [];
+        room.setSpawnToControllerPaths();
+    }
+
     // Set objectives
     if(!room.memory.objectives){
         room.memory.objectives = {
