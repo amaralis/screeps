@@ -128,6 +128,14 @@ module.exports = function(){
             // console.log("Pushing spot to avoid: X ", spot.x, " Y ", spot.y);
         });
 
+        this.memory.minersPerSource.forEach(sourceData => {
+            sourceData.miningSpotsArray.forEach(miningSpot => {
+                avoidPos.push(miningSpot);
+                // console.log("Pushing spot to avoid: X ", spot.x, " Y ", spot.y);
+
+            });
+        });
+
         this.find(FIND_MY_SPAWNS).forEach(spawn => {
             // let i = 1;
 
@@ -200,7 +208,7 @@ module.exports = function(){
         existingMiners = 0;
 
         if(this.memory.creeps && this.memory.creeps.length > 0){
-            room.memory.creeps.forEach(creepName => {
+            this.memory.creeps.forEach(creepName => {
                 if(Game.creeps[creepName] && (Game.creeps[creepName].memory.role === "miner")){
                     existingMiners++;
                 }

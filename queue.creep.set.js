@@ -4,7 +4,7 @@ const setCreepQueue = function(room){
     switch(room.memory.state){
         
         case "improving": {
-            if(room.getExistingMiners() < room.getNeededMiners()){
+            if(room.getExistingMiners() < room.getMaxMiners()){
                 queueMiner.pushToQueue(room);
             }
             break;
