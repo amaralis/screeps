@@ -1,3 +1,5 @@
+const utils = require("utils")
+
 module.exports = {
     availableMiningSpots: function(room){
         let terrain = new Room.Terrain(room.name);
@@ -85,6 +87,13 @@ module.exports = {
             i++;
         });
     },
+
+    upgradingLocations: function(room){
+        utils.getUpgradingLocations(room.controller).forEach(location => {
+            new RoomVisual(room.name).rect(location.x - .5, location.y - .5, 1, 1, {fill: "", stroke: "#33ffff", opacity: 0.5});
+        })
+    },
+
     spawnAdjacentLocations: function(room){
         for (const spawnKey in Game.spawns){
             const spawn = Game.spawns[spawnKey];

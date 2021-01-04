@@ -14,6 +14,48 @@ module.exports = {
         return locations;
     },
 
+    getUpgradingLocations: function(controller) {
+        let locations = [];
+
+        locations.push({x:   controller.pos.x,      y: (controller.pos.y - 3), surrounds: controller});
+        locations.push({x:  (controller.pos.x + 1), y: (controller.pos.y - 3), surrounds: controller});
+        locations.push({x:  (controller.pos.x + 2), y: (controller.pos.y - 3), surrounds: controller});
+        
+        locations.push({x:  (controller.pos.x + 3), y: (controller.pos.y - 3), surrounds: controller});
+        locations.push({x:  (controller.pos.x + 3), y: (controller.pos.y - 2), surrounds: controller});
+        locations.push({x:  (controller.pos.x + 3), y: (controller.pos.y - 1), surrounds: controller});
+        locations.push({x:  (controller.pos.x + 3), y:  controller.pos.y,      surrounds: controller});
+        locations.push({x:  (controller.pos.x + 3), y: (controller.pos.y + 1), surrounds: controller});
+        locations.push({x:  (controller.pos.x + 3), y: (controller.pos.y + 2), surrounds: controller});
+        locations.push({x:  (controller.pos.x + 3), y: (controller.pos.y + 3), surrounds: controller});
+        
+        locations.push({x:  (controller.pos.x + 3), y: (controller.pos.y + 3), surrounds: controller});
+        locations.push({x:  (controller.pos.x + 2), y: (controller.pos.y + 3), surrounds: controller});
+        locations.push({x:  (controller.pos.x + 1), y: (controller.pos.y + 3), surrounds: controller});
+        locations.push({x:   controller.pos.x,      y: (controller.pos.y + 3), surrounds: controller});
+        locations.push({x:  (controller.pos.x - 1), y: (controller.pos.y + 3), surrounds: controller});
+        locations.push({x:  (controller.pos.x - 2), y: (controller.pos.y + 3), surrounds: controller});
+        locations.push({x:  (controller.pos.x - 3), y: (controller.pos.y + 3), surrounds: controller});
+        
+        locations.push({x:  (controller.pos.x - 3), y: (controller.pos.y + 2), surrounds: controller});
+        locations.push({x:  (controller.pos.x - 3), y: (controller.pos.y + 1), surrounds: controller});
+        locations.push({x:  (controller.pos.x - 3), y:  controller.pos.y,      surrounds: controller});
+        locations.push({x:  (controller.pos.x - 3), y: (controller.pos.y - 1), surrounds: controller});
+        locations.push({x:  (controller.pos.x - 3), y: (controller.pos.y - 2), surrounds: controller});
+        locations.push({x:  (controller.pos.x - 3), y: (controller.pos.y - 3), surrounds: controller});
+                
+        locations.push({x:  (controller.pos.x - 2), y: (controller.pos.y - 3), surrounds: controller});
+        locations.push({x:  (controller.pos.x - 1), y: (controller.pos.y - 3), surrounds: controller});
+
+        const terrain = new Room.Terrain(controller.room.name);
+
+        locations = locations.filter(location => {
+            return terrain.get(location.x, location.y) === 0 || terrain.get(location.x, location.y) === 2
+        });
+
+        return locations;
+    },
+
     findPath: function(from, to, opts = undefined){
         return PathFinder.search(from, to, opts);
     },
