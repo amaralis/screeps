@@ -121,35 +121,46 @@ module.exports = function(){
     Room.prototype.setSpawnToControllerPaths = function(){
         let costs = new PathFinder.CostMatrix;
         let avoidPos = [];
-        let controller = this.controller;
-
+        
         this.memory.controllerUpgradeLocations.forEach(upgradeLocation => {
             avoidPos.push(upgradeLocation);
             // console.log("Pushing spot to avoid: X ", spot.x, " Y ", spot.y);
         });
-
+        
         this.memory.minersPerSource.forEach(sourceData => {
             sourceData.miningSpotsArray.forEach(miningSpot => {
                 avoidPos.push(miningSpot);
                 // console.log("Pushing spot to avoid: X ", spot.x, " Y ", spot.y);
-
+                
             });
         });
-
+        
         this.find(FIND_MY_SPAWNS).forEach(spawn => {
             // let i = 1;
+            let avoidSpawnPos = [];
+            spawn.memory.forbiddenUpgraderStartingPos.forEach(forbiddenPos => {
+                avoidSpawnPos.push(forbiddenPos);
+                // console.log("Pushing forbidden pos ", JSON.stringify(forbiddenPos));
+            });
 
             this.memory.controllerUpgradeLocations.forEach(upgradeLocation => {
                 // console.log("Iterating through mining upgradeLocation ", j);
                 targetPos = new RoomPosition(upgradeLocation.x, upgradeLocation.y, this.name);
+                // console.log("Cycling through controller upgrade locations...");
                 this.memory.spawnToControllerPaths.push({spawn: spawn.id, upgradeLocation, path: PathFinder.search(spawn.pos, targetPos, {roomCallback: /* pathingDetails(name) */() => {
                     
                     // Set tiles where upgraders will be upgrading as unwalkable
                     
                     // let k = 1;
                     // innerLoop:
+                    for(let i = 0; i < avoidSpawnPos.length; i++){
+                        // console.log("Setting spawn position to avoid X", avoidSpawnPos[i].x, "Y", avoidSpawnPos[i].y);
+                        costs.set(avoidSpawnPos[i].x, avoidSpawnPos[i].y, 255);
+                    }
+
                     for(let l = 0; l < avoidPos.length; l++){
                         costs.set(avoidPos[l].x, avoidPos[l].y, 255);
+                        // costs.set(30,33,255);
                         // console.log("Iterating through positions to avoid: ", k);
                         if(avoidPos[l].x == targetPos.x && avoidPos[l].y == targetPos.y){
                             // console.log("Not avoiding X ", avoidPos[l].x, " and Y ", avoidPos[l].y, "- Target pos X ", targetPos.x, " Y ", targetPos.y);
@@ -169,6 +180,7 @@ module.exports = function(){
                     }
 
                     // console.log("Path", j, "created");
+                    console.log(JSON.stringify(costs));
                     
                     return costs;
                 }})}.path);

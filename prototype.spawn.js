@@ -32,5 +32,20 @@ module.exports = function(){
         });
         // console.log("Result: ", result);
         return result;
+    },
+
+    StructureSpawn.prototype.setForbiddenUpgraderStartingPos = function(){
+        let possibleSpawnLocations = this.getOpenAdjacentLocations();
+        let takenLocations = [];
+        this.room.memory.spawnToSourcePaths.forEach(pathObj => {
+            takenLocations.push(pathObj.path[0]);
+        });
+        possibleSpawnLocations.forEach(possiblePos => {
+            takenLocations.forEach(takenPos => {
+                if(takenPos.x === possiblePos.x && takenPos.y === possiblePos.y){
+                    this.memory.forbiddenUpgraderStartingPos.push(possiblePos);
+                }
+            });
+        });
     }
 }

@@ -32,7 +32,7 @@ const initializer = function(room) {
         room.memory.sources.forEach(source => {
             room.initializeMiningSpotsPerSource(source);
         });
-    }  
+    }
     
     // Find path from spawn to energy sources, commit to room memory
     if(!room.memory.spawnToSourcePaths || !room.memory.spawnToSourcePaths.length){
@@ -45,11 +45,21 @@ const initializer = function(room) {
         room.memory.sourceToSpawnPaths = [];
         room.setSourceToSpawnPaths();
     }
-    
+
     // Create creeps array
     if(!room.memory.creeps || !room.memory.creeps.length){
         room.memory.creeps = [];
     }
+    
+    // Store open starting locations for upgraders in spawn's memory
+    room.memory.roomSpawns.forEach(elt => {
+        let spawn = Game.getObjectById(elt.id);
+        // console.log(JSON.stringify(room.memory.roomSpawns))
+        if(!spawn.memory.forbiddenUpgraderStartingPos){
+            spawn.memory.forbiddenUpgraderStartingPos = [];
+            spawn.setForbiddenUpgraderStartingPos();
+        }
+    });
 
     // Create controller upgrade locations array
     if(!room.memory.controllerUpgradeLocations || !room.memory.controllerUpgradeLocations.length){
