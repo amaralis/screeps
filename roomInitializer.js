@@ -99,7 +99,7 @@ const initializer = function(room) {
     
     // Set initial room state
     if(!room.memory.state){
-        room.setState("improving");
+        room.setState("rcl1-nominal");
     }
     
     // Set creep production queues and execute

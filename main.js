@@ -78,6 +78,20 @@ module.exports.loop = function () {
                             }
                         }
                     }
+                } else if(Memory.creeps[deadCreepName].role === "upgrader"){
+                    // Clear creep from owner room's creeps array
+                    let owningRoom = Game.rooms[Memory.creeps[deadCreepName].ownedBy];
+                    owningRoom.memory.creeps.splice(owningRoom.memory.creeps.indexOf(deadCreepName), 1);
+                    
+                    let upgradingSpotsArray = owningRoom.memory.controllerUpgradeLocations;
+                    for(let i = 0; i < upgradingSpotsArray.length; i++){
+                        let deadCreepIndex = upgradingSpotsArray[i].isTakenBy.indexOf(deadCreepName);
+                        // Clear creep from mining spot
+                        upgradingSpotsArray[i].isTakenBy.splice(deadCreepIndex, 1);
+                        break;
+
+                    }
+
                 }
                 
                 // console.log(`DELETING CREEP ${JSON.stringify(Memory.creeps[deadCreepName])} FROM MEMORY`);

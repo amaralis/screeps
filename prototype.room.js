@@ -3,7 +3,7 @@ const utils = require("utils");
 const setCreepQueue = require("queue.creep.set");
 const executeCreepQueue = require("queue.creep.execute");
 
-const minerTestingMultiplier = 3; // FOR TESTING
+const minerTestingMultiplier = 1; // FOR TESTING
 
 module.exports = function(){
     /**
@@ -230,6 +230,11 @@ module.exports = function(){
         });
         return maxMiners * minerTestingMultiplier; // TESTING MULTIPLIER
     },
+
+    /**
+     * @returns Number of miners already spawned in
+     */
+
     Room.prototype.getExistingMiners = function(){
         existingMiners = 0;
 
@@ -244,7 +249,7 @@ module.exports = function(){
         return existingMiners;
     },
 
-     Room.prototype.getNeededMiners = function(){
+    Room.prototype.getNeededMiners = function(){
         const maxMiners = this.memory.objectives.creeps.miner;
         let existingMiners = this.getExistingMiners(); // was = 0
         
@@ -263,6 +268,20 @@ module.exports = function(){
         return neededMiners;
     },
 
+    /**
+     * @returns Number of miners in the queue
+     */
+
+    Room.prototype.getQueuedMiners = function(){
+        let queued = 0;
+        this.memory.creepQueue.forEach(queuedCreep => {
+            if(queuedCreep.creepType === "miner"){
+                queued++;
+            }
+        });
+        return queued;
+    },
+
     Room.prototype.getMaxRepairers = function(){
         return 5;
     },
@@ -272,9 +291,67 @@ module.exports = function(){
     Room.prototype.getMaxBuilders = function(){
         return 5;
     },
-    Room.prototype.getMaxUpgraders = function(){
-        return 5;
+
+    Room.prototype.assignUpgradingSpot = function(creep){
+        const room = Game.rooms[creep.memory.ownedBy];
+        if(!creep.memory.hasUpgradingSpot){
+            // console.log("Assigning mining spot to creep ", creep.name);
+            const creepSpot = creep.getUpgradingSpot();
+            // console.log(`Creep mining spot in memory is ${JSON.stringify(creepSpot)}`);
+            
+            let upgradingSpotsArray = room.memory.controllerUpgradeLocations;
+                for(let i = 0; i < upgradingSpotsArray.length; i++){
+                    // console.log(`Looping through upgradingSpotsArray.\nCurrent upgrading spot is ${JSON.stringify(upgradingSpotsArray[i])}`);
+                    if(creepSpot.x === upgradingSpotsArray[i].x && creepSpot.y === upgradingSpotsArray[i].y){
+                        // console.log(`Mining spot array ${JSON.stringify(miningSpotsArray[i])} corresponds to creep's mining spot ${iSON.stringify(creepSpot)}`);
+                        upgradingSpotsArray[i].isTakenBy.push(creep.name);
+                        break;
+                    }
+                }
+            // console.log("Push to mining spot loop complete");
+            creep.memory.hasUpgradingSpot = true;
+            creep.memory.upgradingSpot = creepSpot;
+        }
     },
+
+    Room.prototype.getMaxUpgraders = function(){
+        return (this.memory.controllerUpgradeLocations.length);
+    },
+
+    Room.prototype.getExistingUpgraders = function(){
+        existingUpgraders = 0;
+
+        if(this.memory.creeps && this.memory.creeps.length > 0){
+            this.memory.creeps.forEach(creepName => {
+                if(Game.creeps[creepName] && (Game.creeps[creepName].memory.role === "upgrader")){
+                    existingUpgraders++;
+                }
+            });
+        }
+
+        return existingUpgraders;
+    },
+
+    Room.prototype.getNeededUpgraders = function(){
+        const maxUpgraders = this.memory.objectives.creeps.upgrader;
+        let existingUpgraders = this.getExistingUpgraders();
+        let neededUpgraders = maxUpgraders - existingUpgraders;
+        console.log(`Existing Upgraders: ${existingUpgraders}\nMax Upgraders: ${maxUpgraders}\nNeeded Upgraders: ${(maxUpgraders - existingUpgraders)} - at queue.upgraders`)
+
+        return neededUpgraders;
+    },
+
+    Room.prototype.getQueuedUpgraders = function(){
+        let queued = 0;
+        this.memory.creepQueue.forEach(queuedCreep => {
+            if(queuedCreep.creepType === "upgrader"){
+                queued++;
+            }
+        });
+        return queued;
+    },
+
+
     Room.prototype.getMaxFighters = function(){
         return 5;
     },

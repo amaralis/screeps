@@ -1,4 +1,5 @@
 const getMinerBP = require("blueprints.miner");
+const getUpgraderBP = require("blueprints.upgrader");
 
 /**
  * Returns a somewhat dynamic creep body array
@@ -13,6 +14,11 @@ module.exports = function(type, room){
         case "miner":{
             console.log(`Blueprints called for creep type ${type} at room ${room.name}`);            
             return getMinerBP(room);
+        }
+
+        case "upgrader":{
+            console.log(`Blueprints called for creep type ${type} at room ${room.name}`);            
+            return getUpgraderBP(room);
         }
 
         case "builder":{

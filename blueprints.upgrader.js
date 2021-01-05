@@ -1,8 +1,8 @@
-module.exports = function(){
+module.exports = function(room){
     
     /* ======================================= COMMENT OUT BELOW FOR TESTING ================================================== */  
     
-    let bodyArray = [WORK, CARRY,  MOVE, CARRY, MOVE];            
+    let bodyArray = [WORK, CARRY, CARRY, MOVE, MOVE];            
     let initialBodyCost = 0;
     let dynamicBodyCost = 0;
     let dynamicBody = [];
@@ -55,7 +55,7 @@ module.exports = function(){
     return {
         body: dynamicBody,
         cost: dynamicBodyCost,
-        memory: {role: "miner", type: "basic worker", state:"awaiting ownership"}
+        memory: {role: "upgrader", type: "upgrader", state:"awaiting ownership"}
     }
 
     /* ========================================================================================= */

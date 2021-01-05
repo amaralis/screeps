@@ -1,11 +1,15 @@
 const queueMiner = require("queue.miners");
+const queueUpgrader = require("queue.upgraders");
 
 const setCreepQueue = function(room){
     switch(room.memory.state){
         
-        case "improving": {
+        case "rcl1-nominal": {
             if(room.getExistingMiners() < room.getMaxMiners()){
                 queueMiner.pushToQueue(room);
+            }
+            if(room.getExistingUpgraders() < room.getMaxUpgraders()){
+                queueUpgrader.pushToQueue(room);
             }
             break;
         }

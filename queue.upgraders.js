@@ -1,11 +1,11 @@
 module.exports = {
     pushToQueue: function(room){
-        let minersShort = room.getNeededMiners();
-        const { minersPerSource } = room.memory;
-        console.log("minersShort at queue.creep.set: ", minersShort);
+        let upgradersShort = room.getNeededUpgraders();
+        let upgradingSpotsArray = room.memory.controllerUpgradeLocations;
+        console.log("upgradersShort at queue.creep.set: ", upgradersShort);
         console.log("Creep queue length queue.creep.set: ", room.memory.creepQueue.length);
-        minersPerSource.forEach(sourceData => {
-            sourceData.miningSpotsArray.forEach(miningSpotObj => {
+
+            upgradingSpotsArray.forEach(upgradingSpotObj => {
                 const beeCode = function(){
                     let str = "";
                     function createFlair(char){
@@ -36,51 +36,49 @@ module.exports = {
                     return str;
                 }
 
-                console.log("Mining spot X", miningSpotObj.x, "Y", miningSpotObj.y,".isTakenBy.length: ", miningSpotObj.isTakenBy.length, "--- Creeps taking it:", JSON.stringify(miningSpotObj.isTakenBy));
+                console.log("Upgrading spot X", upgradingSpotObj.x, "Y", upgradingSpotObj.y,".isTakenBy.length: ", upgradingSpotObj.isTakenBy.length, "--- Creeps taking it:", JSON.stringify(upgradingSpotObj.isTakenBy));
                 
-                // if((room.memory.creepQueue.length - room.getNeededUpgraders()) < minersShort){
-                if(room.getQueuedMiners() < minersShort){
+                // if((room.memory.creepQueue.length - room.getNeededMiners()) < upgradersShort){
+                    if((room.getQueuedUpgraders() < upgradersShort) && !(room.getExistingMiners() + room.getQueuedMiners() < room.getMaxMiners())){
                     const flair = beeCode();
                     let flairReversed = flair.split("").reverse().join("");
-                    const creepName = `Busy Bee ${flair}`;
+                    const creepName = `Home Improvement Bee ${flair}`;
                     // const creepName = `Busy Bee - ${Game.time}`;
                         
 
-                    const toSourcePathIndex = this.getCreepPathToSourceIndex(room, miningSpotObj);
-                    const toSpawnPathIndex = this.getCreepPathToSpawnIndex(room, miningSpotObj);
+                    const toControllerPathIndex = this.getCreepPathToControllerIndex(room, upgradingSpotObj);
+                    const toSpawnPathIndex = this.getCreepPathToSpawnIndex(room, upgradingSpotObj);
 
-                    room.memory.creepQueue.push({creepType: "miner",
-                    workUnits: sourceData.workPerMiner,
-                    targetSourceId: sourceData.source.id,
-                    name: `Busy Bee ${flair}`,
-                    hasMiningSpot: false,
-                    miningSpot: room.memory.sourceToSpawnPaths[toSpawnPathIndex][0],
-                    pathToSourceIndex: toSourcePathIndex,
+                    room.memory.creepQueue.push({creepType: "upgrader",
+                    targetControllerId: room.controller.id,
+                    name: `Home Improvement Bee ${flair}`,
+                    hasUpgradingSpot: false,
+                    upgradingSpot: room.memory.controllerToSpawnPaths[toSpawnPathIndex][0],
+                    pathToControllerIndex: toControllerPathIndex,
                     pathToSpawnIndex: toSpawnPathIndex});
                 }
             });
-        });
 
         // console.log("CREEP QUEUE LENGTH: ", room.memory.creepQueue.length);
         // console.log("creepQueue: ", JSON.stringify(room.memory.creepQueue));
     },
 
-    getCreepPathToSourceIndex: function(room, miningSpot){
-        const { spawnToSourcePaths } = room.memory;
-        for(let i = 0; i < spawnToSourcePaths.length; i++){
-            let path = spawnToSourcePaths[i].path;
-            let lastIndex = path.length-1;
-            if(path[lastIndex].x === miningSpot.x && path[lastIndex].y === miningSpot.y){
+    getCreepPathToControllerIndex: function(room, upgradingSpot){
+        const { spawnToControllerPaths } = room.memory;
+        for(let i = 0; i < spawnToControllerPaths.length; i++){
+            let path = spawnToControllerPaths[i].path;
+            let lastIndex = path.length - 1;
+            if(path[lastIndex].x === upgradingSpot.x && path[lastIndex].y === upgradingSpot.y){
                 return i;
             }
         }
     },
 
-    getCreepPathToSpawnIndex: function(room, miningSpot){
-        const { sourceToSpawnPaths } = room.memory;
-        for(let i = 0; i < sourceToSpawnPaths.length; i++){
-            let path = sourceToSpawnPaths[i];
-            if(path[0].x === miningSpot.x && path[0].y === miningSpot.y){
+    getCreepPathToSpawnIndex: function(room, upgradingSpot){
+        const { controllerToSpawnPaths } = room.memory;
+        for(let i = 0; i < controllerToSpawnPaths.length; i++){
+            let path = controllerToSpawnPaths[i];
+            if(path[0].x === upgradingSpot.x && path[0].y === upgradingSpot.y){
                 return i;
             }
         }

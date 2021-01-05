@@ -1,3 +1,4 @@
+const handleUpgrading = require("creep.state.upgrader");
 const handleMining = require("creep.state.miner");
 const handleSpawning = require("creep.state.spawning");
 const handleAwaitingOwnership = require("creep.state.awaitingOwnership");
@@ -28,9 +29,11 @@ module.exports = function(creep){
 
             break;
         }
-        // case "": {
-
-        // }
+        case "upgrader": {
+            // console.log(`CONTROLLER - Creep ${creep.name} is upgrading`);
+            handleUpgrading(creep);
+            break;
+        }
         default:
             console.log("Creep state not recognized at controller: ", creep.memory.state);
     }
