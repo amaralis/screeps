@@ -3,7 +3,7 @@ const utils = require("utils");
 const setCreepQueue = require("queue.creep.set");
 const executeCreepQueue = require("queue.creep.execute");
 
-const minerTestingMultiplier = 1; // FOR TESTING
+let maxMinersPerSpot = 3;
 
 module.exports = function(){
     /**
@@ -180,7 +180,6 @@ module.exports = function(){
                     }
 
                     // console.log("Path", j, "created");
-                    console.log(JSON.stringify(costs));
                     
                     return costs;
                 }})}.path);
@@ -240,8 +239,24 @@ module.exports = function(){
         this.memory.minersPerSource.forEach(elt => {
             maxMiners += elt.miningSpotsArray.length;
         });
-        return maxMiners * minerTestingMultiplier; // TESTING MULTIPLIER
+        // console.log("Max miners if 1 per mining spot: ", maxMiners, "\nMax miners per spot:", maxMinersPerSpot, "at room.getMaxMiners()")
+        return maxMiners * maxMinersPerSpot;
     },
+
+    Room.prototype.setMaxMiners = function(num){
+        this.memory.objectives.creeps.miner = num;
+    },
+
+    Room.prototype.setMaxMinersPerSpot = function(num){
+        minersPerSpot = num;
+        console.log("Setting max miners per spot to ", num);
+
+        this.setMaxMiners(this.getMaxMiners());
+    },
+
+    Room.prototype.getMaxMinersPerSpot = function(){
+        return maxMinersPerSpot;
+    }
 
     /**
      * @returns Number of miners already spawned in
@@ -273,7 +288,7 @@ module.exports = function(){
         //     });
         // }
     
-        console.log(`Existing miners: ${existingMiners}\nMax miners: ${maxMiners}\nNeeded miners: ${(maxMiners - existingMiners)} - at queue.miners`)
+        console.log(`Existing miners: ${existingMiners}\nMax miners: ${maxMiners}\nNeeded miners: ${(maxMiners - existingMiners)} - at room.getNeededMiners`)
     
         let neededMiners = maxMiners - existingMiners;
         

@@ -2,7 +2,7 @@ module.exports = function(room){
     
     /* ======================================= COMMENT OUT BELOW FOR TESTING ================================================== */  
     
-    let bodyArray = [WORK, CARRY, CARRY, MOVE, MOVE];            
+    let bodyArray = [WORK, CARRY, MOVE, MOVE, MOVE];            
     let initialBodyCost = 0;
     let dynamicBodyCost = 0;
     let dynamicBody = [];

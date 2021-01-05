@@ -3,6 +3,7 @@ module.exports = {
         let minersShort = room.getNeededMiners();
         const { minersPerSource } = room.memory;
         console.log("minersShort at queue.creep.set: ", minersShort);
+        console.log("maxMinersPerSpot at queue.creep.set: ", room.getMaxMinersPerSpot());
         console.log("Creep queue length queue.creep.set: ", room.memory.creepQueue.length);
         minersPerSource.forEach(sourceData => {
             sourceData.miningSpotsArray.forEach(miningSpotObj => {
@@ -39,7 +40,7 @@ module.exports = {
                 console.log("Mining spot X", miningSpotObj.x, "Y", miningSpotObj.y,".isTakenBy.length: ", miningSpotObj.isTakenBy.length, "--- Creeps taking it:", JSON.stringify(miningSpotObj.isTakenBy));
                 
                 // if((room.memory.creepQueue.length - room.getNeededUpgraders()) < minersShort){
-                if(room.getQueuedMiners() < minersShort){
+                if(room.getQueuedMiners() < minersShort && miningSpotObj.isTakenBy.length < room.getMaxMinersPerSpot()){
                     const flair = beeCode();
                     let flairReversed = flair.split("").reverse().join("");
                     const creepName = `Busy Bee ${flair}`;

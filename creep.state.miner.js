@@ -36,7 +36,7 @@ module.exports = function(creep){
             // console.log("Creep is transferring");
 
             creep.transfer(Game.getObjectById(spawnedBy), RESOURCE_ENERGY);
-        } else if(creep.store[RESOURCE_ENERGY] > 0 && Game.getObjectById(spawnedBy).store.getFreeCapacity(RESOURCE_ENERGY) < 0){
+        } else if(creep.store[RESOURCE_ENERGY] > 0 && Game.getObjectById(spawnedBy).store.getFreeCapacity(RESOURCE_ENERGY) === 0){
             creep.moveByPath(spawnToSourcePath);
         } else if(creep.store[RESOURCE_ENERGY] < creep.store.getCapacity() && creep.store[RESOURCE_ENERGY] == 0){
             // console.log("Creep is moving to source");
