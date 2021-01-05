@@ -12,7 +12,23 @@ module.exports = function(creep){
                 break;
             }
         }
-        creep.assignMiningSpot();
-        creep.memory.state = creep.memory.role; // Roles have same name as states
+
+        if(creep.memory.role === "miner"){
+            creep.room.assignMiningSpot(creep);
+            let path = creep.getSpawnToSourcePath();
+            let startingPos = new RoomPosition(path[0].x, path[0].y, creep.room.name);
+            
+            if(creep.pos.x === startingPos.x && creep.pos.y === startingPos.y){
+                creep.memory.state = creep.memory.role; // Roles have same name as states
+                console.log("Creep is at starting position");
+                // creep.memory.isAtStartingPos = true;
+            } else {
+                console.log("Creep isn't at starting position");
+                console.log("Moving creep to ", JSON.stringify(startingPos));
+                creep.moveTo(startingPos);
+            }
+        } else {
+            creep.memory.state = creep.memory.role;
+        }
     }
 }

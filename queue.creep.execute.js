@@ -63,7 +63,7 @@ module.exports = function(room){
                             targetSourceId: nextInCreepQueue.targetSourceId,
                             spawnedBy: spawn.id
                                 },
-                            directions: [Game.spawns[spawn.name].getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.toSourcePathIndex].path[0])]
+                            // directions: [Game.spawns[spawn.name].getDirections(room.memory.spawnToSourcePaths[nextInCreepQueue.toSourcePathIndex].path[0])]
                         });
                         
                         // console.log("SPAWNING CREEP NAME: ", nextInCreepQueue.name);

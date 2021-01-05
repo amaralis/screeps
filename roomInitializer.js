@@ -12,7 +12,7 @@ const initializer = function(room) {
         if(spawns){
             spawns.forEach(spawn => {
                 room.memory.roomSpawns.push({name: spawn.name, id: spawn.id});
-                spawn.memory.availableAdjacentLocations = [];
+                // spawn.memory.availableAdjacentLocations = [];
                 spawn.getOpenAdjacentLocations();
             });
         }

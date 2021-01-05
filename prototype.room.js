@@ -197,6 +197,32 @@ module.exports = function(){
         executeCreepQueue(this);
     },
     
+    Room.prototype.assignMiningSpot = function(creep){
+        const room = Game.rooms[creep.memory.ownedBy];
+        if(!creep.memory.hasMiningSpot){
+            // console.log("Assigning mining spot to creep ", creep.name);
+            const creepSpot = creep.getMiningSpot();
+            // console.log(`Creep mining spot in memory is ${JSON.stringify(creepSpot)}`);
+            
+            loop1:
+            for(let i = 0; i < room.memory.sources.length; i++){
+                let miningSpotsArray = room.getMiningSpotsPerSource(room.memory.sources[i]);
+                // console.log(`Looping through sources.\nMining spots array for source ${room.memory.sources[i].id} is ${JSON.stringify(miningSpotsArray)}`);
+                for(let j = 0; j < miningSpotsArray.length; j++){
+                    // console.log(`Looping through mining spots array.\nCurrent mining spot is ${JSON.stringify(miningSpotsArray[j])}`);
+                    if(creepSpot.x === miningSpotsArray[j].x && creepSpot.y === miningSpotsArray[j].y){
+                        // console.log(`Mining spot array ${JSON.stringify(miningSpotsArray[j])} corresponds to creep's mining spot ${JSON.stringify(creepSpot)}`);
+                        room.memory.minersPerSource[i].miningSpotsArray[j].isTakenBy.push(creep.name);
+                        break loop1;
+                    }
+                }
+            }
+            // console.log("Push to mining spot loop complete");
+            creep.memory.hasMiningSpot = true;
+            creep.memory.miningSpot = creepSpot;
+        }
+    }
+    
     Room.prototype.getMaxMiners = function(){
         let maxMiners = 0;
         this.memory.minersPerSource.forEach(elt => {

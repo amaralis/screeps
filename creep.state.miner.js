@@ -1,5 +1,4 @@
 const utils = require("utils");
-const { spawnToSourcePaths } = require("./draw");
 
 /**
  * 
