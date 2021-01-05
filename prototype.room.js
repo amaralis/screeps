@@ -290,7 +290,7 @@ module.exports = function(){
         //     });
         // }
     
-        console.log(`Existing miners: ${existingMiners}\nMax miners: ${maxMiners}\nNeeded miners: ${(maxMiners - existingMiners)} - at room.getNeededMiners`)
+        // console.log(`Existing miners: ${existingMiners}\nMax miners: ${maxMiners}\nNeeded miners: ${(maxMiners - existingMiners)} - at room.getNeededMiners`)
     
         let neededMiners = maxMiners - existingMiners;
         
@@ -379,7 +379,7 @@ module.exports = function(){
         const maxUpgraders = this.memory.objectives.creeps.upgrader;
         let existingUpgraders = this.getExistingUpgraders();
         let neededUpgraders = maxUpgraders - existingUpgraders;
-        console.log(`Existing Upgraders: ${existingUpgraders}\nMax Upgraders: ${maxUpgraders}\nNeeded Upgraders: ${(maxUpgraders - existingUpgraders)} - at room.getNeededUpgraders()`)
+        // console.log(`Existing Upgraders: ${existingUpgraders}\nMax Upgraders: ${maxUpgraders}\nNeeded Upgraders: ${(maxUpgraders - existingUpgraders)} - at room.getNeededUpgraders()`)
 
         return neededUpgraders;
     },

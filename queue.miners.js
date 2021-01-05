@@ -2,9 +2,9 @@ module.exports = {
     pushToQueue: function(room){
         let minersShort = room.getNeededMiners();
         const { minersPerSource } = room.memory;
-        console.log("minersShort at queue.creep.set: ", minersShort);
-        console.log("maxMinersPerSpot at queue.creep.set: ", room.getMaxMinersPerSpot());
-        console.log("Creep queue length queue.creep.set: ", room.memory.creepQueue.length);
+        // console.log("minersShort at queue.creep.set: ", minersShort);
+        // console.log("maxMinersPerSpot at queue.creep.set: ", room.getMaxMinersPerSpot());
+        // console.log("Creep queue length queue.creep.set: ", room.memory.creepQueue.length);
         minersPerSource.forEach(sourceData => {
             sourceData.miningSpotsArray.forEach(miningSpotObj => {
                 const beeCode = function(){
@@ -37,7 +37,7 @@ module.exports = {
                     return str;
                 }
 
-                console.log("Mining spot X", miningSpotObj.x, "Y", miningSpotObj.y,".isTakenBy.length: ", miningSpotObj.isTakenBy.length, "--- Creeps taking it:", JSON.stringify(miningSpotObj.isTakenBy));
+                // console.log("Mining spot X", miningSpotObj.x, "Y", miningSpotObj.y,".isTakenBy.length: ", miningSpotObj.isTakenBy.length, "--- Creeps taking it:", JSON.stringify(miningSpotObj.isTakenBy));
                 
                 // if((room.memory.creepQueue.length - room.getNeededUpgraders()) < minersShort){
                 if(room.getQueuedMiners() < minersShort && miningSpotObj.isTakenBy.length < room.getMaxMinersPerSpot()){

@@ -21,11 +21,11 @@ module.exports = function(creep){
                 
                 if(creep.pos.x === startingPos.x && creep.pos.y === startingPos.y){
                     creep.memory.state = creep.memory.role; // Roles have same name as states
-                    console.log("Creep is at starting position");
+                    // console.log("Creep is at starting position");
                     // creep.memory.isAtStartingPos = true;
                 } else {
-                    console.log("Creep isn't at starting position");
-                    console.log("Moving creep to ", JSON.stringify(startingPos));
+                    // console.log("Creep isn't at starting position");
+                    // console.log("Moving creep to ", JSON.stringify(startingPos));
                     creep.moveTo(startingPos);
                 }
 

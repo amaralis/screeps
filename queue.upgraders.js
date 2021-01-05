@@ -2,8 +2,8 @@ module.exports = {
     pushToQueue: function(room){
         let upgradersShort = room.getNeededUpgraders();
         let upgradingSpotsArray = room.memory.controllerUpgradeLocations;
-        console.log("upgradersShort at queue.creep.set: ", upgradersShort);
-        console.log("Creep queue length queue.creep.set: ", room.memory.creepQueue.length);
+        // console.log("upgradersShort at queue.creep.set: ", upgradersShort);
+        // console.log("Creep queue length queue.creep.set: ", room.memory.creepQueue.length);
 
             upgradingSpotsArray.forEach(upgradingSpotObj => {
                 const beeCode = function(){
@@ -36,7 +36,7 @@ module.exports = {
                     return str;
                 }
 
-                console.log("Upgrading spot X", upgradingSpotObj.x, "Y", upgradingSpotObj.y,".isTakenBy.length: ", upgradingSpotObj.isTakenBy.length, "--- Creeps taking it:", JSON.stringify(upgradingSpotObj.isTakenBy));
+                // console.log("Upgrading spot X", upgradingSpotObj.x, "Y", upgradingSpotObj.y,".isTakenBy.length: ", upgradingSpotObj.isTakenBy.length, "--- Creeps taking it:", JSON.stringify(upgradingSpotObj.isTakenBy));
                 
                 // if((room.memory.creepQueue.length - room.getNeededMiners()) < upgradersShort){
                     if((room.getQueuedUpgraders() < upgradersShort)  && upgradingSpotObj.isTakenBy.length < room.getMaxUpgradersPerSpot()){
