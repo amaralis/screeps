@@ -8,24 +8,24 @@ const creepController = require("controller.creep");
 const setCreepQueue = require("queue.creep.set");
 const executeCreepQueue = require("queue.creep.execute");
 
-delete Game.rooms["W8N4"].memory.miningLocations; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.roomSpawns; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.sources; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.spawnToSourcePaths; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.sourceToSpawnPaths; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.spawnToControllerPaths; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.controllerToSpawnPaths; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.controllerUpgradeLocations; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.initialized; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.objectives; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.minersPerSource; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.state; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.creepQueue; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.creepProductionQueue; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.queue; // JUST FOR TESTING
-delete Game.rooms["W8N4"].memory.creeps; // JUST FOR TESTING
-delete Game.spawns["Spawn1"].memory.availableAdjacentLocations; // JUST FOR TESTING
-delete Memory.creeps; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.miningLocations; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.roomSpawns; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.sources; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.spawnToSourcePaths; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.sourceToSpawnPaths; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.spawnToControllerPaths; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.controllerToSpawnPaths; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.controllerUpgradeLocations; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.initialized; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.objectives; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.minersPerSource; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.state; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.creepQueue; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.creepProductionQueue; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.queue; // JUST FOR TESTING
+// delete Game.rooms["W8N4"].memory.creeps; // JUST FOR TESTING
+// delete Game.spawns["Spawn1"].memory.availableAdjacentLocations; // JUST FOR TESTING
+// delete Memory.creeps; // JUST FOR TESTING
 
 module.exports.loop = function () {    
     
@@ -108,13 +108,13 @@ module.exports.loop = function () {
         }
 
         // !!! drawing has non-insignificant impact on CPU usage
-        draw.availableMiningSpots(room);
-        draw.spawnToSourcePaths(room);
-        draw.sourceToSpawnPaths(room);        
-        draw.spawnAdjacentLocations(room);
-        draw.upgradingLocations(room);
+        // draw.availableMiningSpots(room);
+        // draw.spawnToSourcePaths(room);
+        // draw.sourceToSpawnPaths(room);        
+        // draw.spawnAdjacentLocations(room);
+        // draw.upgradingLocations(room);
         // draw.spawnToControllerPaths(room);
-        draw.controllerToSpawnPaths(room);
+        // draw.controllerToSpawnPaths(room);
     }
 
     // console.log(JSON.stringify(Game.creeps));
