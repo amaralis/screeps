@@ -39,7 +39,7 @@ module.exports = {
                 console.log("Upgrading spot X", upgradingSpotObj.x, "Y", upgradingSpotObj.y,".isTakenBy.length: ", upgradingSpotObj.isTakenBy.length, "--- Creeps taking it:", JSON.stringify(upgradingSpotObj.isTakenBy));
                 
                 // if((room.memory.creepQueue.length - room.getNeededMiners()) < upgradersShort){
-                    if((room.getQueuedUpgraders() < upgradersShort) && !(room.getExistingMiners() + room.getQueuedMiners() < room.getMaxMiners())){
+                    if((room.getQueuedUpgraders() < upgradersShort)  && upgradingSpotObj.isTakenBy.length < room.getMaxUpgradersPerSpot()){
                     const flair = beeCode();
                     let flairReversed = flair.split("").reverse().join("");
                     const creepName = `Home Improvement Bee ${flair}`;

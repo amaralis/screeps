@@ -3,7 +3,8 @@ const utils = require("utils");
 const setCreepQueue = require("queue.creep.set");
 const executeCreepQueue = require("queue.creep.execute");
 
-let maxMinersPerSpot = 3;
+let maxMinersPerSpot = 2;
+let maxUpgradersPerSpot = 2;
 
 module.exports = function(){
     /**
@@ -248,7 +249,8 @@ module.exports = function(){
     },
 
     Room.prototype.setMaxMinersPerSpot = function(num){
-        minersPerSpot = num;
+        this.memory.creepQueue = [];
+        maxMinersPerSpot = num;
         console.log("Setting max miners per spot to ", num);
 
         this.setMaxMiners(this.getMaxMiners());
@@ -342,7 +344,21 @@ module.exports = function(){
     },
 
     Room.prototype.getMaxUpgraders = function(){
-        return (this.memory.controllerUpgradeLocations.length);
+        return (this.memory.controllerUpgradeLocations.length * maxUpgradersPerSpot);
+    },
+    
+    Room.prototype.setMaxUpgraders = function(num){
+        this.memory.objectives.creeps.upgrader = num;
+    },
+    
+    Room.prototype.setMaxUpgradersPerSpot = function(num){
+        this.memory.creepQueue = [];
+        maxUpgradersPerSpot = num;
+        console.log("Setting max upgraders per spot to ", num);
+        this.setMaxUpgraders(this.getMaxUpgraders());
+    },
+    Room.prototype.getMaxUpgradersPerSpot = function(){
+        return maxUpgradersPerSpot;
     },
 
     Room.prototype.getExistingUpgraders = function(){
@@ -363,7 +379,7 @@ module.exports = function(){
         const maxUpgraders = this.memory.objectives.creeps.upgrader;
         let existingUpgraders = this.getExistingUpgraders();
         let neededUpgraders = maxUpgraders - existingUpgraders;
-        console.log(`Existing Upgraders: ${existingUpgraders}\nMax Upgraders: ${maxUpgraders}\nNeeded Upgraders: ${(maxUpgraders - existingUpgraders)} - at queue.upgraders`)
+        console.log(`Existing Upgraders: ${existingUpgraders}\nMax Upgraders: ${maxUpgraders}\nNeeded Upgraders: ${(maxUpgraders - existingUpgraders)} - at room.getNeededUpgraders()`)
 
         return neededUpgraders;
     },
